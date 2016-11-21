@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <title>אגד - מידע לנוסע</title>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <meta name="description" content="אגד מידע לנוסע">
+    <meta name="keywords" content="מידע לנוסע, לוח זמנים, אגד, אגד תעבורה, קווים, תחבורה, תחבורה ציבורית, נסיעות, אוטובוס, אוטובוסים">
+    <meta name="fragment" content="!" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<meta http-equiv="expires" content="mon, 23 mar 2015 14:30:00 GMT">-->
+    <!--<link rel="icon" href="favicon.ico" type="image/x-icon" />-->
+    <link href="app/css/jquery-ui-min.css" rel="stylesheet" />
+
+    <link rel="icon" href="Content/images/favicon/apple-touch-icon-180x180.png" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" title="אגד מידע לנוסע" href="/opensearch.xml" />
+
+
+</head>
+<body data-ng-controller="AppCtrl"
+      data-ng-class="{true: 'rtl', false: 'ltr'}[dir]"
+      style="width: 100%; min-height: 100%; display: none;">
+    <!--[if lt IE 7]>
+        <p >דפדפן בגרסה לא נתמכת, נא התקן דפדפן עדכני יותר .</p>
+    <![endif]-->
+    <div data-ng-show="isMapViewed != true"
+         data-ng-class="{true: 'blur', false: ''}[enumCompatibilityMessage == 1]"
+         class="MainBody"
+         style="margin-left: auto; margin-right: auto; ">
+        <button class="visibleOnFocus"
+                ng-show="accessibilitySite != true &&  search.language == 'he'"
+                accesskey="s"
+                data-ng-click="accessibilitySiteEvent()">
+            {{i18nMoveToAccessibilitySite}}
+        </button>
+        <button class="visibleOnFocus"
+                ng-show="accessibilitySite == true &&  search.language == 'he'"
+                data-ng-click="accessibilitySiteEvent()">
+            {{i18nCloseAccessibilitySite}}
+        </button>
+        <button class="visibleOnFocus"
+                data-ng-click="SkipToSearchArea()">
+            {{i18nSkipToSearchArea}}
+        </button>
+        <button class="visibleOnFocus"
+                data-ng-show="isShowFilter != true && accessibilitySite != true &&  search.language == 'he'"
+                data-ng-click="SkipToResultArea()">
+            {{i18nSkipToResultArea}}
+        </button>
+        <button class="visibleOnFocus"
+                ng-show="accessibilitySite != true &&  search.language == 'he'"
+                data-ng-click="SkipToMainMenu()">
+            {{i18nSkipToMainMenu}}
+        </button>
+        <button class="visibleOnFocus"
+                data-ng-click="SkipToFooter()">
+            {{i18nSkipToFooter}}
+        </button>
+        <a data-ng-href="{{i18nContactUsUrl}}"
+           target="_blank"
+           style="text-decoration: none; color: black;"
+           class="visibleOnFocus">
+            {{i18nContactUs}}
+        </a>
+      
+        <div data-ng-if="isBezeqOnline != true"
+             class="headerStrip no-print">
+            <div class="headerInnerStrip">
+                <table>
+                    <tr>
+                        <td style="width: 80px; vertical-align: top;">
+                            <a data-ng-href="{{i18nEggedSiteUrl}}"
+                               style="line-height: 185px; font-weight: bolder;"
+                               class="siteLogoImage"
+                               title="{{i18nTitle}}">
+                            </a>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="margin-top: 20px;"
+                                             class="LanguageSelector"
+                                             data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                                            <a href="?language=en#/"
+                                               title="Change language to English"
+                                               data-ng-show="search.language == 'he'"
+                                               class="LanguageSelectorItem">
+                                                English
+                                            </a>
+                                            <a href="?language=he#/"
+                                               title="החלף שפה לעברית"
+                                               data-ng-show="search.language == 'en'"
+                                               class="LanguageSelectorItem">
+                                                עברית
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="accessibilitySite != true">
+                                        <div class="mainMenuStrip"
+                                             role="navigation"
+                                             data-ng-if="isMobileBrowser != true "
+                                             style="line-height: normal; display: flex; width: 100%;"
+                                             data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                                            <ul style="margin-bottom: 12px; height: 40px;">
+                                                <li style="display: inline-block;">
+                                                    <a id="navItemToSearchPage"
+                                                       href="#/"
+                                                       target="_blank"
+                                                       class="headerAnchor">
+                                                        {{i18nToSearchPage}}
+                                                    </a>
+                                                </li>
+                                                <li style="display: inline-block;">
+                                                    <a class="headerAnchor"
+                                                       data-ng-click="linesBetweenCitiesMenuItemClicked()">
+                                                        {{i18nDirectLines}}
+                                                    </a>
+                                                </li>
+                                                <li style="display: inline-block;">
+                                                    <a data-ng-href="{{i18nContactUsUrl}}"
+                                                       target="_blank"
+                                                       class="headerAnchor">
+                                                        {{i18nContactUs}}
+                                                    </a>
+                                                </li>
+                                                <!--<li style="display: inline-block;">
+                                                    <a href="http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx"
+                                                       target="_blank"
+                                                       style="text-decoration: none;"
+                                                       data-ng-show="search.language != 'he'"
+                                                       class="headerAnchor">
+                                                        Transfer Ovda Eilat
+                                                    </a>
+                                                </li>-->
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div data-ng-if="isMobileBrowser == true">
+            <div class="btnToggleMainMenuStrip"
+                 data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+                 data-ng-init="isMainMenuStripVisible = false"
+                 data-ng-click="isMainMenuStripVisible = !isMainMenuStripVisible">
+                <div data-ng-show="isMainMenuStripVisible == false">
+                    <span data-ng-show="search.language == 'he'">≡ הצג תפריט</span>
+                    <span data-ng-show="search.language != 'he'">≡ Show Menu</span>
+                </div>
+                <div data-ng-show="isMainMenuStripVisible == true">
+                    <span data-ng-show="search.language == 'he'">≡ הסתר תפריט</span>
+                    <span data-ng-show="search.language != 'he'">≡ Hide Menu</span>
+                </div>
+            </div>
+            <div role="navigation"
+                 data-ng-show="isMainMenuStripVisible == true"
+                 style="line-height: normal; width: 100%;"
+                 class="mainMenuStrip"
+                 data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                <ul style="margin-bottom: 12px; ">
+                    <li style="display: inline-block;">
+                        <a href="#/"
+                           target="_blank"
+                           data-ng-show="search.language == 'he'"
+                           class="headerAnchor">
+                            לדף החיפוש
+                        </a>
+                        <a href="#/"
+                           target="_blank"
+                           data-ng-show="search.language != 'he'"
+                           class="headerAnchor">
+                            To Search Page
+                        </a>
+                    </li>
+                    <li style="display: inline-block;">
+                        <a tabindex="0"
+                           class="headerAnchor"
+                           data-ng-show="search.language == 'he'"
+                           data-ng-click="linesBetweenCitiesMenuItemClicked()">
+                            קווים בין ישובים
+                        </a>
+                        <a tabindex="0"
+                           class="headerAnchor"
+                           data-ng-show="search.language != 'he'"
+                           data-ng-click="linesBetweenCitiesMenuItemClicked()">
+                            Direct Lines
+                        </a>
+                    </li>
+                    <!--<li style="display: inline-block;">
+                        <a href="#/faq"
+                           target="_blank"
+                           class="headerAnchor"
+                           data-ng-show="search.language == 'he'">
+                            {{i18nFaq}}
+                        </a>
+                    </li>-->
+                    <li style="display: inline-block;">
+                        <a href="http://www.egged.co.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8.aspx"
+                           target="_blank"
+                           data-ng-show="search.language == 'he'"
+                           class="headerAnchor">
+                            צור קשר
+                        </a>
+                        <a href="http://www.egged.co.il/ContactUs.aspx"
+                           target="_blank"
+                           data-ng-show="search.language != 'he'"
+                           class="headerAnchor">
+                            Contact Us
+                        </a>
+                    </li>
+                    <!--<li style="display: inline-block;">
+                        <a href="http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx"
+                           target="_blank"
+                           style="text-decoration: none;"
+                           data-ng-show="search.language != 'he'"
+                           class="headerAnchor">
+                            Transfer Ovda Eilat
+                        </a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        <div data-ng-if="isBezeqOnline != true && search.language == 'he' && accessibilitySite != true">
+            <div class="NewsTicker no-print"
+                 data-news-ticker>
+            </div>
+        </div>
+        <div role="main" data-ui-view></div>
+        <div data-ng-if="isBezeqOnline != true " class="footerStrip" role="contentinfo">
+            <div class="bannerStrip no-print">
+                <div class="footerInnerStrip">
+                    <div class="bannerItem" style="padding-top:10px">
+                        <div class="CustomerServiceBanner">
+                            <div class="PhoneBannerIcon" style="margin-left: 6px; display: table; background-size: 313px 101px;">
+                                <div style="text-align: center; color: black; font-size: 17px; display: table-cell;">
+                                    <div style="line-height: 112px; font-size: 20px; font-weight: bold;">
+                                        <span>שרות לקוחות</span>
+                                    </div>
+                                </div>
+                                <div style="display: table-cell;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div style="text-align: center; color: rgb(217, 0, 0); font-size: 27px; display: table-cell;">
+                                    <div style="line-height: 55px; direction: ltr;">
+                                        ✲2800
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bannerItem" data-ng-if="isBusGovIl != true">
+                        <div data-egged-ad-banner></div>
+                    </div>
+                    <div class="bannerItem" data-ng-if="isBusGovIl != true">
+                        <!--<div google-ad-banner thumbnail="true"></div>-->
+                        <div class="googleAdBanner">
+                            <script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <ins class="adsbygoogle"
+                                 style="display:inline-block;width:310px;height:100px;margin-top:2px;margin-right:8px;"
+                                 data-ad-client="ca-pub-5754046038366535"
+                                 data-ad-slot="1057497243">
+                            </ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footerBottomLayer no-print">
+                <div class="footerInnerStrip">
+                    <ul data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+                        class="footerStripRightUl">
+                        <li class="footerStripLi">
+                            <a id="footerFeedbackLink"
+                               data-ng-href="{{i18nFeedbackSiteUrl}}">
+                                {{i18nFeedback}}
+                            </a>
+                        </li>
+                        <li class="footerStripLi">
+                            <a data-ng-href="{{i18nSubsidisedTicketsUrl}}"
+                              >
+                                {{i18nSubsidisedTickets}}
+                            </a>
+                        </li>
+                        <li class="footerStripLi">
+                            <a data-ng-href="{{i18nEggedSiteUrl}}">
+                                {{i18nEggedSite}}
+                            </a>
+                        </li>
+                    </ul>
+                    <ul data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]"
+                        class="footerStripLeftUl">
+                        <li class="footerStripLi">
+                            <a target="_blank" data-ng-href="{{i18nEggedFacebookLogoLink}}">
+                                <img src="Content/images/Footer/Btn_eged_tours.png"
+                                     alt="קישור לאגד טורס בפייסבוק"
+                                     style="border: 0;" />
+                            </a>
+                        </li>
+                        <li class="footerStripLi">
+                            <a target="_blank" href="https://www.facebook.com/eggedfriend">
+                                <img src="Content/images/Footer/Btn_eged_friend.png"
+                                     alt="קישור לאגד חברים בפייסבוק"
+                                     style="border: 0;" />
+                            </a>
+                        </li>
+                        <li class="footerStripLi">
+                            <a target="_blank" href="https://www.facebook.com/egged.israel">
+                                <img src="Content/images/Footer/Btn_eged_Israel.png"
+                                     alt="קישור לאגד ישראל בפייסבוק"
+                                     style="border: 0;" />
+                            </a>
+                        </li>
+                        <li class="footerStripLi">
+                            <a target="_blank" href="https://plus.google.com/100762644502930229931/posts">
+                                <img src="Content/images/Footer/logo_google_plus.png"
+                                     alt="קישור לגוגל פלוס"
+                                     style="border: 0;" />
+                            </a>
+                        </li>
+                    </ul>
+                    <ul style="display: block;"
+                        data-ng-class="{true: 'TextAlignEng', false: 'TextAlignHeb'}[dir]"
+                        class="footerStripRightUl">
+                        <li class="footerStripLi">
+                            <span data-ng-show="isGoogleReachable != true" style="color: #D90000;">{{i18nGoogleConnectionOff}}</span>
+                        </li>
+                        <li class="footerStripLi">
+                            <span data-ng-show="isDbReachable != true" style="color: #D90000;">{{i18nDbConnectionOff}}</span>
+                        </li>
+                        <li class="footerStripLi"></li>
+                        <li class="footerStripLi"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-ng-class="{true: 'showDiv', false:'hideDiv'}[isMapViewed]" style="height: 100%;">
+        <div data-map-control
+             data-ng-class="{true: 'DisplayBlock', false: 'DisplayNone'}[isGoogleReachable == true]"
+             data-lat="32.078964"
+             data-len="34.770443"
+             style="height: 100%; width: 100%;">
+            <button type="button"
+                    aria-label="{{i18nHideMap}}"
+                    title="{{i18nHideMap}}"
+                    style="max-height: unset;"
+                    class="ToggleMapIconWrapper"
+                    data-ng-click="toggleMap(false)">
+                <div class="ToggleMapText">{{i18nHideMap}}</div>
+                <div class="ToggleMapIcon" title="{{i18nHideMap}}"></div>
+            </button>
+            <div data-map-collapse-panel
+                 class="MapCollapsePanel">
+            </div>
+            <div data-map-context-menu
+                 style="position: absolute; z-index: 5; display: none;">
+            </div>
+            <div data-map-measure-distance></div>
+        </div>
+    </div>
+    <div data-browser-compatibility></div>
+    <div style="display: none;">{{dbReachableExp}}</div>
+
+    <script type="text/javascript" data-load-google-maps></script>
+
+    <script type="text/javascript" src="app/scripts/lodash.js"></script>
+    <script type="text/javascript" src="app/scripts/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="app/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="app/scripts/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="app/scripts/angulartics.js"></script>
+    <script type="text/javascript" src="app/scripts/angulartics-ga.js"></script>
+
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/faq/faq.js"></script>
+    <script type="text/javascript" src="app/realtime/query.js"></script>
+    <script type="text/javascript" src="app/realtime/result.js"></script>
+    <script type="text/javascript" src="app/freetext/query.js"></script>
+    <script type="text/javascript" src="app/freetext/result.js"></script>
+    <script type="text/javascript" src="app/search/search.js"></script>
+    <script type="text/javascript" src="app/search/result.js"></script>
+    <script type="text/javascript" src="app/search/busstopList/result.js"></script>
+    <script type="text/javascript" src="app/search/details/result.js"></script>
+    <script type="text/javascript" src="app/search/directLines/result.js"></script>
+    <script type="text/javascript" src="app/search/pathplanList/result.js"></script>
+    <script type="text/javascript" src="app/search/transition/result.js"></script>
+    <script type="text/javascript" src="app/directives/aDisabled.js"></script>
+
+    <script>var isAdBlockActive = true;</script>
+    <script src="app/scripts/ads.js"></script>
+    <script>
+        setTimeout(function () {
+            if (isAdBlockActive == true) {
+                var x = document.getElementsByClassName("googleAdBanner");
+                if (x.length > 0)
+                x[0].style.display = 'none';
+            }
+            else {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        }, 2000);
+    </script>
+
+    <script>
+        var langDir;
+        var appVersionArray = navigator.appVersion.split("; ");
+        for (var i = 0; i < appVersionArray.length; i++) {
+            if (appVersionArray[i].indexOf("MSIE") > -1) {
+                var sVersionNumber = appVersionArray[i].split(" ")[1];
+                var iVersionNumber = parseInt(sVersionNumber);
+                if (iVersionNumber <= 8) {
+                    alert("דפדפן בגרסה לא נתמכת, נא התקן דפדפן עדכני יותר .");
+                    window.close();
+
+                }
+            }
+        }
+    </script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-55496323-1', { 'cookieDomain': 'none' });
+    </script>
+    <script type="text/javascript" src="app/scripts/require.js" data-main="app/scripts/main"></script>
+
+    <!--<script>
+        /* Powered by Toonimo */
+        var TMO_dec = decodeURIComponent || unescape;
+        var TMO_scr = document.createElement('script'); TMO_scr.async = true;
+        TMO_scr.innerHTML = TMO_dec('%0D%0A%2F%2A%20Powered%20by%20Toonimo%20%2A%2F%0D%0A%28function%28d%2Cttk%2Capi%2Ccid%2Cmp%2Ci%2Cet%2Crc%2Cts%2Cfs%29%7Btry%7Bvar%20ll%3D%27local%27%2Cf%3D%27TMOcbHolder%27%2Cls%3D%27Storage%27%2Cae%3D%27Event%27%2Cfi%3D%27TMOcb%27%2Cfc%3D%27firstChild%27%2Cns%3D%27nextSibling%27%2Cnt%3D%27nodeType%27%2Cefce%3D%27create%27%2Ctn%3D%27tagName%27%2Cat%3D%27attach%27%2Cad%3D%27add%27%2Cael%3D%27Listener%27%2Ccn%3D%27childNodes%27%2Cut%3D%27%27%2Cpd%3D%27%27%2C%0D%0Ace%3D%27Element%27%2Cl%3D%27location%27%2Ca%3D%27async%27%2Ct%3D%27type%27%2Cs%3D%27src%27%2Cp%3D%27protocol%27%2Csc%3D%27script%27%3Bael%3Dad%2Bae%2Bael%3Bae%3Dat%2Bae%3Bce%3Defce%2Bce%3Bls%3Dwindow%5Bll%2Bls%5D%3Bwindow%5Bf%5D%3Dfunction%28e%29%7Bif%28window%5Bfi%5D%29%7Bwindow%5Bfi%5D%28%29%7D%7D%3B%0D%0Arc%3Dfunction%28e%2Cc%29%7Btry%7Bfor%28c%3De%5Bfc%5D%3Bc%3Bc%3Dc%5Bns%5D%29%7Bif%28c%5Bnt%5D%3D%3D1%29%7Bet%3D%28c%5B%5Btn%5D%5D.toUpperCase%28%29%3D%3D%27FORM%27%29%3F%27submit%27%3A%27click%27%3Bif%28c%5Bae%5D%29%7Bc%5Bae%5D%28%27on%27%2Bet%2Cwindow%5Bf%5D%29%7Delse%7Bif%28c%5Bael%5D%29%7Bc%5Bael%5D%28et%2Cwindow%5Bf%5D%2Ctrue%29%7D%7Dif%28e%5Bcn%5D.length%3D%3D0%29%7Brc%28c%29%7D%7D%7D%7Dcatch%28ex%29%7B%7D%7D%28d.body%29%3B%0D%0Atry%7But%3Dls.toonimo_user_token%3Bwindow.TMO_jsFetchTimeStart%20%3D%20%2Bnew%20Date%28%29%3B%7Dcatch%28e%29%7B%7Dts%3Dd%5Bce%5D%28sc%29%3Bts%5Ba%5D%3Dtrue%3Bvar%20enc%3DencodeURIComponent%7C%7Cescape%3Bvar%20wlh%3Denc%28window.location.hash.substr%281%29%29%3B%0D%0Ats%5Bs%5D%3Dd%5Bl%5D%5Bp%5D%2B%27%2F%2Fanimations.toonimo.com%2Ffetch_animation.php%3Ftoonimo_token%3D%27%2Bttk%2B%27%26campaign_id%3D%27%2Bapi%2B%27%26container_id%3D%27%2Bcid%2B%27%26screen_width%3D%27%2Bscreen.width%2B%27%26screen_height%3D%27%2Bscreen.height%2B%27%26ref%3D%27%2Benc%28document.referrer%29%2B%27%26ls_utoken%3D%27%2But%2B%27%26wlh%3D%27%2Bwlh%2Bmp%2B%27%27%2B%27%26rnd%3D%27%2BMath.floor%28Math.random%28%29%2A1e4%2B1%29%3B%0D%0Afs%3Dd.getElementsByTagName%28sc%29%5B0%5D%3Bfs.parentNode.insertBefore%28ts%2Cfs%29%7Dcatch%28ex%29%7B%7D%7D%28document%2C%27192f712c-2e06-4dea-9152-ddcd12f3712e%27%2C2133%2C%27%27%2C%27%27%29%29%3B%0D%0A');
+        document.body.appendChild(TMO_scr);
+    </script>-->
+</body>
+</html>
