@@ -1,0 +1,78 @@
+﻿<div role="form">
+    <div class="SearchPageInnerPanel" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.39);">
+        <h1 style="font-size: 0px; text-indent: -9999px;">{{'_SearchingBy_' | i18n}} {{'_byfreetext_' | i18n}}</h1>
+        <h2 style="font-size: 0px; text-indent: -9999px;">{{'_ByfreetextDescription_' | i18n}}</h2>
+        <fieldset class="SearchSection2" style="width: auto; display: block; margin: 0; padding: 0;">
+            <legend style="font-size: 20px; color: white;">{{'_SearchingBy_' | i18n}} {{'_byfreetext_' | i18n}} </legend>
+            <div style="vertical-align: middle;">
+                <div style="display: table; border-spacing: 20px; width: 100%;">
+                    <div class="DisplayTableRowBreakable">
+                        <div class="SearchSubTitle" style="width: 200px; vertical-align: top;">
+                            <label for="realtimeAddressText"
+                                   class="SearchSubTitle">
+                                {{'_FreeTextQuestion_' | i18n}}
+                            </label>
+                            <button 
+                                    title="עזרה אודות שאלת מידע בשפה חופשית"
+                                    style="background-color: transparent; border: 0;" 
+                                    class="DisplayInline" 
+                                    data-ng-click="helpFreeText()">
+                                <div class="HelpSubTitle"></div>
+                            </button>
+                        </div>
+                        <div>
+                            <textarea id="realtimeAddressText"
+                                     data-ng-enter="enterPressed"
+                                      data-ng-model="freeTextQuestion"
+                                      placeholder="{{'_ByFreeTextWatermark_' | i18n}}"
+                                      rows="5"
+                                      class="byFreeTextQuestion"
+                                      style="overflow: hidden; width: 100%; resize: none; font-size: 17px; font-family: Helvetica, Arial, sans-serif;"
+                                      aria-label="{{'_ByFreeTextWatermark_' | i18n}}"
+                                      cols="32"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="" style="display: block;">
+                    <div style="display: table-cell; width: 100%; padding: 20px;">
+                        <div class="SearchSubTitle" ng-if="accessibilitySite != true">
+                            <span style="color: white;">{{'_HelpFullInformationParagraph_' | i18n}}
+                            </span>
+                        </div>
+                       
+                    </div>
+                    <div style="display: table-cell; border-spacing: 20px; vertical-align: bottom;">
+                        <div style="display: table;">
+                            <div style="display: table-cell; vertical-align: bottom;">
+                                <a href="#/freetext/1/0/{{freeTextQuestion}}"
+                                   role="button"
+                                   analytics-on
+                                   analytics-category="Commands"
+                                   analytics-label="SearchByLine"
+                                   analytics-value="1"
+                                   tabindex="0"
+                                   title="{{'_search_' | i18n}}"
+                                   a-disabled="freeTextQuestion == null || freeTextQuestion == ''"
+                                   data-ng-class="{true: 'btnSearch1Disabled', false: 'btnSearch1'}[ freeTextQuestion == null || freeTextQuestion == '']">
+                                    <div class="btnSearch1Icon" style="display: inline-block; vertical-align: middle; margin: 5px;"></div>
+                                    <div class="btnSearch1Text" style="display: inline-block; vertical-align: middle; margin: 5px;">{{'_search_' | i18n}}</div>
+                                </a>
+                            </div>
+                            <div style="display: table-cell; vertical-align: bottom;">
+                                <a href="#/freetext/1/1"
+                                   role="button"
+                                   style="color: white;"
+                                   data-ng-show="isBezeqOnline != true"
+                                   data-ng-class="{true: 'btnClearHeb1', false: 'btnClearEng1'}[dir]"
+                                   title="{{'_Clear_' | i18n}}"
+                                   i18n="_Clear_"
+                                   data-ng-click="search.Clear($event)">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

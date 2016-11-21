@@ -1,0 +1,134 @@
+﻿<div role="form" style="width: 100%;">
+    <div class="SearchPageInnerPanel" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.39);">
+        <h1 style="font-size: 0px; text-indent: -9999px;">{{'_SearchingBy_' | i18n}} {{'_NextBus_' | i18n}}</h1>
+        <h2 style="font-size: 0px; text-indent: -9999px;">{{'_ByrealtimeDescription_' | i18n}}</h2>
+        <fieldset class="SearchSection2" style="width: auto; display: block; margin: 0; padding: 0;">
+            <legend style="font-size: 20px; color: white;">{{'_SearchingBy_' | i18n}} {{'_NextBus_' | i18n}}</legend>
+            <div style="vertical-align: middle;">
+                <div style="display: table; border-spacing: 20px; width: 100%;">
+                    <div style="display: table-row; width: 100%;">
+                        <div style="display: table-cell;"
+                             data-ng-click="realtimeSelector = 1"
+                             data-ng-selected="realtimeSelector"
+                             selected-value="1">
+                            <div>
+                                <div style="display: inline-block; ">
+                                    <input type="radio"
+                                           title="{{'_SearchByMap_' | i18n}}"
+                                           name="realtimeSelector"
+                                           data-ng-model="realtimeSelector"
+                                           value="1"
+                                           class="btnRadio searchToSelectorEgged" />
+                                    <label for="byrealtimeAddress"
+                                           class="SearchSubTitle"
+                                           i18n="_SearchByMap_">
+                                    </label>
+                                    <button title="{{'_Help_' | i18n}}"
+                                            style="background-color: transparent; border: 0;"
+                                            class="DisplayInline"
+                                            data-ng-click="showRealtimeAddressMessage()">
+                                        <div class="HelpSubTitle"></div>
+                                    </button>
+                                </div>
+                                <div data-ng-class="{true: 'DisplayInlineBlock', false: 'DisplayNone'}[isGoogleReachable == true]"
+                                     data-ng-disabled="realtimeSelector == 2">
+                                    <div id="byrealtimeAddress"
+                                         google-autocomplete
+                                         style="margin: 0; "
+                                         data-ng-placeholder="{{'_TypeAddress_' | i18n}}"
+                                         selected-value="selectedLocation"
+                                         data-ng-model="selectedDescription">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: table-row; width: 100%;">
+                        <div style="display: table-cell; width: 46%; vertical-align: top;"
+                             data-ng-click="realtimeSelector = 2"
+                             data-ng-selected="realtimeSelector"
+                             selected-value="2">
+                            <div>
+                                <div style="display: inline-block; ">
+                                    <input type="radio"
+                                           title="{{'_Station_' | i18n}}"
+                                           name="realtimeSelector"
+                                           data-ng-model="realtimeSelector"
+                                           value="2"
+                                           class="btnRadio searchToSelectorEgged" />
+                                    <label for="realtimeLineNumberText"
+                                           class="SearchSubTitle"
+                                           i18n="_Station_">
+                                    </label>
+                                    <button title="{{'_Help_' | i18n}}"
+                                            style="background-color: transparent; border: 0;"
+                                            class="DisplayInline"
+                                            data-ng-click="showRealtimeStopMessage()">
+                                        <div class="HelpSubTitle"></div>
+                                    </button>
+                                </div>
+                                <div style="display: inline-block;"
+                                     data-ng-disabled="realtimeSelector == 1">
+                                    <input id="realtimeLineNumberText"
+                                           type="tel"
+                                           data-ng-model="busStopMakatValue"
+                                           placeholder="{{'_StationNumber_' | i18n}}"
+                                           class="txtGoogleSearch"
+                                           style="margin: 0; width: 120px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-spacing: 20px; vertical-align: bottom;"
+                     data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                    <div style="display: table;">
+                        <div class="DisplayTableRowBreakable">
+                            <div style="vertical-align: bottom;">
+                                <a href="#/realtime/1/0/3/0"
+                                   role="button"
+                                   analytics-on
+                                   analytics-category="Commands"
+                                   analytics-label="Tab Favorite Clicked"
+                                   analytics-value="1"
+                                   tabindex="0"
+                                   title="{{'_FavoriteStations_' | i18n}}"
+                                   style="margin: 2px;"
+                                   class="btnSwitchDirection1">
+                                    <div class="favoriteIconBlack" style="display: inline-block; vertical-align: middle; margin: 5px;"></div>
+                                    <div class="SwitchDirectionByDestText" style="display: inline-block; vertical-align: middle; margin: 5px;">{{'_FavoriteStations_' | i18n}}</div>
+                                </a>
+                            </div>
+                            <div style="vertical-align: bottom;">
+                                <a href="#/realtime/1/0/{{typeIndex}}/{{dataString}}"
+                                   role="button"
+                                   analytics-on
+                                   analytics-category="Commands"
+                                   analytics-label="SearchByRealtime"
+                                   analytics-value="1"
+                                   tabindex="0"
+                                   title="{{'_search_' | i18n}}"
+                                   style="margin: 2px;"
+                                   a-disabled="dataString == null || dataString == ''"
+                                   data-ng-class="{true: 'btnSearch1', false: 'btnSearch1Disabled'}[ dataString != null && dataString != '']">
+                                    <div class="btnSearch1Icon" style="display: inline-block; vertical-align: middle; margin: 5px;"></div>
+                                    <div class="btnSearch1Text" style="display: inline-block; vertical-align: middle; margin: 5px;">{{'_search_' | i18n}}</div>
+                                </a>
+                            </div>
+                            <div style="vertical-align: bottom;">
+                                <a href="#/realtime/1/1"
+                                   role="button"
+                                   style="color: white;"
+                                   data-ng-show="isBezeqOnline != true || isBusGovIl == true"
+                                   data-ng-class="{true: 'btnClearHeb1', false: 'btnClearEng1'}[dir]"
+                                   title="{{'_Clear_' | i18n}}"
+                                   i18n="_Clear_">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

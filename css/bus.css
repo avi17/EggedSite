@@ -1,0 +1,237 @@
+﻿.SearchTabWrapperChosen1 {
+  background: #4090C9;
+}
+.SearchTabWrapper1 {
+   color: #14396A !important;
+  background: #4784AB;
+  background: linear-gradient(top,  #3B6E8F,  #468CCF);
+  background: -ms-linear-gradient(top,  #3B6E8F,  #468CCF);
+  background: -webkit-gradient(linear, left top, left bottom, from(#3B6E8F), to(#468CCF));
+  background: -moz-linear-gradient(top,  #3B6E8F,  #468CCF);
+}
+.SearchPageInnerPanel {
+    background-color: #4090C9;
+}
+
+.SearchTabWrapper1:hover {
+    color: #14396A !important;
+  background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.siteLogoImage {
+    background: url('../../Content/images/MOT_logo.jpg') no-repeat;
+    margin-top: 5px;
+    width: 93px;
+}
+.SearchTabHeader > span.SearchTabMidHeb {
+      color: #4090C9;
+}
+.SearchTabHeader > span.SearchTabMidEng {
+      color: #4090C9;
+}
+.headerInnerStrip {
+    background-image:url();
+border-top:7px solid #4090C9;
+background-color:white;
+}
+.headerAnchor {
+color:black;
+font-weight:500;
+}
+
+.headerAnchor:hover {
+border:none;
+background-color:none;
+color:lightgreen;
+  border: none;
+        text-decoration: none;
+        white-space: nowrap;
+        padding-right: 15px;
+        padding-left: 15px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 0px;
+        font-weight: normal;
+        margin: 0;
+        cursor: pointer;
+        text-align: center;
+
+
+
+}
+.btnGreen{
+ background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.newsTickerHeader > button {
+    background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.ScheduleHeaderText  {
+color:#2f72ad;
+}
+.TableHeaders {
+color:#2f72ad;
+background-color:lightblue;
+}
+.DisplayTableCell > div > button {
+background-color:#2f72ad;
+}
+.newsTickerHeader {
+color:#2f72ad;
+}
+.newsTickerDate {
+    color:#2f72ad;
+}
+.btnGreen:focus {
+     background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.btnGreen:hover {
+     background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.newsTickerHeader > button:hover {
+      background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+.newsTickerHeader > button:focus {
+      background: #366DA1;
+  background: linear-gradient(top,  #468CCF,  #427A9E);
+  background: -ms-linear-gradient(top,  #468CCF,  #427A9E);
+  background: -webkit-gradient(linear, left top, left bottom, from(#468CCF), to(#427A9E));
+  background: -moz-linear-gradient(top,  #468CCF,  #427A9E);
+}
+/*media screen,print*/
+.DialogWindow {
+    background-color: #FFFFFF;
+    border: 2px solid #2f72ad !important;
+    box-shadow: 6px 6px 5px #4f4f4f;
+}
+.ui-dialog-title {
+  color: #366DA1;
+}
+.SearchByAddressPanelButton {
+  color: #4090C9;
+}
+.ScheduleHeaderSquare {
+    background-color:#2f72ad;
+}
+li.byFreeTextResult > div > div{
+
+    background-color:lightblue;
+}
+
+.HighlightedTextGreen {
+ color:#2f72ad;
+}
+.SectionBullet {
+background:lightblue !important;
+background:lightblue !important;
+}
+li.footerStripLi > a {
+color: #4090C9;
+}
+.SelectedDropDownItem {
+  background-color: lightBlue;
+}
+.detailsFooter {
+    background-color: #4090C9;
+}
+.progressBarLightGreenText {
+background-color: lightblue;
+}
+.progressBarGreenText{
+    background-color:#4090C9;
+}
+.progressBarBusHeb {
+    background: url("../../Content/images/journywizard/wiz_bus_icon2.png") no-repeat transparent;
+}
+.progressBarBusEng {
+    background: url("../../Content/images/journywizard/wiz_bus_icon_ENG2.png") no-repeat transparent;
+   }
+.progressBarCToAHeb {
+    background: url("../../Content/images/journywizard/Wiz_div_C--A2.png") no-repeat transparent;
+}
+
+.progressBarCToAEng {
+    background: url("../../Content/images/journywizard/Wiz_div_C--A_ENG2.png") no-repeat transparent;
+}
+.progressBarCToBHeb {
+    background: url("../../Content/images/journywizard/Wiz_div_C--B2.png") no-repeat transparent;
+}
+
+.progressBarCToBEng {
+    background: url("../../Content/images/journywizard/Wiz_div_C--B_ENG2.png") no-repeat transparent;
+}
+
+.progressBarBToBHeb {
+    background: url("../../Content/images/journywizard/Wiz_div_B--B2.png") no-repeat transparent;
+}
+
+.progressBarBToBEng {
+    background: url("../../Content/images/journywizard/Wiz_div_B--B_ENG2.png") no-repeat transparent;
+}
+
+.progressBarCToCHeb {
+    background: url("../../Content/images/journywizard/Wiz_div_C--C2.png") no-repeat transparent;
+}
+
+.progressBarCToCEng {
+    background: url("../../Content/images/journywizard/Wiz_div_C--C_ENG.png") no-repeat transparent;
+}
+
+.progressBarAToBHeb {
+    background: url("../../Content/images/journywizard/Wiz_div_A--B2.png") no-repeat transparent;
+}
+
+.progressBarAToBEng {
+    background: url("../../Content/images/journywizard/Wiz_div_A--B_ENG.png") no-repeat transparent;
+}
+.quarterList > .table-header {
+background-color:#4090C9;
+}
+.TableLineSelected {
+background-color:lightBlue;
+}
+.isBusGovIlTableHeader {
+   background-color: #4090C9;
+}
+
+.HelpSubTitle {
+    background-image: url("../../Content/images/icon_help2.png");
+}
+
+.HelpSubTitle:focus {
+  background-image: url("../../Content/images/icon_help2.png");
+ }
+ .SearchTabWrapperChosen1:focus {
+ background: #366DA1;  
+ }
+ .SearchTabWrapper1:focus{
+      background: #366DA1;
+ }
+.ui-icon-closethick {
+        background: url("../../Content/images/popup/closepopupover2.png") no-repeat transparent !important;
+}
+.SearchByAddressPanelButton:focus{
+     color: #4090C9;
+}

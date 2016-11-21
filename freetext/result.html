@@ -1,0 +1,55 @@
+﻿<div>
+    <div id="freetextSectionList"
+         tabindex="0"
+         data-ng-show="sectionList.length > 0">
+        <div class="byFreeTextResult" style="width: 100%; border: 1px solid #d0d0d0;">
+            <div class="TableHeader" style="height: 43px; display: table; width: 99.4%; margin: 2px;">
+                <div class="ClockImg" style="display: table-cell;"></div>
+                <div style="padding: 1px; display: table-cell;"></div>
+                <h2 class="HighlightedTextGreen" style="font-size: 20px; display: table-cell;">
+                    {{search.freeTextQuestion}}
+                </h2>
+                <div class="no-print" style="text-align: left; display: table-cell; vertical-align: middle;" data-ng-show="isBezeqOnline != true">
+                    <button type="button"
+                            style="margin: 10px;"
+                            class="btnRed"
+                            data-ng-click="sendMail()">
+                        <div class=" MailImg"></div>
+                        <div i18n="_SendByEmail_" style="display: inline-block;"></div>
+                    </button>
+                    <button type="button"
+                            style="margin: 10px;"
+                            ng-print
+                            print-element-id="freetextSectionList"
+                            class="btnRed HideOnMobile">
+                        <div class="PrintImg HideOnMobile"></div>
+                        <div i18n="_Print_" style="display: inline-block;"></div>
+                    </button>
+                </div>
+            </div>
+            <ul>
+                <li class="byFreeTextResult"
+                    data-ng-repeat="section in sectionList"
+                    style="background-color: white; margin: 2px;">
+                    <div style="width: 99%; padding:6px; background-color: rgb(222, 240, 236);">
+                        <div  style="width: 4%;" class="SectionBullet">
+                            <img ng-show="section.Id != 0 && section.Id  != null" src="Content/images/{{section.Id}}.png" alt="{{section.ariaLabel}}"
+                               style="padding-left:7px" data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]" />
+                        </div>
+                        <div style="width:95%;" >
+                            <h3 data-ng-bind-html="section.ContentString" style="font-size: 20px;"></h3>
+                        </div>
+                    </div>
+                    <ul class="tableResultScroll2"
+                        style="max-height: 207px; overflow-y: scroll;">
+                        <li data-ng-repeat="busLine in section.BusLineList" class="TableLine">
+                            <div style="white-space: normal; font-size: 17px;" class="TableCell" data-ng-bind-html="busLine">
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

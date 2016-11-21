@@ -1,0 +1,43 @@
+﻿<div data-ng-controller="FaqCtrl">
+
+    <h1 style="margin: 0; padding: 0px 13px; height: 36px; background-color: #009D73; color: #FFFFFF; font: arial 18px bold;">{{'_FAQ_' | i18n}}</h1>
+
+    <div 
+         data-ng-repeat="faqGrid in faqGridList"
+         class="accordion-group" >
+        <div role="tabpanel"
+             data-ng-show="faqGrid.isCollapsed == false">
+
+            <div class="accordion-group" data-ng-repeat="innerFaqGrid in faqGrid.innerFaqGridList">
+                <button 
+                    type="button" 
+                    style="background-color: transparent; border: 0; cursor: pointer;"
+                    role="tab"
+                    title="{{'_OpenTabForMoreInfo_' | i18n}}"
+                    class="PanelCollapseExpand"
+                    data-ng-click="innerFaqGrid.isCollapsed = !innerFaqGrid.isCollapsed">
+                    <table style="width: 100%; cursor: default;">
+                        <tr>
+                            <td style="width: 30px;">
+                                <div data-ng-class="{false:'btnExpandSmall', true:'btnCollapseSmall'}[innerFaqGrid.isCollapsed == false]">
+                                </div>
+                            </td>
+                            <td>
+                                <h3 
+                                    class="HeaderCollapseExpand">{{innerFaqGrid.Question | i18n}}</h3>
+                            </td>
+                        </tr>
+                    </table>
+                </button>
+                <div role="tabpanel"
+                     data-ng-show="innerFaqGrid.isCollapsed == false">
+                    <span>{{innerFaqGrid.Answer | i18n}}</span>
+                    <br />
+                    <img src="Content/images/Faq/{{innerFaqGrid.AnswerImage}}" alt="{{innerFaqGrid.Answer | i18n}}" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
