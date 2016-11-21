@@ -1,0 +1,17 @@
+﻿<div data-ng-show="filteredList.length > 0"
+     style="border: 1px solid gray; z-index: 10; "
+     class="scrollableParentParnet"
+     data-ng-style="{ 'position' : popupPosition, 'top' : popupTop, 'left' : popupLeft, 'right' : popupRight, 'width': popupWidth}">
+    <ul class="scrollableParent"
+        style="overflow-y: auto; overflow-x: hidden; max-height: 128px; margin: 0px; background-color:white; padding-right: 0px; list-style: none; padding-left: 0px; ">
+        <li data-ng-repeat="item in filteredList"
+            data-ng-class="{true: 'SelectedDropDownItem', false: 'DropDownItem'}[item.iid == navItem.iid]"
+            scroll-to
+            isscroll="item.iid == navItem.iid">
+            <div title="{{item.NAME}}"
+                 data-ng-mousedown="itemSelected(item.iid,$event)"
+                 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width:100%; padding: 3px;"
+                 role="option">{{item.NAME}}</div>
+        </li>
+    </ul>
+</div>

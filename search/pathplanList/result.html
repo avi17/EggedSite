@@ -1,0 +1,75 @@
+﻿<div data-ng-controller="PathPlanCtrl">
+    <div>
+        <div class="SubViewHeader DisplayInline"
+             i18n="_PathplanHeader_">
+        </div>
+        <button title="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_TripSolutions_' | i18n}}"
+                aria-label="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_Schedule_' | i18n}}"
+                style="background-color: transparent; border: 0;"
+                class="DisplayInline"
+                data-ng-click="showPathplanAccessabilityMessage()">
+            <div class="HelpSubTitle"></div>
+        </button>
+    </div>
+    <ul role="tablist">
+        <li class="accordion-group"
+            data-ng-repeat="pathPlanGrid in pathplan.pathPlanGridList">
+            <table style="width: 100%; cursor: default;" class="PanelCollapseExpand">
+                <tr>
+                    <td style="width: 30px;">
+                        <button id="pathplanTab{{$index}}"
+                                style="width: 100%;"
+                                aria-controls="pathplanPanel{{$index}}"
+                                aria-selected="{{search.currentPanelIndex == pathPlanGrid.PanelIndex && pathPlanGrid.pagedPathplanList.length != 0}}"
+                                role="tab"
+                                data-ng-show="pathPlanGrid.pagedPathplanList.length == 0"
+                                data-ng-grid-index="{{pathPlanGrid.PanelIndex}}"
+                                data-ng-click="pathPlanGroupKeyPress($index)">
+                            <div class="btnCollapseDisabled">
+                                -
+                            </div>
+                        </button>
+                        <button id="pathplanTab{{$index}}"
+                                style="width: 100%;"
+                                aria-controls="pathplanPanel{{$index}}"
+                                aria-selected="{{search.currentPanelIndex == pathPlanGrid.PanelIndex && pathPlanGrid.pagedPathplanList.length != 0}}"
+                                role="tab"
+                                data-ng-show="pathPlanGrid.pagedPathplanList.length != 0"
+                                data-ng-grid-index="{{pathPlanGrid.PanelIndex}}"
+                                data-ng-click="pathPlanGroupKeyPress($index)">
+                            <div title="{{'_ClickToClose_' | i18n}}"
+                                 data-ng-show="search.currentPanelIndex == pathPlanGrid.PanelIndex"
+                                 class="btnCollapse">
+                            </div>
+                            <div title="{{'_ClickToOpen_' | i18n}}"
+                                 data-ng-show="search.currentPanelIndex != pathPlanGrid.PanelIndex"
+                                 class="btnExpand">
+                            </div>
+                        </button>
+                    </td>
+                    <td>
+                        <h3 class="HeaderCollapseExpand"
+                            i18n="{{pathPlanGrid.headerElem}}"></h3>
+                    </td>
+                    <td style="text-align: end;">
+                        <div data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]"
+                             style="padding-right: 20px; padding-left: 20px; font: normal 10px arial; color: #c02524; white-space: nowrap;"
+                             i18n="_FoundResults_1param_|{{pathPlanGrid.pathplanList.length}}|">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div id="pathplanPanel{{$index}}"
+                 role="tabpanel"
+                 aria-labelledby="pathplanTab{{$index}}"
+                 aria-hidden="false"
+                 data-ng-show="search.currentPanelIndex == pathPlanGrid.PanelIndex && pathPlanGrid.pagedPathplanList.length > 0">
+                <div grid-view data-source="pathPlanGrid"></div>
+            </div>
+        </li>
+    </ul>
+    <div data-ng-show="ShowWalkingManImgLegend">
+        <div class="WalkingManImg"></div>
+        <div class="HighlightedTextRed" i18n="_SourceDestinationProximity_"></div>
+    </div>
+</div>

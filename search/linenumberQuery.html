@@ -1,0 +1,259 @@
+﻿<div role="form">
+    <div class="SearchPageInnerPanel" style="box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.39);">
+        <h1 style="font-size: 0px; text-indent: -9999px;">{{'_SearchingBy_' | i18n}} {{'_byline_' | i18n}}</h1>
+        <h2 style="font-size: 0px; text-indent: -9999px;">{{'_BylineDescription_' | i18n}}</h2>
+        <div id="bylineCityBoxDescription" class="hidden">{{'_CityBoxDescription_' | i18n}}</div>
+        <fieldset class="SearchSection2" style="width: auto; display: block; margin: 0; padding: 0;">
+            <legend style="font-size: 20px; color: white;">{{'_SearchingBy_' | i18n}} {{'_byline_' | i18n}} </legend>
+            <div style="vertical-align: middle; padding: 20px;">
+                <div style="display: table; width: 100%;">
+                    <div class="DisplayTableRowBreakable">
+                        <label class="SearchSubTitle"
+                               style="white-space: nowrap;"
+                               for="bylineFromCityCombo"
+                               i18n="_OriginCity_">
+                        </label>
+                        <div style="vertical-align: middle;">
+                            <div style="display: table; border-spacing: 0px; width: 100%;">
+                                <div style="display: table-cell;">
+                                    <input type="text"
+                                           id="bylineFromCityCombo"
+                                           style="max-width: 145px;"
+                                           class="bydestDestinationCityInput"
+                                           city-box
+                                           data-ng-model="search.fromAddress.City.NAME"
+                                           ui-items="search.cityList"
+                                           placeholder="{{'_OriginCity_' | i18n}}"
+                                           role="combobox"
+                                           aria-describedby="bylineCityBoxDescription"
+                                           aria-autocomplete="inline"
+                                           aria-required="true"
+                                           autocomplete="off" />
+                                </div>
+                                <div class="SearchSubTitle " style="display: table-cell; padding: 0px 20px 0px 10px; white-space: nowrap;">
+                                    <label style="white-space: nowrap;"
+                                           class="SearchSubTitle"
+                                           for="lineNumberCombo"
+                                           i18n="_line_">
+                                    </label>
+                                </div>
+                                <div style="display: table-cell; vertical-align: middle; min-width: 100px;">
+                                    <div combo-filtered2
+                                         id="lineNumberCombo"
+                                         data-ng-model="search.lineNumber"
+                                         ui-items="busLineList"
+                                         init-selection="search.lineNumber"
+                                         is-table="true"
+                                         class="txtPlace">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 40px;"></div>
+                        <label style="white-space: nowrap;"
+                               class="SearchSubTitle"
+                               for="bylineFromPlace"
+                               i18n="_CityPlace_">
+                        </label>
+                        <div class="FullOnMobile">
+                            <div combo-filtered2
+                                 id="bylineFromPlace"
+                                 width="87%"
+                                 data-ng-model="search.fromAddress.Quarter"
+                                 ui-items="fromPlaceListByLine"
+                                 init-selection="search.fromAddress.Quarter"
+                                 is-table="false"
+                                 class="txtPlace">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 20px;"></div>
+                    <div class="DisplayTableRowBreakable">
+                        <div>
+                            <label class="SearchSubTitle "
+                                   style="white-space: nowrap;"
+                                   for="bylineToCity"
+                                   i18n="_TargetCity_">
+                            </label>
+                        </div>
+                        <div style="vertical-align: middle;">
+                            <div combo-filtered2
+                                 width="98%"
+                                 id="bylineToCity"
+                                 data-ng-model="search.toAddress.City"
+                                 ui-items="toCityList"
+                                 is-table="false"
+                                 class="txtPlace">
+                            </div>
+                        </div>
+                        <div style="width: 40px;"></div>
+                        <div>
+                            <label style="white-space: nowrap;"
+                                   class="SearchSubTitle"
+                                   for="bylineToPlace"
+                                   i18n="_CityPlace_">
+                            </label>
+                        </div>
+                        <div class="FullOnMobile">
+                            <div combo-filtered2
+                                 width="87%"
+                                 id="bylineToPlace"
+                                 data-ng-model="search.toAddress.Quarter"
+                                 ui-items="toPlaceList"
+                                 init-selection="search.toAddress.Quarter"
+                                 is-table="false"
+                                 class="txtPlace">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div data-ng-show="isBezeqOnline == true">
+            <div data-ng-class="{true: 'DisplayBlock', false: 'DisplayNone'}[isGoogleReachable == true]">
+                <button type="button" class="SearchByAddressPanelButton"
+                        data-ng-click="isBylineAddressSearchVisible = !isBylineAddressSearchVisible;"
+                        style="display: table; cursor: pointer;">
+                    <div style="display: table-cell; color: white;">{{'_SearchingBy_' | i18n}} {{'_AccurateAddress_' | i18n}}</div>
+                    <div style="display: table-cell; width: 10px;"></div>
+                    <div style="display: table-cell;">
+                        <div data-ng-show="search.lineNumber.ID == 0" style="opacity: 0.5;">
+                            <div style="line-height: 0px;"
+                                 class="AddressSearchOpenIcon">
+                                <div></div>
+                            </div>
+                        </div>
+                        <div data-ng-show="search.lineNumber.ID != 0">
+                            <div style="line-height: 0px;"
+                                 data-ng-show="isBylineAddressSearchVisible == true"
+                                 class="AddressSearchCloseIcon">
+                                <div></div>
+                            </div>
+                            <div style="line-height: 0px;"
+                                 data-ng-show="isBylineAddressSearchVisible != true"
+                                 class="AddressSearchOpenIcon">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="SearchByAddressPanel"
+                 data-ng-class="{true: 'DisplayBlock', false: 'DisplayNone'}[isGoogleReachable == true]"
+                 data-ng-show="isBezeqOnline == true || (isBylineAddressSearchVisible == true && search.lineNumber.ID != 0)">
+                <div style="vertical-align: middle;">
+                    <div class="FullOnMobile" style="display: table; border-spacing: 20px;">
+                        <div class="DisplayTableRowBreakable">
+                            <div class="SearchSubTitle1"
+                                 data-ng-class="{true: 'TextAlignEng', false: 'TextAlignHeb'}[dir]">
+                                {{'_origin_' | i18n}}
+                            </div>
+                            <div style="border-spacing: 0px; width: 100%;">
+                                <div style="border: 1px #dcdcdc solid;"
+                                     google-autocomplete
+                                     data-ng-placeholder="{{'_OriginAddress_' | i18n}}"
+                                     selected-value="search.autocompleteBylineOrigin.coords"
+                                     aria-hidden="true"
+                                     data-ng-model="search.autocompleteBylineOrigin.description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="DisplayTableRowBreakable">
+                            <div class="SearchSubTitle1"
+                                 data-ng-class="{true: 'TextAlignEng', false: 'TextAlignHeb'}[dir]">
+                                {{'_destination_' | i18n}}
+                            </div>
+                            <div style="border-spacing: 0px; width: 100%;">
+                                <div style="border: 1px #dcdcdc solid;"
+                                     google-autocomplete
+                                     data-ng-placeholder="{{'_TargetAddress_' | i18n}}"
+                                     selected-value="search.autocompleteBylineDestination.coords"
+                                     aria-hidden="true"
+                                     data-ng-model="search.autocompleteBylineDestination.description">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="" style="display: table;">
+            <div class="DisplayTableRowBreakable">
+                <div style="width: 100%;">
+                    <div style="display: table; border-spacing: 10px;">
+                        <div style="display: table-row; width: 100%;">
+                            <div style="display: table-cell;">
+                                <fieldset>
+                                    <legend style="font-size: 20px; color: white;">{{'_WhenYouWantToLeave_' | i18n}}</legend>
+                                    <label for="bylineDateSelect" class="SearchSubTitle" i18n="_Date_"></label>
+                                    <select id="bylineDateSelect"
+                                            aria-required="true"
+                                            class="DateSelect"
+                                            required
+                                            style="font-size: 17px; border-radius: 3px;"
+                                            data-ng-disabled="!search.dateList"
+                                            data-ng-model="search.currentDate"
+                                            data-ng-options="i.NAME for i in search.dateList"></select>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-spacing: 20px; vertical-align: bottom;">
+                    <div style="display: table;">
+                            <div class="DisplayTableRowBreakable">
+                                <div style="vertical-align: bottom;">
+                                    <a href="#/linenumber/0/0/{{search.toAddress.City.ID}}-{{search.toAddress.City.iid}}/{{search.toAddress.Quarter.ID}}/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/{{search.fromAddress.Quarter.ID}}/{{search.lineNumber.ID}}/{{search.currentDate.ID}}/{{search.currentTime.ID}}"
+                                       role="button"
+                                       analytics-on
+                                       analytics-category="Commands"
+                                       analytics-label="SwitchDirectionByDest"
+                                       analytics-value="1"
+                                       title="{{'_SwitchSourceDest_' | i18n}}"
+                                       a-disabled="search.lineNumber.ID == null || search.lineNumber.ID == 0 ||search.fromAddress.Quarter.ID == null || search.toAddress.Quarter.ID == null || search.fromAddress.Quarter.ID == 0 || search.toAddress.Quarter.ID == 0 || search.fromAddress.City.ID == 0 || search.fromAddress.City.ID == null"
+                                       data-ng-class="{true: 'btnSwitchDirection1Disabled', false: 'btnSwitchDirection1'}[search.lineNumber.ID == null || search.lineNumber.ID == 0 ||search.fromAddress.Quarter.ID == null || search.toAddress.Quarter.ID == null || search.fromAddress.Quarter.ID == 0 || search.toAddress.Quarter.ID == 0 || search.fromAddress.City.ID == 0 || search.fromAddress.City.ID == null] ">
+                                        <div class="SwitchDirectionByDestIcon" style="display: inline-block; vertical-align: middle; margin: 5px;"></div>
+                                        <div class="SwitchDirectionByDestText" style="display: inline-block; vertical-align: middle; margin: 5px;">{{'_SwitchSourceDest_' | i18n}}</div>
+                                    </a>
+                                </div>
+                                <div style="vertical-align: bottom;">
+                                    <a href="#/linenumber/0/0/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/{{search.fromAddress.Quarter.ID}}/{{search.toAddress.City.ID}}-{{search.toAddress.City.iid}}/{{search.toAddress.Quarter.ID}}/{{search.lineNumber.ID}}/{{search.currentDate.ID}}/{{search.currentTime.ID}}"
+                                       id="bylineSearchButton"
+                                       role="button"
+                                       analytics-on
+                                       analytics-category="Commands"
+                                       analytics-label="SearchByLine"
+                                       analytics-value="1"
+                                       title="{{'_search_' | i18n}}"
+                                       a-disabled="search.lineNumber.ID == null || search.lineNumber.ID == 0 ||search.fromAddress.Quarter.ID == null || search.toAddress.Quarter.ID == null || search.fromAddress.Quarter.ID == 0 || search.toAddress.Quarter.ID == 0 || search.fromAddress.City.ID == 0 || search.fromAddress.City.ID == null"
+                                       data-ng-class="{true: 'btnSearch1Disabled', false: 'btnSearch1'}[search.lineNumber.ID == null || search.lineNumber.ID == 0 || search.fromAddress.Quarter.ID == null || search.toAddress.Quarter.ID == null || search.fromAddress.Quarter.ID == 0 || search.toAddress.Quarter.ID == 0 || search.fromAddress.City.ID == 0 || search.fromAddress.City.ID == null]">
+                                        <div class="btnSearch1Icon" style="display: inline-block; vertical-align: middle; margin: 5px;"></div>
+                                        <div class="btnSearch1Text" style="display: inline-block; vertical-align: middle; margin: 5px;">{{'_search_' | i18n}}</div>
+                                    </a>
+                                </div>
+                                <div style="vertical-align: bottom;">
+                                    <a href="#/linenumber/1/1"
+                                       role="button"
+                                       analytics-on
+                                       analytics-category="Commands"
+                                       analytics-label="ClearByLine"
+                                       analytics-value="1"
+                                       style="color: white;"
+                                       data-ng-show="isBezeqOnline != true"
+                                       data-ng-class="{true: 'btnClearHeb1', false: 'btnClearEng1'}[dir]"
+                                       title="{{'_Clear_' | i18n}}"
+                                       i18n="_Clear_">
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div active-dates
+         data-ng-show="activeDayList != null && activeDayList.length > 0 && isMapViewed != true">
+    </div>-->
+
+</div>

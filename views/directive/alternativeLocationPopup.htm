@@ -1,0 +1,25 @@
+﻿<div style="background-color: white; height: 97%; padding: 5px; margin: 0; display: none;">
+    <div class="AlternativeLocationPopup" style="height: 100%;"></div>
+    <div style="position: absolute; top: 10px; right: 10px; background-color: white; border: 1px solid gray;">
+        <fieldset>
+            <legend>בחר תחנה</legend>
+            <ul style="overflow-y: auto; max-height: 150px;">
+                <li data-ng-repeat="location in locationArray" style="white-space: nowrap;">
+                    <input id="alternativeOptionRadio{{$index}}"
+                           type='radio'
+                           name="radioAlternativeLocation"
+                           class="btnRadio"
+                           data-ng-click="locationChanged(location)"
+                           checked="{{location.Quarter.ID == selectedQuarter.Quarter.ID}}"
+                           style="display: inline-block;" />
+                    <label for="alternativeOptionRadio{{$index}}" style="display: inline-block;">{{location.City.NAME}} {{location.Quarter.NAME}}</label>
+                </li>
+            </ul>
+            <button data-ng-click="btnOkClicked()"
+                    style="margin: 5px;"
+                    class="btnGreen"
+                    data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]"
+                    i18n="_Next_"></button>
+        </fieldset>
+    </div>
+</div>

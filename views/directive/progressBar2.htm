@@ -1,0 +1,140 @@
+﻿<ul role="navigation"
+    data-ng-style="{'background-color':divBackgroundColor}"
+    style="border-spacing: 0px; font-size: 0px;margin: 0; padding: 0; ">
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             class="{{progressBarFirstTextElem}}"
+             data-ng-style="{'background-color':lineBackgroundcolor}">
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             data-ng-click="tripOptionsClicked()"
+             class="{{progressBarSecondTextElem}}"
+             data-ng-show="resultSubView !='directlines'">
+            <h2 data-ng-if="progressBarSecondTextElem == 'progressBarGreenText' || currentTabName == 2"
+                style="font-size: 16px;">
+                {{'_TripOptions_' | i18n}}
+            </h2>
+            <div data-ng-if="progressBarSecondTextElem != 'progressBarGreenText' && currentTabName != 2"
+                 style="font-size: 16px; cursor: pointer;">{{'_TripOptions_' | i18n}}</div>
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             data-ng-click="linesBetweenCitiesClicked()"
+             class="{{progressBarSecondTextElem}}"
+             data-ng-show="resultSubView =='directlines'">
+            <h2 data-ng-if="progressBarSecondTextElem == 'progressBarGreenText'"
+                style="font-size: 16px;">
+                {{'_LinesBetweenCities_' | i18n}}
+            </h2>
+            <div data-ng-if="progressBarSecondTextElem != 'progressBarGreenText' && resultSubView == 'pathplan' "
+                 style="font-size: 16px; ">{{'_LinesBetweenCities_' | i18n}}</div>
+            <div data-ng-if="progressBarSecondTextElem != 'progressBarGreenText' && resultSubView != 'pathplan' "
+                 style="font-size: 16px; cursor: pointer;">{{'_LinesBetweenCities_' | i18n}}</div>
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             class="{{progressBarThirdTextElem}}">
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             data-ng-click="scheduleClicked()"
+             class="{{progressBarFourthTextElem}}">
+            <h2 data-ng-if="resultSubView == 'pathplan' && progressBarFourthTextElem == 'progressBarGreenText'"
+                style="font-size: 16px;">
+                {{'_bus-stop_' | i18n}}
+            </h2>
+            <h2 data-ng-if="resultSubView != 'pathplan' && progressBarFourthTextElem == 'progressBarGreenText'"
+                style="font-size: 16px;">
+                {{'_bus-stop_' | i18n}}
+            </h2>
+            <div data-ng-if="resultSubView != 'busstop' && progressBarFourthTextElem != 'progressBarGreenText'"
+                 style="font-size: 16px; cursor: pointer;">{{'_bus-stop_' | i18n}}</div>
+            <div data-ng-if="resultSubView == 'busstop' && progressBarFourthTextElem != 'progressBarGreenText'"
+                 style="font-size: 16px; cursor: pointer;">{{'_bus-stop_' | i18n}}</div>
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             class="{{progressBarFifthTextElem}}">
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]"
+             data-ng-click="detailsClicked()"
+             class="{{progressBarSixthTextElem}}">
+            <h2 data-ng-if="progressBarSixthTextElem == 'progressBarGreenText'"
+                style="font-size: 16px;">
+                {{'_details_' | i18n}}
+            </h2>
+            <div data-ng-if="resultSubView == 'transition' && progressBarSixthTextElem != 'progressBarGreenText'"
+                 style="font-size: 16px; cursor: pointer;">{{'_details_' | i18n}}</div>
+            <div data-ng-if="resultSubView != 'transition' && progressBarSixthTextElem != 'progressBarGreenText'"
+                 style="font-size: 16px; ">{{'_details_' | i18n}}</div>
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle;">
+        <div data-ng-if="isBezeqOnline != true "
+             print-daily-schedule
+             data-ng-show="resultSubView == 'transition'">
+            <div>
+                <div class="PrintImg HideOnMobile"></div>
+                <div style="line-height: 120%; display: inline-block;">
+                    {{'_Print_' | i18n}} {{'_DailySchedule_' | i18n}}
+                </div>
+            </div>
+        </div>
+    </li>
+    <li style="vertical-align: middle; margin: 2px;" data-ng-class="{true: 'DisplayInlineBlock', false: 'DisplayNone'}[dir]">
+        <div weekly-schedule
+             data-ng-show="showOnTransitionChoosen == true">
+            <div style="line-height: 120%;">
+                {{'_WeeklySchedule_' | i18n}}
+            </div>
+        </div>
+    </li>
+    <li style="display: inline-block; vertical-align: middle; margin: 2px;">
+        <button type="button"
+                data-ng-show="resultSubView == 'transition' && currentTabName != 2 || resultSubView == 'details' || resultSubView == 'busstop'"
+                analytics-on
+                analytics-category="Commands"
+                analytics-label="PrevButton {{resultSubView}}"
+                analytics-value="1"
+                class="btnRed1"
+                data-ng-click="btnBackClicked()">
+            <h3 
+                title="{{'_From_' | i18n}} {{'_BackArrow_' | i18n}} {{'_TripOptions_' | i18n}}"
+                data-ng-show="resultSubView == 'transition' && currentTabName != 2">{{'_BackArrow_' | i18n}} {{'_TripOptions_' | i18n}}</h3>
+            <h3 
+                title="{{'_From_' | i18n}} {{'_BackArrow_' | i18n}} {{'_bus-stop_' | i18n}}"
+                data-ng-show="resultSubView == 'details' || resultSubView == 'busstop'">{{'_BackArrow_' | i18n}} {{'_bus-stop_' | i18n}}</h3>
+        </button>
+    </li>
+    <li style="display: inline-block; vertical-align: middle; margin: 2px;">
+        <button type="button"
+                data-ng-if="resultSubView == 'transition' || resultSubView == 'directlines'"
+                data-ng-hide="(selectedLineList.length > 1 && selectedLineList[1] == null) || (selectedLineList.length > 2 && selectedLineList[2] == null)"
+                analytics-on
+                analytics-category="Commands"
+                analytics-label="NextButton{{resultSubView}}"
+                analytics-value="1"
+                xng-focus="isNextButtonFocused"
+                a-disabled="
+                        search.selectedPathPlan == null &&
+                        search.selectedDirectLine == null &&
+                        (selectedLineList == null || selectedLineList.length == 0)"
+                data-ng-class="{false:'btnRed1', true:'btnRedDisabled'}[search.selectedPathPlan == null && search.selectedDirectLine == null && (selectedLineList == null || selectedLineList.length == 0)]"
+                data-ng-click="btnNextClicked()">
+            <h3 
+                title="{{'_To_' | i18n}} {{'_PriceAndItinerary_' | i18n}} {{'_NextArrow_' | i18n}}"
+                data-ng-show="resultSubView == 'transition'">{{'_PriceAndItinerary_' | i18n}} {{'_NextArrow_' | i18n}}</h3>
+            <h3 
+                title="{{'_To_' | i18n}} {{'_bus-stop_' | i18n}} {{'_NextArrow_' | i18n}}"
+                data-ng-show="resultSubView == 'directlines'">{{'_bus-stop_' | i18n}} {{'_NextArrow_' | i18n}}</h3>
+        </button>
+    </li>
+</ul>

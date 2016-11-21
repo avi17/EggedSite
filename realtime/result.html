@@ -1,0 +1,133 @@
+﻿<div id="realtimeResult" tabindex="0" data-ng-show="typeIndex != null || dataString != null ">
+    <div class="TableHeader" style="height: 43px;">
+        <table>
+            <tr>
+                <td class="ScheduleHeaderSquare" style="font-size: 15px;">
+                    <div>{{"_NextBus_" | i18n}}</div>
+                </td>
+                <td style="width: 37px;">
+                    <div class="ScheduleHeaderIcon"></div>
+                </td>
+                <td class="ScheduleHeaderText">
+                    <h2 style="margin: 0px; font-size: 18px; font-weight: normal;">
+                        {{"_RealTimeLinesAroundAddress_" | i18n}}
+                        <span data-ng-show="nearBustop && nearBustop.LinesInStationList && nearBustop.LinesInStationList.length == 0"> - {{"_NoResultsFound_" | i18n}}</span>
+                    </h2>
+                </td>
+                <td style="text-align: left;">
+                    <div data-ng-if="isBezeqOnline == true" style="display: inline-block;">
+                        <span>הזן מספר קו כדי לסנן: </span>
+                        <input type="text"
+                               size="5"
+                               data-ng-keyup="shilutFilterValueKeyUp(shilutFilterValue)"
+                               data-ng-model="shilutFilterValue" />
+                    </div>
+                    <div style="display: inline-block;">
+                        <button type="button"
+                                aria-label="{{'_Refresh_' | i18n}}"
+                                title="{{'_Refresh_' | i18n}}"
+                                style="font-size: 30px; height: 100%; cursor: pointer;"
+                                data-ng-click="refresh()">
+                            ⟳
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <ul class="MobileFontSize">
+            <li data-ng-show="nearBustopList == null ">
+                {{"_DataLoading_" | i18n}} ...
+            </li>
+            <li data-ng-show="nearBustopList != null && nearBustopList.length == 0">
+                {{"_NoResultsFound_" | i18n}}
+            </li>
+            <li data-ng-repeat="nearBustop in nearBustopList"
+                data-ng-show="nearBustopList != null && nearBustopList.length > 0">
+                <table>
+                    <tr style="height: 24px;color: white;"
+                        class="isBusGovIlTableHeader"
+                        data-ng-show="nearBustop && nearBustop.LinesInStationList && nearBustop.LinesInStationList.length > 0">
+                        <td>
+                            <div style="margin: 2px;"
+                                 data-ng-class="{true: 'FloatRight', false: 'FloatLeft'}[dir]">
+                                <button data-ng-show="isStorageActive == true && nearBustop.isFavorite != true"
+                                        class="favoriteFalseIcon"
+                                        title="לחץ להוספת התחנה לרשימת המועדפים"
+                                        aria-label="לחץ להוספת התחנה לרשימת המועדפים"
+                                        style="vertical-align: middle; border: 0; background-color: transparent; "
+                                        data-ng-click="favoriteStopClicked(nearBustop.Makat, nearBustop.isFavorite)"></button>
+                                <button data-ng-show="isStorageActive == true && nearBustop.isFavorite == true"
+                                        class="favoriteTrueIcon"
+                                        title="לחץ להסרת התחנה מרשימת המועדפים"
+                                        aria-label="לחץ להסרת התחנה מרשימת המועדפים"
+                                        style="vertical-align: middle; border: 0; background-color: transparent; "
+                                        data-ng-click="favoriteStopClicked(nearBustop.Makat, nearBustop.isFavorite)"></button>
+                                {{nearBustop.Name}} {{nearBustop.Makat}}
+                            </div>
+                            <div style="margin: 2px;"
+                                 data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                                <div compass
+                                     data-ng-destination="nearBustop">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-ng-show="nearBustop && nearBustop.LinesInStationList && nearBustop.LinesInStationList.length > 0">
+                        <td>
+                            <table style="width: 100%;">
+                                <thead class="TableHeaders">
+                                    <tr style="height: 24px;">
+                                        <th style="white-space: nowrap; width: 50px;">{{"_Company_" | i18n}}</th>
+                                        <th style="white-space: nowrap; width: 50px;">{{"_line_" | i18n}}</th>
+                                        <th style="white-space: nowrap; ">{{"_destination_" | i18n}}</th>
+                                        <th style="white-space: normal; width: 80px;">{{"_Minutes_" | i18n}} {{"_To_" | i18n}}{{"_Station_" | i18n}}</th>
+                                        <th style="white-space: normal; width: 80px;" data-ng-if="isBezeqOnline == true">{{"_Actions_" | i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="TableLines">
+                                    <tr class="TableLine"
+                                        data-ng-show="line.isVisible == null || line.isVisible == true"
+                                        data-ng-repeat="line in nearBustop.LinesInStationList">
+                                        <td style="width: 50px;">
+                                            <img tabindex="0" class="scheduleScrollableTableImg"
+                                                 data-ng-src="Content/images/BusOperators/company_{{line.CompanyId}}.png"
+                                                 alt="{{line.CompanyHebrewName}}"
+                                                 title="{{line.CompanyName}}" />
+                                        </td>
+                                        <td style="width: 50px;">
+                                            <div tabindex="0">
+                                                {{line.Shilut}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div tabindex="0" class="TextOverflowEllipsis">
+                                                {{line.DestinationQuarterName}}
+                                            </div>
+                                        </td>
+                                        <td style="width: 80px;">
+                                            <div tabindex="0">
+                                                <span data-ng-show="line.MinutesToArrival != '0'">{{line.MinutesToArrival}}</span>
+                                                <span data-ng-show="line.MinutesToArrival == '0'" title='{{"_InStation_" | i18n}}'><b>&darr;</b></span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 80px;" data-ng-if="isBezeqOnline == true">
+                                            <button type="button"
+                                                    data-ng-click="moveToSearchByLine(line, nearBustop)"
+                                                    style="cursor: pointer; text-decoration: underline;">
+                                                {{"_Schedule_" | i18n}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+
+</div>
+

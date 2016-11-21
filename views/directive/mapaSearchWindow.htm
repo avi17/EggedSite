@@ -1,0 +1,42 @@
+﻿<div style="background-color: white; height: 100px; font-size: 12px;">
+
+    <input type="radio" name="mapaSearchRadio" value="true" class="mapaSearchByAddress btnRadio DisplayInline " />
+    <label for="mapaSearchByAddress" style="color: black;" class="SearchSubTitle DisplayInline ">לפי כתובת</label>
+    <fieldset>
+        <!--<legend>לפי כתובת</legend>-->
+
+        <label class="DisplayInline">שם הרחוב : </label>
+        <input
+            id="tbStreetList"
+            type="text"
+            style="width: 200px;"
+            class="tbStreetList TextFieldCenter DisplayInline" />
+        <label class="DisplayInline ">מספר הבית : </label>
+        <input
+            type="text"
+            style="width: 30px;"
+            class="tbHouseNumber TextFieldCenter DisplayInline" />
+
+    </fieldset>
+
+    <input type="radio" name="mapaSearchRadio" value="false" class="mapaSearchPoi btnRadio DisplayInline " />
+    <label for="mapaSearchPoi" style="color: black;" class="SearchSubTitle DisplayInline ">לפי מיקומי עניין</label>
+    <fieldset>
+        <!--<legend>לפי מיקומי עניין</legend>-->
+
+        <label class="DisplayInline">שם מיקום עניין : </label>
+        <input
+            id="tbPoiList"
+            type="text"
+            style="width: 400px;"
+            class="tbPoiList TextFieldCenter DisplayInline" />
+
+    </fieldset>
+
+    <div class="DisplayInline ">שם המקום : </div>
+    <div id="selectedPlaceName" class="selectedPlaceName DisplayInline ">text</div>
+    <button id="btnSelectMapaLocation" class="btnGreen DisplayInline" style="float: left;">בחר</button>
+
+    <div id="ErrorMsg" style="color: red; font-weight: bold;"></div>
+
+</div>

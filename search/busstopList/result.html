@@ -1,0 +1,191 @@
+﻿<div data-ng-controller="BusStopCtrl as vm" class="busStopListView" id="busStopListView">
+    <div tabindex="0" style="border: 1px solid #d0d0d0;">
+        <div class="TableHeader" style="height: 43px; display: table;">
+            <div style="display: table-cell; width: 100%;">
+                <div class="BusStopHeaderImg"></div>
+                <div class="HighlightedTextGreen">
+                    <h3 style="font-weight: bold;">{{"_StationsInLine_" | i18n}} {{selectedLine.NAME}} {{"_OnTime_" | i18n}} {{busstopListTransition[search.busStationArrangementD-1].ArrivalTime}}</h3>
+                </div>
+            </div>
+            <div style="display: table-cell; text-align: left; vertical-align: middle;">
+                <div data-ng-class="{true: 'TextAlignHeb', false: 'TextAlignEng'}[dir]"
+                     data-ng-show="vm.isBezeqOnline != true">
+                    <div class="no-print" style="margin-left: 10px; margin-right: 10px; display: table-cell;">
+                        <button type="button"
+                                analytics-on
+                                analytics-category="Commands"
+                                analytics-label="DetailsSendMail"
+                                analytics-value="1"
+                                class="btnRed"
+                                data-ng-click="vm.sendMail()">
+                            <img src="../../Content/images/icon_mail.png"
+                                 alt="Alternate Text"
+                                 style="height: 10px; width: 10px;vertical-align: middle;" />
+                            <!--<div class="MailImg"></div>-->
+                            <div i18n="_SendByEmail_" style="display: inline-block; vertical-align: middle;"></div>
+                        </button>
+                    </div>
+                    <div class="no-print" style="margin-left: 10px; margin-right: 10px; display: table-cell;">
+                        <button type="button"
+                                ng-print 
+                                print-element-id="busStopListView"
+                                analytics-on
+                                analytics-category="Commands"
+                                analytics-label="DetailsPrint"
+                                analytics-value="1"
+                                class="btnRed HideOnMobile">
+                            <img src="/content/images/icon_print1.png"
+                                 alt="Alternate Text"
+                                 style="height: 10px; width: 10px; vertical-align: middle;" />
+                            <div i18n="_Print_" style="display: inline-block; vertical-align: middle;"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table cellspacing="0">
+                <caption class="hidden">
+                    {{"_StationsInLine_" | i18n}} {{selectedLine.NAME}} {{"_OnTime_" | i18n}} {{busstopListTransition[search.busStationArrangementD-1].ArrivalTime}}
+                </caption>
+                <thead class="TableHeaders" style="display: block; width: 100%; overflow: hidden;">
+                    <tr>
+                        <th style="padding: 0;">
+                            <div style="width: 30px; text-align: center; margin: 0px 2px;"> {{"_Num_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 150px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_CityPlace_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_StationName_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_StationNumber_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 110px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_Type_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_Arrival_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 40px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_Distance_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <div style="width: 50px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">{{"_Platform_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;">
+                            <button data-ng-if="vm.isShowingBoarding != true"
+                                    style="width: 150px; border: 0; background-color: transparent; cursor: pointer; color: #00715a; text-decoration: underline;"
+                                    title="{{'_ClickToSortDescendingAscending_' | i18n}} {{'_Boarding_' | i18n}}"
+                                    aria-label="{{'_ClickToSortDescendingAscending_' | i18n}} {{'_Boarding_' | i18n}}"
+                                    data-ng-click="vm.toggleBoardingAlighting()">
+                                {{"_BoardingAlightingUp_" | i18n}}
+                            </button>
+                            <button data-ng-if="vm.isShowingBoarding == true"
+                                    style="width: 150px; border: 0; background-color: transparent; cursor: pointer; color: #00715a; text-decoration: underline; font-weight: bold;"
+                                    title="{{'_ClickToSortDescendingAscending_' | i18n}} {{'_Alighting_' | i18n}}"
+                                    aria-label="{{'_ClickToSortDescendingAscending_' | i18n}} {{'_Alighting_' | i18n}}"
+                                    data-ng-click="vm.toggleBoardingAlighting()">
+                                {{"_BoardingAlightingDown_" | i18n}}
+                            </button>
+                        </th>
+                        <th style="padding: 0;" class="no-print">
+                            <div style="width: 40px; overflow: hidden; text-overflow: ellipsis;"
+                                 data-ng-if="isGoogleReachable == true">{{"_Map_" | i18n}}</div>
+                        </th>
+                        <th style="padding: 0;" class="no-print" aria-hidden="true">
+                            <div style="width: 15px; overflow: hidden; text-overflow: ellipsis; ">&nbsp;</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="TableLines" style="overflow-y: auto; overflow-x: hidden; display: block;" >
+                    <tr class="TableLine"
+                        data-ng-repeat="BusStop in busstopListTransition"
+                        aria-describedby="{{BusStop.titleString}}">
+                        <td>
+                            <div tabindex="0" style="width: 30px; overflow: hidden; text-overflow: ellipsis; text-align: center; margin: 0px 2px;">
+                                {{BusStop.Id}}
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 150px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;" title="{{BusStop.PlaceDescription}}">
+                                {{BusStop.PlaceDescription}}
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;" title="{{BusStop.Name}}">
+                                {{BusStop.Name.substring(0, 27)}}
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">
+                                {{BusStop.Makat}}
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 110px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;" title="{{BusStop.BusStopType}}">
+                                {{BusStop.BusStopType.substring(0, 27)}}
+                                <span style="font-size: 10px; color: #c02524;"
+                                      data-ng-if="BusStop.BusStopType != 'אסוף בלבד' && BusStop.BusStopType != 'Boarding Only' && vm.currentFirstAlightId && BusStop.Id > search.busStationArrangementD && BusStop.Id < vm.currentFirstAlightId">★★</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" data-ng-if="BusStop.Id == 1"
+                                 style="width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">
+                                {{BusStop.ArrivalTime}}
+                            </div>
+                            <div tabindex="0" style="width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;"
+                                 data-ng-if="BusStop.Id != 1"
+                                 title='{{"_ArrivalTimeFromLineOrigin_" | i18n}} {{BusStop.hourFromStart}} {{"_Hours_" | i18n}} {{BusStop.minuteFromStart}} {{"_Minutes_" | i18n}}'>
+                                <div data-ng-class="{true: 'RedText', false: ''}[BusStop.Id != 1]" style="display: inline-block;">
+                                    {{BusStop.ArrivalTime}}
+                                    <span data-ng-if="BusStop.Id != 1" style="font-size: 10px; color: #c02524;">★</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 40px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;">
+                                {{BusStop.Distance}}
+                            </div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 50px; overflow: hidden; text-overflow: ellipsis; margin: 0px 2px;" data-ng-if="BusStop.PlatformId != '0'">{{BusStop.PlatformId}}</div>
+                            <div tabindex="0" style="width: 50px; overflow: hidden; text-overflow: ellipsis;" data-ng-if="BusStop.PlatformId == '0'">&nbsp;</div>
+                        </td>
+                        <td>
+                            <div tabindex="0" style="width: 150px; overflow: hidden; text-overflow: ellipsis; ">
+                                <span style="font-size: 10px; color: #c02524;"
+                                      data-ng-if="BusStop.BoardingAlighting == 'תחנת ירידה ראשונה' || BusStop.BoardingAlighting == 'First Alighting'">★★★</span>
+                                {{BusStop.BoardingAlighting}}
+                            </div>
+                        </td>
+                        <td data-ng-if="isGoogleReachable == true"
+                            class="no-print"
+                            title="{{'_ShowMap_' | i18n}}">
+                            <div style="height: 33px; width: 40px;">
+                                <button type="button"
+                                        class="MapImg"
+                                        aria-label="{{'_ShowMap_' | i18n}}"
+                                        title="{{'_ShowMap_' | i18n}}"
+                                        data-ng-click="vm.showBusstopOnMap(BusStop)"></button>
+                            </div>
+                        </td>
+                        <!--<td style="width: 0px;"></td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="HighlightedTextRedNotice">
+        <div data-ng-if="vm.isShowEstimatedDepartureTimeMessage">
+            <h3 class="HighlightedTextRed">★ {{"_EstimatedDepartureTime_" | i18n}}</h3>
+        </div>
+        <div data-ng-if="vm.isShowRefreshmentStation">
+            <h3 class="HighlightedTextRed">★★ {{"_NoAlightingOnRefreshmentStation_" | i18n}}{{busstopListTransition[search.busStationArrangementD-1].Name}}</h3>
+        </div>
+        <div data-ng-if="vm.isShowFirstAlightStop">
+            <h3 class="HighlightedTextRed">★★★ {{"_FirstAlightAvailableStopMessage_" | i18n}}</h3>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+﻿<div data-ng-controller="TransitionCtrl"
+     data-ng-show="isDigested == true">
+    <h3 style="font-size: 0px; text-indent: -9999px;">{{'_bus-stop_' | i18n}}</h3>
+    <h4 style="font-size: 0px; text-indent: -9999px;">בחר שעת יציאה ועבור אל מסך מחיר ופרטי מסע. שינוי שעת יציאה בקטע אחד משנה את שעת היציאה בקטעים שלאחריו.</h4>
+    <!--<print-daily-schedule transition-list="transitionList"></print-daily-schedule>-->
+    <table class="transitionTable">
+        <tr>
+            <td colspan="3">
+                <div style="display: table; width: 100%;">
+                    <div style="display: table-cell; width: 33%;">
+                        <div data-ng-if="gridScheduleList.length > 1">
+                            <div class="SubViewHeader DisplayInline"
+                                 i18n="_TransitionHeader_">
+                            </div>
+                            <button title="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_Schedule_' | i18n}}"
+                                    aria-label="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_Schedule_' | i18n}}"
+                                    style="background-color: transparent; border: 0;"
+                                    class="DisplayInline"
+                                    data-ng-click="showScheduleAccessabilityMessage()">
+                                <div class="HelpSubTitle"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="display: table-cell; width: 33%; text-align: center;">
+                        <div data-ng-if="isBezeqOnline == true" style="font-weight: bold; font-size: 20px;">
+                            <span data-ng-show="isSolutionByDeparture == true">{{"_SearchingBy_" | i18n}} {{"_Departure_" | i18n}}</span>
+                            <span data-ng-show="isSolutionByDeparture != true">{{"_SearchingBy_" | i18n}} {{"_Arrival_" | i18n}}</span>
+                        </div>
+                    </div>
+                    <div style="display: table-cell; width: 33%;">
+                        <button data-ng-if="isBezeqOnline == true"
+                                style="background-color: #00715a; color: white; border: 0; cursor: pointer; float: left; font-size: 15px;"
+                                class="DisplayInline"
+                                data-ng-click="toggleDepartureArrival()">
+                            <span data-ng-show="isSolutionByDeparture == true">{{"_SearchBy_" | i18n}} {{"_Arrival_" | i18n}}</span>
+                            <span data-ng-show="isSolutionByDeparture != true">{{"_SearchBy_" | i18n}} {{"_Departure_" | i18n}}</span>
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td data-ng-repeat="childSchedule in gridScheduleList"
+                style="vertical-align: top;"
+                data-ng-class="{false: 'DisplayNone', true: 'VisibleSchedule'}[childSchedule != null]">
+                <div data-ng-include="'app/search/transition/schedule.html'"
+                     class="ScheduleView">
+                </div>
+            </td>
+            <td data-ng-show="gridScheduleList.length == 1">
+                <div data-ng-class="{false: 'OneTableBusPicEng', true: 'OneTableBusPic'}[dir]">
+                </div>
+            </td>
+            <td data-ng-show="gridScheduleList.length == 2">
+                <div data-ng-class="{false: 'TwoTableBusPicEng', true: 'TwoTableBusPic'}[dir]">
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 10px;">
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div data-ng-show="isShowEstimatedDepartureTimeMessage">
+                    <h3 class="HighlightedTextRed">★ {{"_EstimatedDepartureTime_" | i18n}}</h3>
+                </div>
+                <div data-ng-show="isShowAftermidnightMessage">
+                    <div style="display: table-cell;">
+                        <img style="height: 13px; width: 13px" class="scheduleScrollableTableImg" src="Content/images/icon_aftermidnight.png" />
+                    </div>
+                    <div class="HighlightedTextRed" style="display: table-cell;">
+                        <h3 class="HighlightedTextRed">{{"_AfterMidnight_" | i18n}}</h3>
+                    </div>
+                </div>
+                <div data-ng-show="isShowMigunMessage">
+                    <div style="display: table-cell;">
+                        <img style="height: 13px; width: 13px;"
+                             class="scheduleScrollableTableImg"
+                             src="Content/images/icon_shielded.png"
+                             alt="{{'_ArmoredVehicle_' | i18n}}" />
+                    </div>
+                    <div class="HighlightedTextRed" style="display: table-cell;">
+                        <h3 class="HighlightedTextRed">{{"_ArmoredVehicle_" | i18n}}</h3>
+                    </div>
+                </div>
+                <div data-ng-if="isAirlineDependentFrom == true">
+                    <div style="font-size: 14px; font-weight: bolder; color: #c02524;display: table-cell">!</div>
+                    <div class="HighlightedTextRed" style="display: table-cell;">
+                        <h3 data-ng-if="search.language == 'he'"
+                            class="HighlightedTextRed">
+                            שינוי בשעות נחיתת המטוס, יביא לשינוי במועד  יציאת האוטובוס. <a target='_blank' href='http://www.egged.co.il/מאמר-4917-קו-חדש-קו--משדה-התעופה-עובדה.aspx?nc=1'>לפרטים נוספים</a>
+                        </h3>
+                        <h3 data-ng-if="search.language != 'he'"
+                            class="HighlightedTextRed">
+                            Changes in the airplane landing times will bring about corresponding changes in the bus departure times. <a target='_blank' href='http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx#1'>For detailed information</a>
+                        </h3>
+                    </div>
+                </div>
+                <div data-ng-if="isAirlineDependentTo == true">
+                    <div style="font-size: 14px; font-weight: bolder; color: #c02524;display: table-cell">!</div>
+                    <div class="HighlightedTextRed" style="display: table-cell;">
+                        <h3 data-ng-if="search.language == 'he'"
+                            class="HighlightedTextRed">
+                            שינוי שעת המראת המטוס, יביא לשינוי במועד יציאת האוטובוס מתחנת המוצא ותחנות הביניים. <a target='_blank' href='http://www.egged.co.il/מאמר-4917-קו-חדש-קו--משדה-התעופה-עובדה.aspx?nc=1'>לפרטים נוספים</a>
+                        </h3>
+                        <h3 data-ng-if="search.language != 'he'"
+                            class="HighlightedTextRed">
+                            Changes in the airplane departure times will bring about corresponding changes in the bus departure times from the bus terminal and intermediate stops. <a target='_blank' href='http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx#1'>For detailed information</a>
+                        </h3>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!--<div class="MapTripSolutionsHeader" tabindex="0" map-transition style="max-height: 200px; overflow-y: scroll;"></div>-->
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div data-ng-if="isBezeqOnline == true">
+                    <div data-ng-init="isShowDetailView = false">
+                        <button type="button"
+                                data-ng-click="isShowDetailView  = !isShowDetailView"
+                                style="background-color: #00715a; color: white; border: 0; cursor: pointer; font-size: 15px;">
+                            <span data-ng-show="isShowDetailView != true">מחיר ופרטי מסע - הצג</span>
+                            <span data-ng-show="isShowDetailView == true">מחיר ופרטי מסע - הסתר </span>
+                        </button>
+                        <div data-ng-show="isShowDetailView == true"
+                             data-ng-include="'app/search/details/result.html?versionNumber={{versionNumber}}'"></div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,31 @@
+﻿  <div class="container" style="width:800px; margin-right:15px; direction:{{direction}};">
+      <br />
+        <div style='margin:6px;'>
+            <div>
+                {{'_Schedule_' | i18n}} {{'_To_' | i18n}} {{transition[0].Date }}
+            </div>
+            <div>
+                {{'_From_' | i18n}}{{fromPlaceNameArray[0]}} {{'_To_' | i18n}}{{toPlaceNameArray[0]}}
+            </div>
+            <div>★ {{'_EstimatedDepartureTime_' | i18n}}</div>
+            
+            <table style='width:800px'>
+                <tr style='width:800px;height:37px;background-color:lightgray'>
+                    <th style='text-align:center;border:1px solid black;'>{{'_line_' | i18n}}</th>
+                    <th style='border:1px solid black;text-align:center;'>{{'_Time_' | i18n}}</th>
+                    <th style='border:1px solid black;text-align:center;'>{{'_Oprator_' | i18n}}</th>
+                    <th style='border:1px solid black;text-align:center;width:50px;'>{{'_Platform_' | i18n}}</th>
+                    <th style='border:1px solid black;text-align:center;'>{{'_ArrivalTime_' | i18n}}</th>
+                </tr>
+                <tr data-ng-repeat="item in transition" >
+                    <td style='border:1px solid black;text-align:center;font-size:18px;'>{{item.Shilut}}</td>
+                    <td style='border:1px solid black;text-align:center;font-size:18px' >{{item.TimeOriginBusstop}} <span data-ng-if="item.MazanToMoza !=0">★</span></td>
+                    <td style='border:1px solid black;text-align:center;font-size:18px'>{{item.Company.Name}}</td>
+                    <td style='border:1px solid black;text-align:center;font-size:18px' data-ng-if="item.PlatformNumber != 0">{{item.PlatformNumber}}</td>
+                    <td style='border:1px solid black;text-align:center;font-size:18px'data-ng-if="item.PlatformNumber == 0"></td>
+                    <td style='border:1px solid black;text-align:center;font-size:18px'>{{item.TimeDestinationBusstop}}</td>
+                </tr>
+               
+            </table>
+        </div>
+    </div>

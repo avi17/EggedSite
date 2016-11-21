@@ -1,0 +1,291 @@
+﻿<div data-ng-controller="DetailsController as vm" class="detailsPrintableView" id="detailsPrintableView">
+    <div class="SubViewHeader"
+         i18n="_DetailsViewHeader_">
+    </div>
+    <div style="width: 100%; border: 1px solid #d0d0d0;">
+        <div class="TableHeader" style="display: table; width: 100%; height: 43px; display: table;">
+            <div class="DisplayTableRowBreakable">
+                <div class="ClockImg" style="display: inline-block;"></div>
+                <h3 class="HighlightedTextGreen" style="display: inline-block;">{{"_DepartureWithColon_" | i18n}} {{vm.departureTime}} {{"_ArrivalWithColon_" | i18n}} {{vm.ArrivalTime}} {{"_TotalTimeGross_" | i18n}} {{vm.totalTime}}</h3>
+                <div data-ng-class="{true: 'TextAlignHeb', false: 'TextAlignEng'}[dir]"
+                     style="width: 200px; vertical-align: middle;"
+                     data-ng-show="isBezeqOnline != true">
+                    <div class="no-print" style="margin-left: 10px; margin-right: 10px; display: table-cell;">
+                        <button type="button"
+                                analytics-on
+                                analytics-category="Commands"
+                                analytics-label="DetailsSendMail"
+                                analytics-value="1"
+                                class="btnRed"
+                                data-ng-click="vm.sendMail()">
+                            <img src="../../Content/images/icon_mail.png"
+                                 alt="Alternate Text"
+                                 style="height: 10px; width: 10px;" />
+                            <div i18n="_SendByEmail_" style="display: inline-block; vertical-align: middle;"></div>
+                        </button>
+                    </div>
+                    <div class="no-print" style="margin-left: 10px; margin-right: 10px; display: table-cell;">
+                        <button type="button"
+                                ng-print
+                                print-element-id="detailsPrintableView"
+                                analytics-on
+                                analytics-category="Commands"
+                                analytics-label="DetailsPrint"
+                                analytics-value="1"
+                                class="btnRed HideOnMobile">
+                            <img src="/content/images/icon_print1.png"
+                                 alt="Alternate Text"
+                                 style="height: 10px; width: 10px; vertical-align: middle;" />
+                            <div i18n="_Print_" style="display: inline-block; vertical-align: middle;"></div>
+                        </button>
+                        <!--<button type="button"
+                                analytics-on
+                                analytics-category="Commands"
+                                analytics-label="DetailsPrint"
+                                analytics-value="1"
+                                class="btnRed HideOnMobile"
+                                data-ng-click="vm.print()">
+                            <img src="/content/images/icon_print1.png"
+                                 alt="Alternate Text"
+                                 style="height: 10px; width: 10px; vertical-align: middle;" />
+                            <div i18n="_Print_" style="display: inline-block; vertical-align: middle;"></div>
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table role="grid" tabindex="0" cellspacing="0">
+                <caption class="hidden">
+                    {{"_DepartureWithColon_" | i18n}} {{vm.departureTime}} {{"_ArrivalWithColon_" | i18n}} {{vm.ArrivalTime}} {{"_TotalTimeGross_" | i18n}} {{vm.totalTime}}
+                </caption>
+                <thead style="border: 1px black solid; width: 100%;">
+                    <tr class="TableHeaders" style="border: 1px black solid; width: 100%;">
+                        <th title='{{"_Section_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_Section_"
+                            style="width: 35px; text-align: center;"></th>
+                        <th title='{{"_line_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_line_"
+                            style="width: 35px;"></th>
+                        <th title='{{"_Platform_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_Platform_"
+                            style="width: 30px;"
+                            data-ng-if="vm.isShowPlatformHeader == true"></th>
+                        <th class="TextOverflowEllipsis"
+                            style="width: 60px;"
+                            i18n="_BoardingTime_"></th>
+                        <th title='{{"_BoardingBusStop_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_BoardingBusStop_"
+                            style="width: 200px;"></th>
+                        <th title='{{"_Company_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_Company_"
+                            style="width: 35px;"></th>
+                        <th class="TextOverflowEllipsis"
+                            i18n="_AlightTime_"></th>
+                        <th title='{{"_AlightBusStop_" | i18n}}'
+                            class="TextOverflowEllipsis"
+                            i18n="_AlightBusStop_"
+                            style="width: 200px;"></th>
+                        <th class="TextOverflowEllipsis"
+                            i18n="_Price_"
+                            style="width: 100px;"></th>
+                        <th class="TextOverflowEllipsis"
+                            i18n="_TravelTime_"
+                            style="width: 70px;"></th>
+                        <th class="TextOverflowEllipsis"
+                            i18n="_WaitingTime_"
+                            style="width: 90px;"
+                            data-ng-hide="segmentList.length == 1"></th>
+                    </tr>
+                </thead>
+                <tbody style="border: 1px black solid; width: 100%;">
+                    <tr data-ng-repeat="childSegment in segmentList"
+                        class="TableLine"
+                        tabindex="0"
+                        style="line-height: 30px;">
+                        <td style="width: 35px; text-align: center;">
+                            <img src="Content/images/{{childSegment.Id}}.png"
+                                 style="height: 22px; width: 22px; vertical-align: middle"
+                                 alt="{{childSegment.Id}}" />
+                        </td>
+                        <td style="width: 35px;"
+                            title='{{childSegment.LineNumber}}'
+                            class="TextOverflowEllipsis">
+                            {{childSegment.LineNumber}}&nbsp;
+                        </td>
+                        <td title='{{childSegment.PlatformNumber}}'
+                            data-ng-if="vm.isShowPlatformHeader == true"
+                            class="TextOverflowEllipsis"
+                            style="width: 30px;">
+                            <span data-ng-if="childSegment.PlatformNumber != '0'">{{childSegment.PlatformNumber}}</span>
+                            <span data-ng-if="childSegment.PlatformNumber == '0'">&nbsp;</span>
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 60px;">
+                            <span data-ng-if="childSegment.MazanToMoza  == 0 && childSegment.PlatformNumber == '0'"
+                                  data-ng-class="{true: 'RedText', false: ''}[childSegment.MazanToMoza != 0]">
+                                {{childSegment.BoardingTime}}
+                            </span>
+                            <span data-ng-if="childSegment.MazanToMoza != 0 && childSegment.PlatformNumber == '0'"
+                                  data-ng-class="{true: 'RedText', false: ''}[childSegment.MazanToMoza != 0]"
+                                  title='{{"_EstimatedDepartureTimeShort_" | i18n}}{{childSegment.OriginTime.split(" ")[1]}}'>
+                                {{childSegment.BoardingTime}}
+                            </span>
+                            <span data-ng-if="childSegment.MazanToMoza  == 0 && childSegment.PlatformNumber != '0'"
+                                  data-ng-class="{true: 'RedText', false: ''}[childSegment.MazanToMoza != 0]"
+                                  title='{{"_Platform_" | i18n}} {{childSegment.PlatformNumber}}'>
+                                {{childSegment.BoardingTime}}
+                            </span>
+                            <span data-ng-if="childSegment.MazanToMoza != 0 && childSegment.PlatformNumber != '0'"
+                                  data-ng-class="{true: 'RedText', false: ''}[childSegment.MazanToMoza != 0]"
+                                  title='{{"_EstimatedDepartureTimeShort_" | i18n}}{{childSegment.OriginTime.split(" ")[1]}} {{"_Platform_" | i18n}} {{childSegment.PlatformNumber}}'>
+                                {{childSegment.BoardingTime}}
+                            </span>
+                            <span data-ng-if="childSegment.MazanToMoza != 0"
+                                  style="font-size: 10px; color: #c02524;">
+                                ★
+                            </span>
+                            <span data-ng-if="childSegment.Makat == airlineDependent.makatFrom || childSegment.Makat == airlineDependent.makatTo"
+                                  style="font-size: 14px; font-weight: bolder; color: #c02524;">!</span>
+                            <span>
+                                <img data-ng-if="childSegment.IsShowAftermidnightImg == true"
+                                     style="height: 13px; width: 13px;"
+                                     class="scheduleScrollableTableImg"
+                                     alt='{{"_AfterMidnightShort_" | i18n}}'
+                                     src="Content/images/icon_aftermidnight.png" />
+                            </span>
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            title="{{childSegment.BoardingBusStop}}"
+                            style="width: 200px;">
+                            {{childSegment.BoardingBusStop}}
+                        </td>
+                        <td title='{{"_CompanyOf_" | i18n}} {{childSegment.Company.Name}}'
+                            style="width: 35px;">
+                            <img class="scheduleScrollableTableImg"
+                                 alt="{{childSegment.Company.Name}}"
+                                 data-ng-src="Content/images/BusOperators/company_{{childSegment.Company.Id}}.png" />
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 35px;">
+                            {{childSegment.AlightTime}}&nbsp;
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            title="{{childSegment.AlightBusStop}}"
+                            style="width: 200px;">
+                            {{childSegment.AlightBusStop}}&nbsp;
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 100px;">
+                            <span data-ng-if="childSegment.Price != 0"
+                                  data-ng-class="{true: 'RedText', false: ''}[vm.isShowContinuationCardRemark == true || vm.isShowMigunRemark == true]">
+                                {{childSegment.Price}} ₪
+                                <span data-ng-if="vm.isShowContinuationCardRemark == true || vm.isShowMigunRemark == true"
+                                      style="font-size: 10px; color: #c02524;">★</span>
+                            </span>
+                            <span data-ng-if="childSegment.Price == 0">
+                                {{"_NoData_" | i18n}}
+                            </span>
+                        </td>
+                        <td style="width: 70px;">
+                            {{childSegment.TravelTime}}
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            data-ng-if="segmentList.length > 1"
+                            style="width: 90px;">
+                            <span 
+                                  data-ng-if="childSegment.WaitingTime != '00:00'">
+                                {{childSegment.WaitingTime}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="detailsFooter">
+                        <td style="width: 35px;"></td>
+                        <td style="width: 35px;"></td>
+                        <td style="width: 30px;" data-ng-if="vm.isShowPlatformHeader == true"></td>
+                        <td style="width: 60px;"></td>
+                        <td style="width: 200px;"></td>
+                        <td style="width: 35px;"></td>
+                        <td style="width: 35px;"></td>
+                        <td style="width: 200px;">
+                            <div style="float: left; text-align: left;">{{"_TotalWithColon_" | i18n}}&nbsp;</div>
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 100px;">
+                            <span data-ng-if="vm.totalPrice != 0">
+                                {{vm.totalPrice}} ₪
+                                <span data-ng-if="vm.isShowPassageCardRemark == true" style="font-size: 10px; color: white;">★★</span>
+                            </span>
+                            <span data-ng-if="vm.totalPrice == 0">{{"_NoData_" | i18n}}&nbsp;</span>
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 70px;">
+                            {{vm.totalTravelTime}}
+                        </td>
+                        <td class="TextOverflowEllipsis"
+                            style="width: 90px;"
+                            data-ng-if="segmentList.length > 1">
+                            {{vm.totalWaitingTime}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div style="height: 45px;" class="detailsRemarkSection">
+        <div data-ng-if="vm.isShowAftermidnightMessage == true">
+            <img style="height: 13px; width: 13px; display: inline-block;"
+                 class="scheduleScrollableTableImg"
+                 src="Content/images/icon_aftermidnight.png"
+                 alt='{{"_AfterMidnightShort_" | i18n}}' />
+            <div class="HighlightedTextRed">
+                <h3>{{"_AfterMidnight_" | i18n}}</h3>
+            </div>
+        </div>
+        <div data-ng-if="vm.isShowEstimatedDepartureTimeRemark == true">
+            <h3 class="HighlightedTextRed">★ {{"_EstimatedDepartureTime_" | i18n}}</h3>
+        </div>
+        <div data-ng-if="vm.isAirlineDependentFrom== true">
+            <div style="font-size: 14px; font-weight: bolder; color: #c02524;display: table-cell">!</div>
+            <div class="HighlightedTextRed" style="display: table-cell;">
+                <h3 data-ng-if="search.language == 'he'"
+                    class="HighlightedTextRed">
+                    שינוי בשעות נחיתת המטוס, יביא לשינוי במועד  יציאת האוטובוס. <a target='_blank' href='http://www.egged.co.il/מאמר-4917-קו-חדש-קו--משדה-התעופה-עובדה.aspx?nc=1'>לפרטים נוספים</a>
+                </h3>
+                <h3 data-ng-if="search.language != 'he'"
+                    class="HighlightedTextRed">
+                    Changes in the airplane landing times will bring about corresponding changes in the bus departure times. <a target='_blank' href='http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx#1'>For detailed information</a>
+                </h3>
+            </div>
+        </div>
+        <div data-ng-if="vm.isAirlineDependentTo== true">
+            <div style="font-size: 14px; font-weight: bolder; color: #c02524;display: table-cell">!</div>
+            <div class="HighlightedTextRed" style="display: table-cell;">
+                <h3 data-ng-if="search.language == 'he'"
+                    class="HighlightedTextRed">
+                    שינוי שעת המראת המטוס, יביא לשינוי במועד יציאת האוטובוס מתחנת המוצא ותחנות הביניים. <a target='_blank' href='http://www.egged.co.il/מאמר-4917-קו-חדש-קו--משדה-התעופה-עובדה.aspx?nc=1'>לפרטים נוספים</a>
+                </h3>
+                <h3 data-ng-if="search.language != 'he'"
+                    class="HighlightedTextRed">
+                    Changes in the airplane departure times will bring about corresponding changes in the bus departure times from the bus terminal and intermediate stops. <a target='_blank' href='http://www.egged.co.il/Article-4917-Transfer-Ovda-Eilat.aspx#1'>For detailed information</a>
+                </h3>
+            </div>
+        </div>
+        <div data-ng-if="vm.isShowPassageCardRemark == true">
+            <h3 class="HighlightedTextRed">★★ {{"_PriceConditionedOnTransCard_" | i18n}}</h3>
+        </div>
+        <div data-ng-if="vm.isShowContinuationCardRemark == true">
+            <h3 class="HighlightedTextRed">★ {{"_TotalPriceAfterDiscount_" | i18n}} {{vm.totalPrice}} {{"_ConditionedOnPurchasingContCard_" | i18n}}</h3>
+        </div>
+        <div data-ng-if="vm.isShowMigunRemark == true">
+            <h3 class="HighlightedTextRed">★ {{"_AfterShieldDiscount_" | i18n}}</h3>
+        </div>
+    </div>
+</div>

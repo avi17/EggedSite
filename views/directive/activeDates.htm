@@ -1,0 +1,18 @@
+﻿<div style="background-color: white; height: 100px; font-size: 12px;">
+    <div class="poiDialogOverlay"></div>
+    <div class="poiDialog">
+        <span style="text-align: center; font-size: 20px;">לישוב {{search.fromAddress.City.NAME}} אין שירות ביום מבוקש. בחר יום אחר.</span>
+        <div style="cursor: pointer; float: left; border: 1px black solid; padding: 2px; font-size: 20px;" data-ng-click="activeDayList = [];">X</div>
+        <div data-ng-repeat="activeDay in activeDayList">
+            <br />
+            <div data-ng-show="activeDay.IS_ACTIVE == true">
+                <div style="display: inline-block; cursor: pointer; text-decoration: underline; color: blue;" data-ng-click="setActiveDate('{{activeDay.NAME}}')">{{activeDay.NAME}} {{activeDay.ID }}</div>
+                <span style="display: inline-block;">- {{"_AtService_" | i18n}}</span>
+            </div>
+            <div data-ng-hide="activeDay.IS_ACTIVE == true">
+                <div style="display: inline-block;">{{activeDay.NAME}} {{activeDay.ID }}</div>
+                <span style="display: inline-block;">- {{"_NoService_" | i18n}}</span>
+            </div>
+        </div>
+    </div>
+</div>

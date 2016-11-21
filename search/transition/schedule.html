@@ -1,0 +1,275 @@
+﻿<div style="width: 100%; height: 100%; vertical-align: top;">
+
+    <div class="TableHeader" style="height: 43px;">
+        <div data-ng-class="{true: 'FloatEng', false: 'FloatHeb'}[dir]"
+             class="ScheduleHeaderSquare"
+             style="vertical-align: middle;">
+            <h3 title="{{'_Section_' | i18n}} {{childSchedule.gridIndex + 1}}"
+                style="font-size: 18px; overflow: hidden; text-overflow: ellipsis;">
+                {{"_Section_" | i18n}} {{childSchedule.gridIndex + 1}}
+            </h3>
+        </div>
+        <div data-ng-class="{true: 'FloatEng', false: 'FloatHeb'}[dir]"
+             style="width: 37px; vertical-align: middle;">
+            <div class="ScheduleHeaderIcon"></div>
+        </div>
+        <div tabindex="0"
+             class="ScheduleHeaderText " style="vertical-align: middle; ">
+            <h4>
+                <span style="margin: 0; font-weight: bold; display: block;"
+                      class="TextOverflowEllipsis">
+                    {{"_From_" | i18n}}{{fromPlaceNameArray[$parent.$index]}}
+                </span>
+                <span style="margin: 0; font-weight: bold; display: block;"
+                      class="TextOverflowEllipsis">
+                    {{"_To_" | i18n}}{{toPlaceNameArray[$parent.$index]}}
+                </span>
+            </h4>
+        </div>
+    </div>
+    <div style="display: none;">
+    </div>
+    <div style="overflow: auto;">
+        <table class="TableHeaders">
+            <thead>
+                <caption class="hidden">{{"_From_" | i18n}}{{fromPlaceNameArray[$parent.$index]}} {{"_To_" | i18n}}{{toPlaceNameArray[$parent.$index]}}</caption>
+                <tr>
+                    <th class="DisplayTableCell"
+                        aria-hidden="true"
+                        data-ng-style="{'text-align': ScheduleLineHeader.textAlign}"
+                        data-ng-if="ScheduleLineHeader.fieldVisibility(childSchedule.gridIndex)"
+                        data-ng-repeat="ScheduleLineHeader in childSchedule.columnDefs">
+                        <div header-filter
+                             title="{{'_Select_' | i18n}} {{'_EstimatedDepartureTimeShorter_' | i18n}}"
+                             aria-hidden="true"
+                             data-ng-if="ScheduleLineHeader.filterType"
+                             search="search"
+                             minvalue="ScheduleLineHeader.minvalue"
+                             maxvalue="ScheduleLineHeader.maxvalue"
+                             filtertype="ScheduleLineHeader.filterType"
+                             filterclosed="ScheduleLineHeader.filterClosed"
+                             gridIndex="ScheduleLineHeader.gridIndex"
+                             contentstring="{{ScheduleLineHeader.field | i18n}}">
+                            {{ScheduleLineHeader.field | i18n}}
+                        </div>
+                        <div data-ng-if="!ScheduleLineHeader.filterType"
+                             title="{{ScheduleLineHeader.field | i18n}}"
+                             aria-label="{{ScheduleLineHeader.field | i18n}}"
+                             data-ng-style="{{ScheduleLineHeader.fieldWidth}}"
+                             style="overflow: hidden; text-overflow: ellipsis;">{{ScheduleLineHeader.field | i18n}}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="TableLines">
+                <tr style="height: auto;"
+                    data-ng-repeat="ScheduleLine in childSchedule.pagedTransitionList"
+                    data-ng-class="{true: 'TableLineSelected', false: 'TableLine'}[ScheduleLine.Id == selectedIdList[childSchedule.gridIndex]]">
+                    <td class="scheduleLineCell"
+                        aria-hidden="true"
+                        style="text-align: center;">
+                        <input type="radio"
+                               aria-label="{{'_line_' | i18n}} {{ScheduleLine.Shilut}}, {{'_EstimatedDepartureTimeShort_' | i18n}} {{ScheduleLine.TimeOriginBusstop}}, {{'_EstimatedArrivalTime_' | i18n}} {{ScheduleLine.TimeDestinationBusstop}}"
+                               class="btnRadio"
+                               aria-describedby='{{ScheduleLine.titleString}}'
+                               value="{{ScheduleLine.Id}}"
+                               data-ng-model="selectedIdList[childSchedule.gridIndex]"
+                               data-ng-key-press="scheduleKeyPress"
+                               data-ng-grid-index="{{childSchedule.gridIndex}}"
+                               xng-focus="isFocusOnStationButton == false && isFocusOnMapButton == false && ScheduleLine.Id == selectedIdList[search.currentScheduleGridIndex]" />
+                    </td>
+                    <td class="scheduleLineCell"
+                        aria-hidden="true"
+                        title="{{ScheduleLine.Name}}">
+                        {{ScheduleLine.Shilut}}
+                    </td>
+                    <td aria-hidden="true"
+                        class="scheduleLineCell">
+                        <span>
+                            <span data-ng-if="ScheduleLine.MazanToMoza  == 0 && ScheduleLine.PlatformNumber == '0'" data-ng-class="{true: 'RedText', false: ''}[ScheduleLine.MazanToMoza  != 0]">{{ScheduleLine.TimeOriginBusstop}}</span>
+                            <span data-ng-if="ScheduleLine.MazanToMoza  != 0 && ScheduleLine.PlatformNumber == '0'" data-ng-class="{true: 'RedText', false: ''}[ScheduleLine.MazanToMoza  != 0]" class="no-print" title='{{"_EstimatedDepartureTimeShort_" | i18n}}{{ScheduleLine.OriginTime.split(" ")[1]}}'>{{ScheduleLine.TimeOriginBusstop}}</span>
+                            <span data-ng-if="ScheduleLine.MazanToMoza  == 0 && ScheduleLine.PlatformNumber != '0'" data-ng-class="{true: 'RedText', false: ''}[ScheduleLine.MazanToMoza  != 0]" class="no-print" title='{{"_Platform_" | i18n}} {{ScheduleLine.PlatformNumber}}'>{{ScheduleLine.TimeOriginBusstop}}</span>
+                            <span data-ng-if="ScheduleLine.MazanToMoza  != 0 && ScheduleLine.PlatformNumber != '0'" data-ng-class="{true: 'RedText', false: ''}[ScheduleLine.MazanToMoza  != 0]" class="no-print" title='{{"_EstimatedDepartureTimeShort_" | i18n}}{{ScheduleLine.OriginTime.split(" ")[1]}} {{"_Platform_" | i18n}} {{ScheduleLine.PlatformNumber}}'>{{ScheduleLine.TimeOriginBusstop}}</span>
+                        </span>
+                        <span data-ng-if="ScheduleLine.MazanToMoza  != 0" style="font-size: 10px; color: #c02524; ">★</span>
+                        <span data-ng-if="ScheduleLine.Makat == airlineDependent.makatFrom || ScheduleLine.Makat == airlineDependent.makatTo" style="font-size: 14px; font-weight: bolder; color: #c02524;">!</span>
+                        <span class="scheduleLineCell" style="vertical-align: middle; ">
+                            <img data-ng-if="ScheduleLine.isShowAftermidnightImg == true"
+                                 style="height: 13px; "
+                                 class="scheduleScrollableTableImg"
+                                 alt='{{"_AfterMidnightShort_" | i18n}}'
+                                 src="Content/images/icon_aftermidnight.png" />
+                        </span>
+                    </td>
+                    <td class="scheduleLineCell"
+                        aria-hidden="true"
+                        style="text-align: center;"
+                        title='{{"_CompanyOf_" | i18n}} {{ScheduleLine.Company.Name}}'>
+                        <img class="scheduleScrollableTableImg"
+                             data-ng-src="Content/images/BusOperators/company_{{ScheduleLine.Company.Id}}.png"
+                             alt='{{"_CompanyOf_" | i18n}} {{ScheduleLine.Company.Name}}' />
+                    </td>
+                    <td aria-hidden="true"
+                        class="scheduleLineCell"
+                        title="{{'_EstimatedArrivalTime_' | i18n}}, {{'_TripTime_' | i18n}} {{ScheduleLine.TimeToDestinationFormatted}}">
+                        {{ScheduleLine.TimeDestinationBusstop}}
+                    </td>
+                    <td data-ng-if="isBezeqOnline == true"
+                        style="text-align: center;"
+                        class="scheduleLineCell"
+                        title="{{'_EstimatedArrivalTime_' | i18n}}, {{'_TripTime_' | i18n}} {{ScheduleLine.TimeToDestinationFormatted}}">
+                        {{ScheduleLine.MazanToYaad}}
+                    </td>
+                    <td class="scheduleLineCell no-print"
+                        aria-hidden="true"
+                        data-ng-if="childSchedule.isShowPlatformNumber == true && isBezeqOnline == true">
+                        <div data-ng-if="ScheduleLine.PlatformNumber != ''">
+                            <span data-ng-if="ScheduleLine.PlatformNumber != '0'">{{ScheduleLine.PlatformNumber}}</span>
+                            <span data-ng-if="ScheduleLine.PlatformNumber == '0'">&nbsp;</span>
+                        </div>
+                    </td>
+                    <td class="scheduleLineCell no-print"
+                        aria-hidden="true"
+                        style="text-align: center;"
+                        data-ng-if="childSchedule.isShowMigunMessage == true">
+                        <img data-ng-if="ScheduleLine.Migun == 3"
+                             style="height: 13px; width: 13px;"
+                             class="scheduleScrollableTableImg"
+                             src="Content/images/icon_shielded.png"
+                             alt="{{'_ArmoredVehicle_' | i18n}}" />
+                    </td>
+                    <td class="scheduleLineCell"
+                        aria-hidden="true"
+                        style="text-align: center;"
+                        data-ng-if="childSchedule.ShowAccessibilityMessage == true">
+                        <div data-ng-if="ScheduleLine.Accessibility == true" title="{{'_AccessibleVehicle_' | i18n}}" data-ng-class="{true: 'AccessibilityImg', false: 'AccessibilityImgHidden'}[ScheduleLine.Accessibility == true]"></div>
+                    </td>
+                    <td data-ng-if="isGoogleReachable == true"
+                        aria-hidden="true"
+                        class="scheduleLineCell"
+                        style="height: 33px; text-align: center;">
+                        <button type="button"
+                                class="MapImg"
+                                aria-label="{{'_ShowMap_' | i18n}}"
+                                title="{{'_ShowMap_' | i18n}}"
+                                data-ng-click="childSchedule.showScheduleOnMap(ScheduleLine)"></button>
+                    </td>
+                    <td class="scheduleLineCell"
+                        aria-hidden="true"
+                        style="height: 33px;text-align: center;">
+                        <button type="button"
+                                class="BusStopImg"
+                                aria-label="{{'_ShowBusStopList_' | i18n}}"
+                                title="{{'_ShowBusStopList_' | i18n}}"
+                                data-ng-click="childSchedule.showStations(ScheduleLine)"></button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="no-print">
+                    <td colspan="10">
+                        <ol style="margin:0;" data-ng-if="childSchedule.pageList.length>0">
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        aria-hidden="true"
+                                        title="{{'_FirstPage_' | i18n}}"
+                                        data-ng-if="childSchedule.currentPageIndex != 0"
+                                        data-ng-click="childSchedule.setFirstPage()">
+                                    <<
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        aria-hidden="true"
+                                        data-ng-disabled="childSchedule.currentPageIndex == 0"
+                                        data-ng-if="childSchedule.currentPageIndex == 0"
+                                        title="{{'_FirstPage_' | i18n}}">
+                                    <<
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        data-ng-if="childSchedule.currentPageIndex != 0"
+                                        title="{{'_PrevPage_' | i18n}}"
+                                        data-ng-click="childSchedule.setPrevPage()">
+                                    <
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-if="childSchedule.currentPageIndex == 0"
+                                        data-ng-disabled="childSchedule.currentPageIndex == 0"
+                                        title="{{'_PrevPage_' | i18n}}">
+                                    <
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        aria-hidden="true"
+                                        data-ng-if="childSchedule.currentPagingPageIndex > 0"
+                                        class="PrevPagingPage"
+                                        title="{{'_PrevPagingPage_' | i18n}}"
+                                        data-ng-click="childSchedule.setPrevPagingPage()">
+                                    ...
+                                </button>
+                            </li>
+                            <li style="display: inline-block;"
+                                data-ng-repeat="n in childSchedule.pageList">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        aria-hidden="true"
+                                        data-ng-class="{true: 'notSelectedPageIndex', false: 'selectedPageIndex'}[childSchedule.currentPageIndex+1 == n.id]"
+                                        data-ng-click="childSchedule.setPageIndex(n.id)"
+                                        title="{{n.timeRange}}">
+                                    {{n.id}}
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        aria-hidden="true"
+                                        data-ng-if="childSchedule.currentPagingPageIndex < childSchedule.lastPagingPageIndex-1"
+                                        class="NextPagingPage"
+                                        title="{{'_NextPagingPage_' | i18n}}"
+                                        data-ng-click="childSchedule.setNextPagingPage()">
+                                    ...
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        data-ng-if="childSchedule.currentPageIndex != childSchedule.lastPageIndex-1"
+                                        title="{{'_NextPage_' | i18n}}"
+                                        data-ng-click="childSchedule.setNextPage()">
+                                    >
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-if="childSchedule.currentPageIndex == childSchedule.lastPageIndex-1"
+                                        data-ng-disabled="childSchedule.currentPageIndex == childSchedule.lastPageIndex-1"
+                                        title="{{'_NextPage_' | i18n}}">
+                                    >
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        aria-hidden="true"
+                                        data-ng-if="childSchedule.currentPageIndex != childSchedule.lastPageIndex-1"
+                                        title="{{'_LastPage_' | i18n}}"
+                                        data-ng-click="childSchedule.setLastPage()">
+                                    >>
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        aria-hidden="true"
+                                        data-ng-if="childSchedule.currentPageIndex == childSchedule.lastPageIndex-1"
+                                        data-ng-disabled="childSchedule.currentPageIndex == childSchedule.lastPageIndex-1"
+                                        title="{{'_LastPage_' | i18n}}">
+                                    >>
+                                </button>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

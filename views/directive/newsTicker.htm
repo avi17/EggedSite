@@ -1,0 +1,47 @@
+﻿<div>
+    <table class="newsList" style="table-layout: fixed;">
+        <tr>
+            <td style="width: 145px;">
+                <div class="newsTickerHeader" >
+                    <button type="button"
+                            title="הפעל גלילת עדכונים"
+                            aria-label="הפעל גלילת עדכונים"
+                            name="הפעל גלילת עדכונים"
+                            style="padding: 0px 5px; width: 30px;"
+                            data-ng-show="isTickerPaused == true" 
+                            data-ng-click="togglePause()"
+                            class="btnGreen">
+                        <div>◄</div>
+                    </button>
+                    <button type="button"
+                            title="עצור גלילת עדכונים"
+                            aria-label="עצור גלילת עדכונים"
+                            name="עצור גלילת עדכונים"
+                            style="padding: 0px 5px; width: 30px; "
+                            data-ng-show="isTickerPaused != true" 
+                            data-ng-click="togglePause()"
+                            class="btnGreen">
+                        <div>■</div>
+                    </button>
+                    <div><h2 style="margin: 0;">עדכונים:</h2></div>
+                    <div class="newsTickerDate">{{dtToday}}</div>
+                </div>
+            </td>
+            <td>
+                <div class="marquee" >
+                    <ul class="marqueeContent" style="margin: 0px;"></ul>
+                </div>
+            </td>
+            <td>
+                <div class="newsTickerHeader" style="float: left;">
+                    <button type="button"
+                            style="border: 0;"
+                            class="NewsShowAll"
+                            data-ng-click="btnShowAllClick()">
+                        הצג הכל >
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

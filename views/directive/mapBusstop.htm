@@ -1,0 +1,184 @@
+﻿<div style="background-color: white;" data-ng-show="search.selectedBusStop">
+    <table>
+        <tr class="TableHeader ScheduleHeaderText">
+            <td
+                style="padding: 5px;"
+                data-ng-mouseenter="mouseEnteredBusstopHeader()"
+                data-ng-mouseleave="mouseLeftBusstopHeader()"
+                >
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                {{"_StationOf_" | i18n}} <b>{{search.selectedBusStop.Name}}</b> 
+                                <span data-ng-show="search.selectedBusStop.BoardingAlighting && search.selectedBusStop.BoardingAlighting != ''">, {{"_StationOf_" | i18n}}</span> 
+                                <b>{{search.selectedBusStop.BoardingAlighting}}</b>
+                                <span data-ng-show="busstopHeaderEntered == true">({{'_StationNumber_' | i18n}} {{search.selectedBusStop.Makat}})</span>
+                            </div>
+                            <div>
+                                <span data-ng-show="search.selectedBusStop.ArrivalTime && search.selectedBusStop.ArrivalTime != ''">{{"_ArrivalTimeColon_" | i18n}}</span>
+                                {{search.selectedBusStop.ArrivalTime }}
+                                <span data-ng-show="search.selectedBusStop.ArrivalTime && search.selectedBusStop.ArrivalTime != ''">{{"_EsteematedTimeParatheses_" | i18n}} </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-ng-show="busstopHeaderEntered == true">
+                        <td>
+                            <div>{{search.selectedBusStop.HebrewPlaceDescription}}</div>
+                            <div data-ng-show="search.selectedBusStop.Id != 0">{{"_LineStopNumColon_" | i18n}}{{search.selectedBusStop.Id}}</div>
+                            <div data-ng-show="search.selectedBusStop.Id != 1">{{"_DistanceFromBeginingColon_" | i18n}}{{search.selectedBusStop.Distance}} ק''מ</div>
+                            <div data-ng-show="search.selectedBusStop.Id != 1">{{"_StopOfTypeColon_" | i18n}}{{search.selectedBusStop.HebrewBusStopType}}</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div ng:class="{true:'MapTabWrapperChosen', false:'MapTabWrapper'}[currentBusstopTabName == 'actions']" style="display: table-cell;">
+                    <div data-ng-click="changeMapBusstopTab('actions');">
+                        <div>
+                            <div>{{"_Actions_" | i18n}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div ng:class="{true:'MapTabWrapperChosen', false:'MapTabWrapper'}[currentBusstopTabName == 'busstopList']" style="display: table-cell;" >
+                    <div data-ng-click="changeMapBusstopTab('busstopList');" data-ng-show="search.currentBusStopList.length>1">
+                        <div>
+                            <div>{{"_AllStops_" | i18n}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div ng:class="{true:'MapTabWrapperChosen', false:'MapTabWrapper'}[currentBusstopTabName == 'linesInStation']" style="display: table-cell;">
+                    <div data-ng-click="changeMapBusstopTab('linesInStation');">
+                        <div>
+                            <div>{{"_LinesInStation_" | i18n}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div ng:class="{true:'MapTabWrapperChosen', false:'MapTabWrapper'}[currentBusstopTabName == 'nextBus']" style="display: table-cell;">
+                    <div data-ng-click="changeMapBusstopTab('nextBus');">
+                        <div>
+                            <div>{{"_NextBus_" | i18n}}</div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div data-ng-show="currentBusstopTabName == 'actions'">
+                    <table>
+                        <tr>
+                            <td>
+                                <div style="cursor: pointer;" data-ng-show="search.nearBustopList == null || search.nearBustopList.length == 0" data-ng-click="getNearBustopList()">{{"_ShowStationsInTheArea_" | i18n}}</div>
+                                <div style="cursor: pointer;" data-ng-show="search.nearBustopList.length > 0" data-ng-click="getNearBustopList()">{{"_HideStationsInTheArea_" | i18n}}</div>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td>
+                                <div style="display: inline-block;">חיפוש לפי מספר תחנה : </div>
+                                <div style="display: inline-block;">
+                                    <input type="text" data-ng-model="selectedMakat" data-ng-enter="selectedBusStopMakatChanged" />
+                                </div>
+                            </td>
+                        </tr>-->
+                        <!--<tr>
+                            <td>תכנון מסלול הליכה
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>נקודת מוצא : 
+                            </td>
+                            <td title="{{search.selectedBusStop.HebrewPlaceDescription }}">תחנת {{search.selectedBusStop.Name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>נקודת יעד: 
+                            </td>
+                            <td>
+                                <input 
+                                    googleplace 
+                                    data-ng-model="search.googleAddressTo"
+                                    data-ng-model="search.selectedMapAddressTo"
+                                    data-selected-value="pedestrianDestination" 
+                                    />
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2">
+                                <div
+                                    data-ng-show="search.selectedBusStop.Id < search.currentBusStopList.length"
+                                    data-ng-click="showNextBusstop()"
+                                    style="cursor: pointer; display: inline-block; float: right;">
+                                    {{"_NextStop_" | i18n}}
+                                </div>
+                                <div
+                                    data-ng-show="search.selectedBusStop.Id > 1"
+                                    data-ng-click="showPrevBusstop()"
+                                    style="cursor: pointer; display: inline-block; float: left;">
+                                    {{"_PrevStop_" | i18n}}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-ng-show="currentBusstopTabName == 'busstopList'" style="max-height: 150px;">
+                    <div data-ng-repeat="busStop in search.currentBusStopList">
+                        <input
+                            type="radio"
+                            data-ng-click="selectedBusstopChanged(busStop)"
+                            data-ng-checked="busStop.Id == search.selectedBusStop.Id"
+                            title="בחר"
+                            style="display: inline-block;" />
+                        <div style="display: inline-block;">זמן הגעה : {{busStop.ArrivalTime}}</div>
+                        <div style="display: inline-block;">שם תחנה : {{busStop.Name}}</div>
+                        <div data-ng-show="busStop.Id == search.selectedBusStop.Id">
+                            <div style="width: 40px; display: inline-block;"></div>
+                            <div style="display: inline-block;">
+                                <div style="width: 150px;">מקום התחנה : {{busStop.HebrewPlaceDescription}}</div>
+                                <div style="width: 70px;">סוג תחנה : {{busStop.HebrewBusStopType}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-show="currentBusstopTabName == 'linesInStation'">
+                    <table>
+                        <tr>
+                            <td>
+                                <div style="max-height: 150px;">
+                                    <table class="TableLine" data-ng-repeat="line in LinesInStationList">
+                                        <tr>
+                                            <td>
+                                                <div data-ng-show="line.Shilut != '-1'" style="cursor: pointer; display: inline-block; text-align: center; width: 40px; border: 1px solid black;" data-ng-click="toggleVisibility(line)" title="- לחץ לפרטים נוספים">{{line.Shilut}}</div>
+                                                <div data-ng-show="line.Shilut == '-1'" style="cursor: pointer; display: inline-block; text-align: center; width: 40px; border: 1px solid black;" data-ng-click="toggleVisibility(line)" title="- לחץ לפרטים נוספים">{{"_Train_" | i18n}}</div>
+                                                <div style="display: inline-block; width: 70px; white-space: nowrap;">{{"_destination_" | i18n}} : {{line.DestinationQuarterName}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr data-ng-show="line.isDetailVisible">
+                                            <td>
+                                                <div style="width: 140px; white-space: nowrap;" data-ng-show="{{line.Description.length <= 20}}">{{"_TripDescription_" | i18n}} : {{line.Description}}</div>
+                                                <div style="width: 140px; white-space: nowrap;" data-ng-show="{{line.Description.length > 20}}" title="{{line.Description}}">{{"_TripDescription_" | i18n}} : {{line.Description.substring(0,20)}}...</div>
+                                                <div style="width: 40px; white-space: nowrap;">{{"_TripCount_" | i18n}} : {{line.TripsPerDay}}</div>
+                                                <div style="width: 70px; white-space: nowrap;">סוג תחנה : {{line.BusstopType}}</div>
+                                                <div style="width: 70px; white-space: nowrap;">{{"_Company_" | i18n}} : {{line.CompanyHebrewName}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-ng-show="currentBusstopTabName == 'nextBus'">
+                    <div style="max-height: 150px;">
+                        <div data-ng-show="search.nextBusList.length == 0">{{"_NoResultsFound_" | i18n}}</div>
+                        <div data-ng-show="search.nextBusList.length > 0" data-ng-repeat="line in search.nextBusList ">
+                            <div>{{"_line_" | i18n}} <b>{{line.Shilut}}</b> {{"_ToTwoLetter_" | i18n}} <b>{{line.DestinationName}}</b> {{"_InTime_" | i18n}} <b>{{line.MinutesToArrival}}</b> {{"_Minutes_" | i18n}} <b>{{line.Remark}}</b></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

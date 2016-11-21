@@ -1,0 +1,157 @@
+﻿<div style="cursor: default;">
+    <button data-ng-transclude
+            class="btnGreen HideOnMobile"
+            data-ng-click="parentButtonClicked()"
+            style="color: white; cursor: pointer;"></button>
+    <div data-ng-show="showWeeklySchedule">
+        <div role="dialog"
+             tabindex="-1"
+             aria-labelledby="weeklyDialogHeader"
+             id="weeklyDialogHeader"
+             class="printWeeklySchedule"
+             style="border: 1px white gray; position: fixed; top: 10%; left: 10%; bottom: 10%; right: 10%; background-color: white; box-shadow: 10px 10px 5px #888888; z-index: 3; color: black; border: 1px gray solid; overflow: auto; ">
+            <div>
+                <div style="display: table; width : 100%; background-color: lightgray;">
+                    <div style="display: table-cell; width: 100%; vertical-align: middle; ">
+                        <h3 style="font-size: 18px; margin: 0px 20px; ">{{'_WeeklySchedule_' | i18n}}</h3>
+                    </div>
+                    <div style="display: table-cell; text-align: end; ">
+                        <div style="display: table; border-spacing: 5px;">
+                            <div style="display: table-cell;">
+                                <button type="button"
+                                        class="btnRed"
+                                        style="cursor: pointer; font-size: 14px; "
+                                        data-ng-click="sendMailClicked()">
+                                    <div class="MailImg"></div>
+                                    <div class="MailText" style="display: inline-block;">{{'_SendByEmail_' | i18n}}</div>
+                                </button>
+                            </div>
+                            <div style="display: table-cell;">
+                                <button type="button"
+                                        ng-print
+                                        print-element-id="WeeklyScheduleDiv"
+                                        class="btnRed HideOnMobile"
+                                        style="cursor: pointer; font-size: 14px; ">
+                                    <div class="PrintImg"></div>
+                                    <div class="PrintText" style="display: inline-block;">{{'_Print_' | i18n}}</div>
+                                </button>
+                                <!--<button type="button"
+                                        class="btnRed HideOnMobile"
+                                        style="cursor: pointer; font-size: 14px; "
+                                        data-ng-click="printClicked()">
+                                    <div class="PrintImg"></div>
+                                    <div class="PrintText" style="display: inline-block;">{{'_Print_' | i18n}}</div>
+                                </button>-->
+                            </div>
+                            <div style="display: table-cell;">
+                                <button type="button"
+                                        class="btnDialogClose"
+                                        title="לחץ לסגירת חלונית {{'_WeeklySchedule_' | i18n}}"
+                                        style="cursor: pointer; vertical-align: middle;"
+                                        data-ng-click="closeClicked()">
+                                    <span class="hidden">לחץ לסגירת חלונית {{'_WeeklySchedule_' | i18n}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="WeeklyScheduleDiv" id="WeeklyScheduleDiv" style="">
+                <table style="width: 100%; border-spacing: 5px;">
+                    <tr>
+                        <td style="vertical-align: middle; ">
+                            <table style="width: 100%; ">
+                                <tr>
+                                    <td style="width: 40px; ">
+                                        <img alt="{{'_CompanyOf_' | i18n}} {{search.selectedScheduleLine.Company.Name}}"
+                                             src="../../Content/images/BusOperatorsBig/company_{{search.selectedScheduleLine.Company.Id}}.png"
+                                             style="width: 40px; height: 40px;">
+                                    </td>
+                                    <td style="width: 60px;  vertical-align: middle;">
+                                        <div style="border: 5px double black; font-size: 16px; vertical-align: middle; text-align: center; font-weight: bold; ">{{weeklyReportData.Shilut}}</div>
+                                    </td>
+                                    <td style="font-weight: bold; vertical-align: middle;  font-size: 15px;">
+                                        <div style="white-space: nowrap; width: 100%;">{{'_From_' | i18n}}: {{weeklyReportData.OriginName}}</div>
+                                        <div style="white-space: nowrap; width: 100%;">{{'_To_' | i18n}}: {{weeklyReportData.DestinationName}}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="text-decoration: underline; vertical-align: middle;"></td>
+                        <td style="vertical-align: middle; width: 380px; font-size: 10px; ">
+                            <div style="width: 380px; background-color: lightgray; border: 1px black solid; ">
+                                {{'_WeeklyScheduleMessagePart1_' | i18n}}
+                                <br />
+                                {{'_WeeklyScheduleMessagePart2_' | i18n}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <h2 data-ng-if="search.busStationArrangementD != 1 && weeklyReportData.WeeklySchedule.length > 0 && weeklyReportData.LineOriginName != null && weeklyReportData.LineOriginName != ''"
+                    style="text-align: center; font-weight: bold; font-size: 15px;">
+                    {{'_origin_' | i18n}} {{'_line_' | i18n}}: {{weeklyReportData.LineOriginName}}({{'_TripTimesAreEstimated_' | i18n}}).
+                </h2>
+                <table class="WeeklyScheduleDivTable"
+                       style="width: 100%;  font-size: 11.5px; table-layout: auto;">
+                    <caption data-ng-if="search.busStationArrangementD != 1 && weeklyReportData.WeeklySchedule.length > 0"
+                             class="hidden">{{'_From_' | i18n}}{{weeklyReportData.OriginName}}{{'_To_' | i18n}}{{weeklyReportData.DestinationName}}</caption>
+                    <thead>
+                        <tr class="WeeklyScheduleDivTr"
+                            data-ng-repeat="lineitemlist in weeklyReportData.WeeklySchedule" data-ng-if="$index == 0">
+                            <th class='WeeklyScheduleDivTh'
+                                data-ng-repeat="lineitem in lineitemlist track by $index">
+                                <div>
+                                    <span style="display: block;">{{lineitem.day}}</span>
+                                    <span style="display: block;">{{lineitem.range}}</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="WeeklyScheduleDivTr"
+                            data-ng-repeat="lineitemlist in weeklyReportData.WeeklySchedule" data-ng-if="$index > 0">
+                            <td class="WeeklyScheduleDivTd"
+                                data-ng-repeat="lineitem in lineitemlist track by $index">
+                                <div tabindex="0" title="{{weeklyReportData.WeeklySchedule[0][$index].day}} {{'_Hours_' | i18n}} {{lineitem}}">
+                                    {{lineitem}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3 data-ng-if="weeklyReportData.ReversedWeeklySchedule.length > 0"
+                    style="vertical-align: middle; font-weight: bold; font-size: 15px;">
+                    {{'_From_' | i18n}}: {{weeklyReportData.DestinationName}} {{'_To_' | i18n}}: {{weeklyReportData.OriginName}}
+                </h3>
+                <table class="WeeklyScheduleDivTable"
+                       style="width: 100%;  font-size: 11.5px; table-layout: auto;">
+                    <caption data-ng-if="weeklyReportData.ReversedWeeklySchedule.length > 0" class="hidden">{{'_From_' | i18n}}{{weeklyReportData.DestinationName}} {{'_To_' | i18n}} {{weeklyReportData.OriginName}}</caption>
+                    <thead>
+                        <tr class="WeeklyScheduleDivTr"
+                            data-ng-repeat="lineitemlist in weeklyReportData.ReversedWeeklySchedule" data-ng-if="$index == 0">
+                            <th class='WeeklyScheduleDivTh'
+                                data-ng-repeat="lineitem in lineitemlist track by $index">
+                                <div>
+                                    <span style="display: block;">{{lineitem.day}}</span>
+                                    <span style="display: block;">{{lineitem.range}}</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="WeeklyScheduleDivTr"
+                            data-ng-repeat="lineitemlist in weeklyReportData.ReversedWeeklySchedule" data-ng-if="$index > 0">
+                            <td class="WeeklyScheduleDivTd"
+                                data-ng-repeat="lineitem in lineitemlist track by $index">
+                                <div tabindex="0" title="{{weeklyReportData.ReversedWeeklySchedule[0][$index].day}} {{'_Hours_' | i18n}} {{lineitem}}">
+                                    {{lineitem}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="background-color: lightgray; height: 100%; width: 100%; position: fixed; top: 0px; left: 0px; z-index: 2; opacity: 0.5;"></div>
+    </div>
+</div>

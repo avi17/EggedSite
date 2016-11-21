@@ -1,0 +1,62 @@
+﻿<div style="background-color: white;">
+    <div style="display: table; width: 100%;">
+        <div style="display: table-cell;">
+            <h2>{{"_StationsInTheArea_" | i18n}} ({{"_NextBus_" | i18n}})</h2>
+        </div>
+        <div style="display: table-cell;">
+            <button type="button"
+                    data-ng-click="getNearBustopList(false)"
+                    style="cursor: pointer; text-decoration: underline; padding: 0px 5px 0px 5px; background-color: transparent; border: 0;"
+                    data-ng-class="{true: 'FloatLeft', false: 'FloatRight'}[dir]">
+                {{"_Refresh_" | i18n}}
+            </button>
+        </div>
+        <div style="display: table-cell;"
+             data-ng-show="search.nearBustopList == null">
+            {{"_DataLoading_" | i18n}}...
+            <!--<img src="Content/images/spinner.gif" style="height: 20px; width: 20px;" />-->
+        </div>
+    </div>
+    <div class="linesInBusstopInnerTable" style="max-height: 200px; overflow-y: scroll;">
+        <div data-ng-repeat="nearBustop in search.nearBustopList"
+             data-ng-show="search.nearBustopList != null && search.nearBustopList.length > 0">
+            <div data-ng-show="nearBustop.LinesInStationList.length > 0"
+                 style="background-color: grey; color: white; padding: 2px 10px 2px 10px;">
+                <div style="display: table; width: 100%;">
+                    <div style="display: table-cell;">{{nearBustop.Name}} {{nearBustop.Makat}}</div>
+                    <div data-ng-class="{true: 'TextAlignHeb', false: 'TextAlignEng'}[dir]"
+                         style="display: table-cell;">
+                        <button type="button"
+                                style="cursor: pointer; text-decoration: underline;"
+                                data-ng-click="nearBusstopPaneClicked({{nearBustop.Makat}})">
+                            {{"_Select_" | i18n}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div style="display: table; width: 100%;">
+                <div style="display: table-row; background-color: #def0ec; color: #00715a;">
+                    <div style="display: table-cell; text-align: right; width: 50px; padding: 2px 10px 2px 10px;">{{"_line_" | i18n}}</div>
+                    <div style="display: table-cell; text-align: right;">{{"_destination_" | i18n}}</div>
+                    <div style="display: table-cell; text-align: right; width: 80px;">{{"_Minutes_" | i18n}} {{"_To_" | i18n}}{{"_Station_" | i18n}}</div>
+                </div>
+                <div class="TableLine"
+                     style="display: table-row; height: 10px;"
+                     data-ng-repeat="line in nearBustop.LinesInStationList">
+                    <div style="display: table-cell; text-align: right; width: 50px; padding: 2px 10px 2px 10px;">{{line.Shilut}}</div>
+                    <div class="TextOverflowEllipsis"
+                         style="display: table-cell; text-align: right;">
+                        {{line.DestinationQuarterName}}
+                    </div>
+                    <div style="display: table-cell; text-align: right; width: 80px;">
+                        <span data-ng-show="line.MinutesToArrival != '0'">{{line.MinutesToArrival}}</span>
+                        <span data-ng-show="line.MinutesToArrival == '0'" title='{{"_InStation_" | i18n}}'><b>&darr;</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="search.nearBustopList != null && search.nearBustopList.length == 0">
+            {{"_NoResultsFound_" | i18n}}
+        </div>
+    </div>
+</div>

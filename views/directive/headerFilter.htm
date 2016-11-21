@@ -1,0 +1,54 @@
+﻿<div style="cursor: pointer;">
+    <button type="button"
+            style="background-color: transparent; border: 0; cursor: pointer; padding: 0; font-size: 13px; text-decoration: underline; width: 100%; overflow: hidden; text-overflow: ellipsis; color: #00715a; font-weight: bold;"
+            data-ng-click="headerClicked()">{{contentstring}}∇
+        <!--<div style="display: inline-block;text-decoration: underline;">{{contentstring}}</div>
+        <div data-ng-show="isFiltered == true"
+             class="no-print"
+             data-ng-class="{true: 'DisplayNone', false: 'DisplayInlineBlock'}[filterType == '']">
+            <img src="../../../Content/images/FilterIcon.png"
+                 alt="כפתור סינון"
+                 style="height: 10px; width: 10px;" />
+        </div>-->
+    </button>
+    <div class="ComboPopup no-print"
+         data-ng-show="isShowPopup == true"
+         style="border: solid grey 1px; background-color: white; height: auto; max-height: 150px;">
+        <div class="table-header" style="color: white; background-color: green; width: 100%; font-size: 15px; font-weight: normal">
+            <label style="margin: 2px;">
+                {{'_Select_' | i18n}} {{'_EstimatedDepartureTimeShorter_' | i18n}}
+            </label>
+        </div>
+        <ul ng-if="isMobileBrowser != true"
+            style="max-height: 150px; overflow-y: scroll;"
+            role="listbox">
+            <li title="{{item.NAME}}"
+                tabindex="0"
+                style="font-weight: normal;"
+                class="DropDownItem"
+                data-ng-click="headerFilterSelected(item)"
+                data-ng-repeat="item in timeList"
+                role="option">
+                {{item.NAME}}
+            </li>
+        </ul>
+        <div ng-if="isMobileBrowser != true">
+            <div style="display: table;">
+                <div style="display: table-cell;">
+                    <select class="DateSelect"
+                            style="padding: 0; height: auto; "
+                            data-ng-model="selectedItem"
+                            data-ng-options="i.NAME for i in timeList"></select>
+                </div>
+                <div style="display: table-cell;">
+                    <button type="button"
+                            style="background-color: transparent; border: 0; color: green;"
+                            title="לחץ לסגירה"
+                            data-ng-click="headerFilterSelected(selectedItem)">
+                        ✔
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

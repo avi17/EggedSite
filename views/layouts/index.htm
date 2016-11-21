@@ -1,0 +1,161 @@
+﻿<div style="width: 100%;">
+    <div style="width: 100%; padding: 0;"
+         class="filterTabControl ">
+        <table style="border-spacing: 0;">
+            <tr>
+                <td>
+                    <ul role="tablist"
+                        class="tablist"
+                        style="margin: 0px; padding: 0px;">
+                        <li style="display: inline-block;" class="SearchTabHeaderWrapper">
+                            <div class="SearchTabHeader" style="margin: 0px 13px;">
+                                <span i18n="_SearchingBy_"
+                                      style="font-size: 18px;"
+                                      class="SearchTabMidHeb"></span>
+                            </div>
+                        </li>
+                        <li role="tab"
+                            aria-selected="{{currentTabName == 1}}"
+                             ng-show="accessibilitySite != true"
+                            style="display: inline-block;">
+                            <a href="#/origindestination/1/0/{{search.isDirectLine}}/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/{{search.fromAddress.Quarter.ID}}/{{search.toAddress.City.ID}}-{{search.toAddress.City.iid}}/{{search.toAddress.Quarter.ID}}/{{search.currentDate.ID}}/{{search.currentTime.ID}}/{{search.autocompleteOrigin.coords}}/{{search.autocompleteDestination.coords}}"
+                               data-ng-class="{true:'SearchTabWrapperChosen1', false:'SearchTabWrapper1'}[currentTabName == 1]">
+                                <div>
+                                    <div class="FromToTabIcon" title="{{'_SearchByDest_' | i18n}}"></div>
+                                    <div class="SearchTabMid">
+                                        <h1 data-ng-if="currentTabName == 1"
+                                             i18n="_bydest_"
+                                             style="margin: 0; font-size: 18px;"
+                                             class="SearchTabMidHeb"></h1>
+                                        <div data-ng-if="currentTabName != 1"
+                                             i18n="_bydest_"
+                                             style="margin: 0;"
+                                             class="SearchTabMidHeb"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="tab"
+                            aria-selected="{{currentTabName == 2}}"
+                             ng-show="accessibilitySite != true"
+                            style="display: inline-block;">
+                            <a href="#/linenumber/1/0/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/"
+                               data-ng-class="{true:'SearchTabWrapperChosen1', false:'SearchTabWrapper1'}[currentTabName == 2]">
+                                <div>
+                                    <div class="LineTabIcon" title="{{'_SearchByLine_' | i18n}}"></div>
+                                    <div class="SearchTabMid">
+                                        <h1 data-ng-if="currentTabName == 2"
+                                             i18n="_byline_"
+                                             style="font-size: 18px; margin: 0;"
+                                             class="SearchTabMidHeb"></h1>
+                                        <div data-ng-if="currentTabName != 2"
+                                             i18n="_byline_"
+                                             style="margin: 0;"
+                                             class="SearchTabMidHeb"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="tab"
+                            aria-selected="{{currentTabName == 3}}"
+                            data-ng-show="search.language == 'he'"
+                            style="display: inline-block;">
+                            <a href="#/freetext/1/0"
+                               data-ng-class="{true:'SearchTabWrapperChosen1', false:'SearchTabWrapper1'}[currentTabName == 3]">
+                                <div>
+                                    <div class="FreeTextTabIcon" title="{{'_SearchByFreeText_' | i18n}}"></div>
+                                    <div class="SearchTabMid">
+                                        <h1 data-ng-if="currentTabName == 3"
+                                             i18n="_byfreetext_"
+                                             style="font-size: 18px; margin: 0;"
+                                             class="SearchTabMidHeb"></h1>
+                                        <div data-ng-if="currentTabName != 3"
+                                             i18n="_byfreetext_"
+                                             style="margin: 0;"
+                                             class="SearchTabMidHeb"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="tab"
+                             ng-show="accessibilitySite != true"
+                            aria-selected="{{currentTabName == 4}}"
+                            style="display: inline-block;">
+                            <a href="#/realtime/1/0"
+                               data-ng-class="{true:'SearchTabWrapperChosen1', false:'SearchTabWrapper1'}[currentTabName == 4]">
+                                <div>
+                                    <div class="RealtimeTabIcon " title="{{'_TimeToStop_' | i18n}}"></div>
+                                    <div class="SearchTabMid">
+                                        <h1 data-ng-if="currentTabName == 4"
+                                             i18n="_TimeToStop_"
+                                             style="font-size: 18px; margin: 0;"
+                                             class="SearchTabMidHeb"></h1>
+                                        <div data-ng-if="currentTabName != 4"
+                                             i18n="_TimeToStop_"
+                                             style="margin: 0;"
+                                             class="SearchTabMidHeb"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li style="display: inline-block; float: left;">
+                            <button type="button"
+                                    style="background-color: darkred; background-image: none; border: 0; "
+                                    class="SearchTabWrapperChosen"
+                                    analytics-on
+                                    analytics-category="Commands"
+                                    analytics-label="BalClear"
+                                    analytics-value="1"
+                                    data-ng-click="BalClear()"
+                                    data-ng-if="isBezeqOnline == true">
+                                <div class="SearchTabMid">
+                                    <h1 style="margin: 0;">נקה</h1>
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div role="tabpanel"
+                         tabindex="-1"
+                         class="searchSubView"
+                         data-ng-show="isShowFilter == true"
+                         data-ui-view="query"></div>
+                    <div data-ng-if="isShowFilter != true"
+                         data-ng-include="'app/views/search/minimized.htm'">
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div style="text-align: center;" data-ng-show="isGoogleReachable == true">
+
+        <button type="button"
+                style="cursor: pointer; border: 0; border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-right-radius:3px; border-bottom-left-radius:3px;"
+                data-ng-click="toggleMap(true)"
+                data-ng-show="isMapViewed == null || isMapViewed != true && accessibilitySite != true"
+                class="SearchTabWrapper1"
+                analytics-on
+                analytics-category="Commands"
+                analytics-label="ToggleMap"
+                analytics-value="Show">
+            <div style="display: table; width: 100%;">
+                <div style="display: table-cell; background-position: center; height: 30px; width: 30px; " class="MapWhiteIcon" title="{{'_ShowMap_' | i18n}}"></div>
+                <div style="display: table-cell;" class="SearchTabMid">
+                    <h1 style="line-height: 10px;" i18n="_ShowMap_"></h1>
+                </div>
+            </div>
+        </button>
+
+    </div>
+    <div tabindex="-1"
+         class="resultSubView"
+         data-ui-view="result"></div>
+</div>
+<div class="userMessage" user-message data-ng-model="search.userMessage"></div>
+<div alternative-location-popup original-location="{{search.coordinateLat}}, {{search.coordinateLng}}"
+     data-ng-source-list="search.alternativeSourceList"
+     data-ng-destination-list="search.alternativeDestinationList"></div>

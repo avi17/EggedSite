@@ -1,0 +1,29 @@
+﻿<div style="background-color: white; font-size: 13px; padding: 5px; border: solid grey 1px; ">
+    <div 
+         class="MapTabWrapper" 
+         style="cursor: pointer; margin:0; padding: 5px;" 
+         data-ng-click="getBustopListNearPlace()">{{strShow}} {{strStationsInTheArea}}</div>
+    <div 
+         class="MapTabWrapper" 
+         style="cursor: pointer; margin:0; padding: 5px;" 
+         data-ng-click="setOriginPoint()">{{strNavigateFrom}}</div>
+    <div 
+         class="MapTabWrapper" 
+         style="cursor: pointer; margin:0; padding: 5px;" 
+         data-ng-click="setDestinationPoint()">{{strNavigateTo}}</div>
+    <div class="MapTabWrapper"
+         data-ng-if="isBezeqOnline == true"
+         style="cursor: pointer; margin:0; padding: 5px;"
+         data-ng-click="measureWalkDistance()"
+         >מדוד מרחק הליכה</div>
+    <div class="MapTabWrapper"
+         data-ng-if="isBezeqOnline == true"
+         style="cursor: pointer; margin:0; padding: 5px;"
+         data-ng-click="measureWalkDistanceFromHere()"
+         >מדוד מרחק הליכה מכאן</div>
+    <div class="MapTabWrapper"
+         data-ng-if="isBezeqOnline == true"
+         style="cursor: pointer; margin:0; padding: 5px;"
+         data-ng-click="measureWalkDistanceToHere()"
+         >מדוד מרחק הליכה לכאן</div>
+</div>

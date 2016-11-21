@@ -1,0 +1,102 @@
+﻿<div>
+    <h1 style="font-size: 0px; text-indent: -9999px;">מפת מידע לנוסע</h1>
+    <div style="background-color: lightgrey;">
+        <ul style="background-color: white; margin: 1px; width: 100%;">
+            <li style="display: inline-block; ">
+                <button type="button"
+                        analytics-on
+                        analytics-category="Commands"
+                        analytics-label="Map Toggle Pedestrian Tab {{search.selectedMapWidjetTab}}"
+                        analytics-value="1"
+                        title="{{'_WalkingCourse_' | i18n}}"
+                        aria-label="{{'_WalkingCourse_' | i18n}}"
+                        aria-selected="{{search.selectedMapWidjetTab == 'Pedestrian'}}"
+                        style="vertical-align: middle;"
+                        data-ng-click="search.selectedMapWidjetTab = 'Pedestrian'"
+                        data-ng-class="{true: 'WidgetTabSelected', false: 'WidgetTab'}[search.selectedMapWidjetTab == 'Pedestrian']">
+                    🚶
+                </button>
+            </li>
+            <li style="display: inline-block; ">
+                <button type="button"
+                        analytics-on
+                        analytics-category="Commands"
+                        analytics-label="Map Toggle PublicTransport Tab {{search.selectedMapWidjetTab}}"
+                        analytics-value="1"
+                        title="{{'_PublicTransportCourse_' | i18n}}"
+                        aria-label="{{'_PublicTransportCourse_' | i18n}}"
+                        aria-selected="{{search.selectedMapWidjetTab == 'PublicTransport'}}"
+                        style="vertical-align: middle;"
+                        data-ng-click="search.selectedMapWidjetTab = 'PublicTransport'"
+                        data-ng-class="{true: 'WidgetTabSelected', false: 'WidgetTab'}[search.selectedMapWidjetTab == 'PublicTransport']">
+                    🚌
+                </button>
+            </li>
+        </ul>
+        <div style="background-color: white; margin: 1px;">
+            <div style="display: table-cell; width: 100%; background-color: grey;">
+                <div style="margin-bottom: 1px; display: table; width: 100%; background-color: white;">
+                    <div style="display: table-cell; vertical-align: middle;">
+                        <img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" alt="{{'_OriginAddress_' | i18n}}" style="height: 60%; " />
+                    </div>
+                    <div id="mapFromAddress"
+                         google-autocomplete
+                         style="display: table-cell; margin: 0; border: 0; width: 100%; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;"
+                         data-ng-show="!isShowFromBusStopMakat"
+                         data-ng-placeholder="{{'_OriginAddress_' | i18n}}"
+                         selected-value="search.autocompleteOrigin.coords"
+                         data-ng-model="search.autocompleteOrigin.description">
+                    </div>
+                </div>
+                <div style="margin-bottom: 1px; display: table; width: 100%; background-color: white;">
+                    <div style="display: table-cell; vertical-align: middle;">
+                        <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" alt="{{'_TargetAddress_' | i18n}}" style="height: 60%; " />
+                    </div>
+                    <div id="mapToAddress"
+                         google-autocomplete
+                         style="display: table-cell; margin: 0; border: 0; width: 100%; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;"
+                         data-ng-show="!isShowToBusStopMakat"
+                         data-ng-placeholder="{{'_TargetAddress_' | i18n}}"
+                         selected-value="search.autocompleteDestination.coords"
+                         data-ng-model="search.autocompleteDestination.description">
+                    </div>
+                </div>
+            </div>
+            <div style="display: table-cell; vertical-align: middle; border-right: 1px solid lightgray; border-left: 1px solid lightgray; ">
+                <a href="#/origindestination/0/0/{{search.isDirectLine}}/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/{{search.fromAddress.Quarter.ID}}/{{search.toAddress.City.ID}}-{{search.toAddress.City.iid}}/{{search.toAddress.Quarter.ID}}/{{search.currentDate.ID}}/{{search.currentTime.ID}}/{{search.autocompleteOrigin.coords}}/{{search.autocompleteDestination.coords}}"
+                   data-ng-click="focusTripResults()"
+                   role="button"
+                   title="{{'_search_' | i18n}}"
+                   style="cursor: pointer; font-size: 23px; text-decoration: blink; color: black;">
+                    <span class="hidden">{{'_search_' | i18n}}</span>
+                    🔍
+                </a>
+            </div>
+            <div style="display: table-cell; vertical-align: middle; ">
+                <a href="#/origindestination/0/0/{{search.isDirectLine}}/{{search.toAddress.City.ID}}-{{search.toAddress.City.iid}}/{{search.toAddress.Quarter.ID}}/{{search.fromAddress.City.ID}}-{{search.fromAddress.City.iid}}/{{search.fromAddress.Quarter.ID}}/{{search.currentDate.ID}}/{{search.currentTime.ID}}/{{search.autocompleteDestination.coords}}/{{search.autocompleteOrigin.coords}}"
+                   role="button"
+                   title="{{'_SwitchSourceDest_' | i18n}}"
+                   style="cursor: pointer; font-size: 30px; text-decoration: blink; color: black;">
+                    <span class="hidden">{{'_SwitchSourceDest_' | i18n}}</span>
+                    ⇅
+                </a>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="isBezeqOnline == true && search.currentBusStopList.length>0"
+         style="background-color: white; margin: 1px;" add-nav-point></div>
+</div>
+<div style="background-color: white;"
+     data-ng-show="search.selectedMapWidjetTab == 'Pedestrian' && search.autocompleteOrigin.coords && search.autocompleteDestination.coords">
+    <div>{{"_WalkingCourse_" | i18n}} {{"_From_" | i18n}}{{search.autocompleteOrigin.description}} {{"_To_" | i18n}}{{search.autocompleteDestination.description}}</div>
+    <div data-ng-show="search.pedestrianDistance != null && search.pedestrianDistance != ''">{{"_DistanceOf_" | i18n}} {{search.pedestrianDistance}} ({{search.pedestrianDuration}})</div>
+</div>
+<div tabindex="0" data-ng-show="gridScheduleList != null && gridScheduleList.length > 0 && search.selectedMapWidjetTab == 'PublicTransport'"
+     style="background-color: white; cursor: default; margin: 1px; padding: 2px;">
+    <h2>
+        {{'_TripSolutions_' | i18n}}
+    </h2>
+    <span class="hidden"> {{'_SearchResults_' | i18n}} </span>
+    <div class="MapTripSolutionsHeader" tabindex="0" map-transition style="max-height: 200px; overflow-y: scroll;"></div>
+</div>
+<div map-busstop-data></div>

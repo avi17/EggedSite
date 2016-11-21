@@ -1,0 +1,31 @@
+﻿<div style="position: relative;"
+     data-ng-if="isShowFilter != true">
+    <div class="progressBarSpacer" ></div>
+    <div data-ng-switch="resultSubView">
+        <div data-ng-switch-when="pathplan">
+            <div data-ng-include=" 'app/search/pathplanList/result.html?versionNumber={{versionNumber}}'"></div>
+        </div>
+        <div data-ng-switch-when="transition">
+            <div data-ng-include=" 'app/search/transition/result.html?versionNumber={{versionNumber}}'"></div>
+        </div>
+        <div data-ng-switch-when="busstop">
+            <div data-ng-include=" 'app/search/busstopList/result.html?versionNumber={{versionNumber}}'"></div>
+        </div>
+        <div data-ng-switch-when="details">
+            <div data-ng-include=" 'app/search/details/result.html?versionNumber={{versionNumber}}'"></div>
+        </div>
+        <div data-ng-switch-when="directlines">
+            <div data-ng-include=" 'app/search/directLines/result.html?versionNumber={{versionNumber}}'"></div>
+        </div>
+        <div data-ng-switch-default></div>
+    </div>
+    <div progress-bar2
+         search="search"
+         userDetails="userDetails"
+         isStorageActive="isStorageActive"
+         currentCssFilename="currentCssFilename"
+         data-ng-show="resultSubView"
+         style="margin-top: 10px; width: 100%; display: table; position: absolute; top: 0px;"
+         data-ng-model="resultSubView">
+    </div>
+</div>

@@ -1,0 +1,177 @@
+﻿<div class="ScheduleView"
+     data-ng-controller="DirectLinesCtrl"
+     style="height: auto;">
+    <div style="white-space: nowrap;">
+        <div class="SubViewHeader DisplayInline"
+             i18n="_DirectLinesHeader_">
+        </div>
+        <button title="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_LinesBetweenCities_' | i18n}}"
+                aria-label="{{'_KeyboardUseInstruction_' | i18n}} {{'_TableOf_' | i18n}} {{'_LinesBetweenCities_' | i18n}}"
+                style="background-color: transparent; border: 0;"
+                class="DisplayInline"
+                data-ng-click="showDirectLinesAccessabilityMessage()">
+            <div class="HelpSubTitle"></div>
+        </button>
+    </div>
+    <div class="TableHeader" style="height: 43px;">
+        <table>
+            <tr>
+                <td class="ScheduleHeaderSquare">
+                    <div>{{"_LinesBetweenCities_" | i18n}}</div>
+                </td>
+                <td style="width: 37px;">
+                    <div class="ScheduleHeaderIcon"></div>
+                </td>
+                <td class="ScheduleHeaderText">
+                    <h4>
+                        <span style="margin: 0; font-weight: bold; display: block;">{{"_From_" | i18n}}{{fromCity}}</span>
+                        <span style="margin: 0; font-weight: bold; display: block;">{{"_To_" | i18n}}{{toCity}}</span>
+                    </h4>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table class="TableHeaders">
+            <thead>
+                <tr>
+                    <th i18n="_Select_"
+                        style="white-space: nowrap; width: 35px; text-align: center;"></th>
+                    <th i18n="_line_"
+                        style="white-space: nowrap; width: 40px; text-align: center;"></th>
+                    <th i18n="_Operator_"
+                        style="white-space: nowrap; width: 40px; text-align: center;"></th>
+                    <th i18n="_TripTime_"
+                        style="white-space: nowrap; width: 70px; text-align: center;"></th>
+                    <th i18n="_KM_"
+                        style="white-space: nowrap; width: 60px; text-align: center;"></th>
+                    <th i18n="_Price_"
+                        style="white-space: nowrap; width: 40px; text-align: center;"></th>
+                    <!--<th style="white-space: nowrap; width: 15px;"></th>-->
+                </tr>
+            </thead>
+            <tbody class="TableLines">
+                <tr data-ng-repeat="Line in pageddirectLinesList"
+                    data-ng-class="{true: 'TableLineSelected', false: 'TableLine'}[Line.LineId == parsedSelectedDirectLine.LineId ]">
+                    <td class="scheduleLineCell">
+                        <div style="width: 35px">
+                            <input type="radio"
+                                   title="{{'_line_' | i18n}} {{Line.LineName}} {{'_CompanyOf_' | i18n}} {{Line.CompanyName}} {{'_TripTime_' | i18n}} {{Line.TripTime}} {{'_KM_' | i18n}} {{Line.KM}} {{'_Price_' | i18n}} {{Line.Price}}"
+                                   class="btnRadio"
+                                   data-ng-model="search.selectedDirectLine"
+                                   value="{{Line}}" />
+                        </div>
+                    </td>
+                    <td class="scheduleLineCell">
+                        <div style="width: 40px;" data-ng-show="Line.LineName != '-1'">{{Line.LineName}}&nbsp;</div>
+                        <div style="width: 40px;" data-ng-show="Line.LineName == '-1'">{{"_Train_" | i18n}}&nbsp;</div>
+                    </td>
+                    <td class="scheduleLineCell"
+                        style="text-align: center;"
+                        title='{{"_CompanyOf_" | i18n}} {{Line.Company.Name}}'>
+                        <img class="scheduleScrollableTableImg"
+                             data-ng-src="Content/images/BusOperators/company_{{Line.CompanyId}}.png"
+                             alt='{{"_CompanyOf_" | i18n}} {{Line.Company.Name}}' />
+                    </td>
+                    <td class="scheduleLineCell">
+                        <div style="width: 70px;">{{Line.TripTime}}&nbsp;</div>
+                    </td>
+                    <td class="scheduleLineCell">
+                        <div style="width: 60px;">{{Line.KM}}&nbsp;</div>
+                    </td>
+                    <td class="scheduleLineCell" style="height: 33px;">
+                        <div style="">
+                            <span data-ng-if="Line.Price!= 0">{{Line.Price}}&nbsp;</span>
+                            <span data-ng-if="Line.Price== 0">{{"_NoData_" | i18n}}&nbsp;</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <caption class="hidden">
+                    לחץ על כפתורי הניווט על מנת לעבור בין דפי הטבלה
+                </caption>
+                <tr>
+                    <td colspan="6">
+                        <ol style="margin:0;" data-ng-show="pageList().length>1">
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        title="{{'_FirstPage_' | i18n}}"
+                                        data-ng-if="currentPageIndex != 0"
+                                        data-ng-click="setFirstPage()">
+                                    <<
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-disabled="currentPageIndex == 0"
+                                        data-ng-if="currentPageIndex == 0"
+                                        title="{{'_FirstPage_' | i18n}}">
+                                    <<
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        data-ng-if="currentPageIndex != 0"
+                                        title="{{'_PrevPage_' | i18n}}"
+                                        data-ng-click="setPrevPage()">
+                                    <
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-if="currentPageIndex == 0"
+                                        data-ng-disabled="currentPageIndex == 0"
+                                        title="{{'_PrevPage_' | i18n}}">
+                                    <
+                                </button>
+                            </li>
+                            <li style="display: inline-block;"
+                                data-ng-repeat="n in pageList()">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        data-ng-class="{true: 'notSelectedPageIndex', false: 'selectedPageIndex'}[currentPageIndex+1 == n]"
+                                        data-ng-click="setPageIndex(n-1)"
+                                        title="{{n}}">
+                                    {{n}}
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        data-ng-if="currentPageIndex != lastPageIndex-1"
+                                        title="{{'_NextPage_' | i18n}}"
+                                        data-ng-click="setNextPage()">
+                                    >
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-if="currentPageIndex == lastPageIndex-1"
+                                        data-ng-disabled="currentPageIndex == lastPageIndex-1"
+                                        title="{{'_NextPage_' | i18n}}">
+                                    >
+                                </button>
+                            </li>
+                            <li style="display: inline-block;">
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="enabledPageNav"
+                                        data-ng-if="currentPageIndex != lastPageIndex-1"
+                                        title="{{'_LastPage_' | i18n}}"
+                                        data-ng-click="setLastPage()">
+                                    >>
+                                </button>
+                                <button style="background-color: transparent; border: 0; padding: 1px 3px;"
+                                        class="disabledPageNav"
+                                        data-ng-if="currentPageIndex == lastPageIndex-1"
+                                        data-ng-disabled="currentPageIndex == lastPageIndex-1"
+                                        title="{{'_LastPage_' | i18n}}">
+                                    >>
+                                </button>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>

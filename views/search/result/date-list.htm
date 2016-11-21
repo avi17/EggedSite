@@ -1,0 +1,19 @@
+﻿
+<div class="egged view" data-ng-controller="search.result.DateListController"> <!-- class="l-standard"-->
+
+    <h4 data-i18n="_OldDateResult_"></h4>
+    <div >
+        <table data-ng-repeat="pathPlanGrid in selectedDateList">
+            <tr>
+                <td>
+                   
+                    <a data-ng-click="showSearchResult({{pathPlanGrid.ID}})"> {{pathPlanGrid.NAME}} </a>
+
+                </td>
+               
+            </tr>
+            
+        </table>
+   
+        </div>
+</div>

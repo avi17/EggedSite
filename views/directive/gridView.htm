@@ -1,0 +1,205 @@
+﻿<table cellspacing="0" style="table-layout: auto;">
+    <caption style="text-indent:-9999px;">{{dataSource.headerElem |i18n}}</caption>
+    <thead class="PathplanHeader" style="width: 100%;">
+        <tr>
+            <!--data-ng-hide="isBezeqOnline == false && pathPlanHeader.field == '_TripCount_'"-->
+            <th style="padding: 0px 5px 0px 5px; text-align: inherit;"
+                class="TextOverflowEllipsis"
+                data-ng-hide="isBezeqOnline == false  && ( pathPlanHeader.field == '_FirstSegmentTripCount_' || pathPlanHeader.field == '_SecondSegmentTripCount_' || pathPlanHeader.field == '_ThirdSegmentTripCount_')"
+                data-ng-repeat="pathPlanHeader in dataSource.columnDefs">
+                <button style="background-color: transparent; border: 0;color:black"
+                        data-ng-disabled="pathPlanHeader.field != '_Price_' && pathPlanHeader.field != '_Distance_' && pathPlanHeader.field != '_TravelTime_' 
+                         && pathPlanHeader.field != '_FirstSegmentTripCount_' && pathPlanHeader.field != '_SecondSegmentTripCount_' && pathPlanHeader.field != '_ThirdSegmentTripCount_'"
+                        data-ng-click="dataSource.headerClicked(pathPlanHeader.field)">
+                    {{pathPlanHeader.field | i18n }}
+                </button>
+                <!--<span style="background-color: transparent; border: 0;"
+                        data-ng-hide="pathPlanHeader.field == '_Price_' || pathPlanHeader.field == '_Distance_' || pathPlanHeader.field == '_TravelTime_'"
+                        data-ng-click="dataSource.headerClicked(pathPlanHeader.field)">
+                    {{pathPlanHeader.field | i18n }}
+                </span>-->
+            </th>
+        </tr>
+    </thead>
+    <tbody class="accordionBody" style="table-layout: fixed;">
+        <tr style="line-height: 30px;"
+            data-ng-class="{true: 'TableLineSelected', false: 'TableLine'}[search.selectedPathPlan == pathPlanLine]"
+            data-ng-repeat="pathPlanLine in dataSource.pagedPathplanList">
+            <td class="TextOverflowEllipsis"
+                style="width: 25%; padding: 0px 5px 0px 5px;">
+                <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"
+                     data-ng-class="{true: 'RedText', false: ''}[pathPlanLine.DistanceSource != null && pathPlanLine.DistanceSource != '0']"
+                     title="{{pathPlanLine.SourceName}}">
+                    {{pathPlanLine.SourceName}}
+                </div>
+                <div title='{{"_SourceProximity_" | i18n}} {{pathPlanLine.DistanceSource}} {{"_KM_" | i18n}}'
+                     class="WalkingManImg"
+                     data-ng-show="pathPlanLine.DistanceSource != null && pathPlanLine.DistanceSource != '0'"></div>
+            </td>
+            <td class="TextOverflowEllipsis"
+                data-ng-hide="isBezeqOnline == false"
+                style="width: 40px; padding: 0px 5px 0px 5px;"
+                title="{{pathPlanLine.FirstSegmentFromToTime}}">
+                {{pathPlanLine.FirstSegmentTripCount}}
+            </td>
+            <td class="TextOverflowEllipsis"
+                data-ng-hide="pathPlanLine.Transitions[0].ConnectionPointDescription == null"
+                style="width: 25%; padding: 0px 5px 0px 5px;"
+                title="{{pathPlanLine.Transitions[0].ConnectionPointDescription}}">
+                <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+                    {{pathPlanLine.Transitions[0].ConnectionPointDescription}}
+                </div>
+            </td>
+            <td data-ng-hide="isBezeqOnline == false || pathPlanLine.Transitions[0].ConnectionPointDescription == null"
+                style="width: 40px; padding: 0px 5px 0px 5px;"
+                title="{{pathPlanLine.SecondSegmentFromToTime}}">
+                {{pathPlanLine.SecondSegmentTripCount}}&nbsp;
+            </td>
+            <td class="TextOverflowEllipsis"
+                data-ng-hide="pathPlanLine.Transitions[1].ConnectionPointDescription == null"
+                style="width: 25%; padding: 0px 5px 0px 5px;"
+                title="{{pathPlanLine.Transitions[1].ConnectionPointDescription}}">
+                <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+                    {{pathPlanLine.Transitions[1].ConnectionPointDescription}}
+                </div>
+
+            </td>
+            <td class="TextOverflowEllipsis"
+                data-ng-hide="isBezeqOnline == false || pathPlanLine.Transitions[1].ConnectionPointDescription == null"
+                style="width: 40px; padding: 0px 5px 0px 5px;"
+                title="{{pathPlanLine.ThirdSegmentFromToTime}}">
+                {{pathPlanLine.ThirdSegmentTripCount}}&nbsp;
+            </td>
+            <td data-ng-hide="pathPlanLine.Transitions[0].ConnectionPointDescription != null || pathPlanLine.Transitions[1].ConnectionPointDescription != null"
+                class="TextOverflowEllipsis"
+                style="width: 25%; padding: 0px 5px 0px 5px;">
+                <span style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"
+                      data-ng-class="{true: 'RedText', false: ''}[pathPlanLine.DistanceDestination != null && pathPlanLine.DistanceDestination != '0']"
+                      title="{{pathPlanLine.DestinationName}}">
+                    {{pathPlanLine.DestinationName}}
+                </span>
+                <span title='{{"_DestinationProximity_" | i18n}} {{pathPlanLine.DistanceDestination}} {{"_KM_" | i18n}}'
+                      class="WalkingManImg"
+                      data-ng-show="pathPlanLine.DistanceDestination != null && pathPlanLine.DistanceDestination != '0'"></span>
+            </td>
+            <td style="width: 73px;padding: 0px 5px 0px 5px;">
+                <div style="cursor: pointer;"
+                     data-ng-show="pathPlanLine.SpecialPriceIndex == 0 ">
+                    <span data-ng-show="pathPlanLine.Price == ''">{{"_NoData_" | i18n}}</span>
+                    <span data-ng-show="pathPlanLine.Price != ''">₪{{pathPlanLine.Price}}</span>
+                </div>
+                <div style="cursor: pointer;"
+                     data-ng-show="pathPlanLine.SpecialPriceIndex == 1"
+                     title='{{"_PressForFurtherDetails_" | i18n}}'
+                     data-ng-click="pathplan.showSpecialPriceMessage(2)">
+                    {{"_ContinuationCard_" | i18n}}
+                </div>
+                <div style="cursor: pointer;"
+                     data-ng-show="pathPlanLine.SpecialPriceIndex == 2"
+                     title='{{"_PressForFurtherDetails_" | i18n}}'
+                     data-ng-click="pathplan.showSpecialPriceMessage(1)">
+                    {{"_TransitionCard_" | i18n}}
+                </div>
+                <!--<div style="" data-ng-show="pathPlanLine.SpecialPriceIndex == 3" title='{{"_PressForFurtherDetails_" | i18n}}' data-ng-click="pathplan.showSpecialPriceMessage(3)">{{"_TransitionCard_" | i18n}}</div>-->
+            </td>
+            <td style="width: 83px;padding: 0px 5px 0px 5px;">
+                {{pathPlanLine.TripTime}}&nbsp;
+            </td>
+            <td style="width: 41px;padding: 0px 5px 0px 5px;">
+                <div data-ng-hide="pathPlanLine.Transitions[0].ConnectionPointDescription != null || pathPlanLine.Transitions[1].ConnectionPointDescription != null">
+                    {{pathPlanLine.Distance}}&nbsp;
+                </div>
+                <div data-ng-hide="pathPlanLine.Transitions[1].ConnectionPointDescription != null  || pathPlanLine.Transitions[0].ConnectionPointDescription == null">
+                    {{pathPlanLine.Distance}}&nbsp;
+                </div>
+                <div data-ng-hide="pathPlanLine.Transitions[1].ConnectionPointDescription == null">
+                    {{pathPlanLine.Distance}}&nbsp;
+                </div>
+            </td>
+            <td style="width: 90px;padding: 0px 5px 0px 5px;">
+                <button analytics-on
+                        analytics-category="Commands"
+                        analytics-label="Show Schedule"
+                        analytics-value="1"
+                        data-ng-click="pathplan.showSchedule(pathPlanLine)"
+                        class="btnGreen"
+                        style="font-size: 12px; line-height: 20px;">
+                    <h3 data-ng-show="search.language == 'he'">{{'_Schedule_' | i18n}}◀</h3>
+                    <h3 data-ng-show="search.language != 'he'">{{'_Schedule_' | i18n}}▶</h3>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="10">
+                <ol data-ng-if="pathPlanGrid.pageList().length > 1" style="margin: 0;">
+                    <li style="display: inline-block;">
+                        <button style="border: 0;background-color: transparent;"
+                                aria-hidden="true"
+                                title="{{'_FirstPage_' | i18n}}"
+                                data-ng-show="pathPlanGrid.currentPageIndex != 0"
+                                data-ng-click="pathPlanGrid.setFirstPage()">
+                            <<
+                        </button>
+                        <button style="border: 0;background-color: transparent;"
+                                aria-hidden="true"
+                                data-ng-show="pathPlanGrid.currentPageIndex == 0"
+                                title="{{'_FirstPage_' | i18n}}">
+                            <<
+                        </button>
+                    </li>
+                    <li style="display: inline-block;">
+                        <button data-ng-show="pathPlanGrid.currentPageIndex != 0"
+                                style="border: 0;background-color: transparent;"
+                                title="{{'_PrevPage_' | i18n}}"
+                                data-ng-click="pathPlanGrid.setPrevPage()">
+                            <
+                        </button>
+                        <button style="border: 0;background-color: transparent;"
+                                data-ng-show="pathPlanGrid.currentPageIndex == 0"
+                                title="{{'_PrevPage_' | i18n}}">
+                            <
+                        </button>
+                    </li>
+                    <li style="display: inline-block;" data-ng-repeat="n in pathPlanGrid.pageList()">
+                        <button data-ng-class="{true: 'notSelectedPageIndex', false: 'selectedPageIndex'}[pathPlanGrid.currentPageIndex +1 == n]"
+                                aria-hidden="true"
+                                style="border: 0;background-color: transparent;"
+                                data-ng-click="pathPlanGrid.setPageIndex(n)">
+                            {{n}}
+                        </button>
+                    </li>
+                    <li style="display: inline-block;">
+                        <button data-ng-show="pathPlanGrid.currentPageIndex != pathPlanGrid.lastPageIndex-1"
+                                style="border: 0;background-color: transparent;"
+                                title="{{'_NextPage_' | i18n}}"
+                                data-ng-click="pathPlanGrid.setNextPage()">
+                            >
+                        </button>
+                        <button style="border: 0;background-color: transparent;"
+                                data-ng-show="pathPlanGrid.currentPageIndex == pathPlanGrid.lastPageIndex-1"
+                                title="{{'_NextPage_' | i18n}}">
+                            >
+                        </button>
+                    </li>
+                    <li style="display: inline-block;">
+                        <button data-ng-show="pathPlanGrid.currentPageIndex != pathPlanGrid.lastPageIndex-1"
+                                aria-hidden="true"
+                                style="border: 0;background-color: transparent;"
+                                title="{{'_LastPage_' | i18n}}"
+                                data-ng-click="pathPlanGrid.setLastPage()">
+                            >>
+                        </button>
+                        <button data-ng-show="pathPlanGrid.currentPageIndex == pathPlanGrid.lastPageIndex-1"
+                                aria-hidden="true"
+                                style="border: 0;background-color: transparent;"
+                                title="{{'_LastPage_' | i18n}}">
+                            >>
+                        </button>
+                    </li>
+                </ol>
+            </td>
+        </tr>
+    </tfoot>
+</table>

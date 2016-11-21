@@ -1,0 +1,87 @@
+﻿<div>
+    <!--<button data-ng-transclude
+            style="cursor: pointer; margin:0; padding: 5px;"
+            class="MapTabWrapper"
+            data-ng-click="parentButtonClicked()"></button>-->
+    <div data-ng-show="isShowMeasureDistancePopup == true">
+        <div role="dialog"
+             tabindex="0"
+             aria-labelledby="measureDistanceScheduleDialogHeader"
+             aria-describedby="measureDistanceScheduleDialogDescription"
+             class="measureDistanceScheduleMessage" style="border: 1px gray solid; position: fixed; right: 30%; top: 40%; left: 30%; background-color: white; box-shadow: 10px 10px 5px #888888; z-index: 3; padding: 10px; ">
+            <table style="height: 150px; ">
+                <tr>
+                    <td colspan="2">
+                        <h2 id="measureDistanceScheduleDialogHeader" style="color: black; text-align: center; margin: 0; padding: 0;">מדידת מרחק הליכה</h2>
+                        <p id="measureDistanceScheduleDialogDescription" style="font-size: 0px; text-indent: -9999px;">לפניך טופס להדפסת לוח זמנים יומי. יש לקבוע טווח שעות מבוקש באמצעות תיבות הקומבו משעה ועד שעה . לאחר הזנת הנתונים לחץ על כפתור הדפס.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="measureWalkFromAddress"
+                               class="SearchSubTitle"
+                               style="color: black;">מוצא</label>
+                    </td>
+                    <td>
+                        <div style="border: 1px gray solid; ">
+                            <div id="measureWalkFromAddress"
+                                 google-autocomplete
+                                 style="margin: 0; border: 0; width: 100%; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;"
+                                 data-ng-placeholder="הזן כתובת מוצא"
+                                 selected-value="walkAddressOrigin.coords"
+                                 data-ng-model="walkAddressOrigin.description">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="measureWalkToAddress"
+                               class="SearchSubTitle"
+                               style="color: black;">יעד</label>
+                    </td>
+                    <td>
+                        <div style="border: 1px gray solid; ">
+                            <div id="measureWalkToAddress"
+                                 google-autocomplete
+                                 style="margin: 0; border: 0; width: 100%; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;"
+                                 data-ng-placeholder="הזן כתובת יעד"
+                                 selected-value="walkAddressDestination.coords"
+                                 data-ng-model="walkAddressDestination.description">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <button type="button"
+                                            style="border: 1px solid black; background-color: transparent; color: black; font-size: 25px; cursor: pointer;"
+                                            data-ng-click="close()">
+                                        סגור
+                                    </button>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button"
+                                            data-ng-show="walkAddressOrigin.coords != '' && walkAddressDestination.coords != '' "
+                                            style="border: 1px solid black; background-color: transparent; color: black; font-size: 25px; cursor: pointer;"
+                                            data-ng-click="measure()">
+                                        חשב מרחק
+                                    </button>
+                                    <button type="button"
+                                            data-ng-show="walkAddressOrigin.coords == '' || walkAddressDestination.coords == '' "
+                                            style="border: 1px solid gray; background-color: transparent; color: gray; font-size: 25px; ">
+                                        חשב מרחק
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--<div style="background-color: lightgray; height: 100%; width: 100%; position: fixed; top: 0px; left: 0px; z-index: 2; opacity: 0.5;"></div>-->
+    </div>
+</div>

@@ -1,0 +1,135 @@
+﻿<div style="" data-ng-show="transitionShilutScheduleList.length > 0">
+    <div data-ng-repeat="transitionShilutScheduleItem in transitionShilutScheduleList"
+         style="background-color: white; margin: 1px;">
+        <h3 class="hidden">
+            <span>
+                <span>{{'_TripSolution_' | i18n}} {{'_Include_' | i18n}}</span>
+                <span data-ng-if="search.directionsDisplayBoarding.directions.routes[0].legs != null">{{'_WalkingCourse_' | i18n}}</span>
+                <span data-ng-repeat="shilutSchedule in transitionShilutScheduleItem.shilutScheduleList">
+                    <span data-ng-if="shilutSchedule.Company.Id == 10">נסיעה ב{{'_Train_' | i18n}}</span>
+                    <span data-ng-if="shilutSchedule.Company.Id != 10">נסיעה ב{{'_line_' | i18n}} {{shilutSchedule.Shilut}}</span>
+                    <span data-ng-if="transitionShilutScheduleItem.shilutScheduleList.length - 1 > $index">></span>
+                </span>
+                <span data-ng-if="transitionShilutScheduleItem.MinutesToArrival != null && transitionShilutScheduleItem.MinutesToArrival != '0'" style="color: #D90000;">
+                    {{"_InStation_" | i18n}} {{"_InTime_" | i18n}} {{transitionShilutScheduleItem.MinutesToArrival}} {{"_Minutes_" | i18n}}
+                </span>
+            </span>
+        </h3>
+        <div style="padding: 2px 10px 2px 10px;">
+            <div style="display: table-cell;" data-ng-if="search.directionsDisplayBoarding.directions.routes[0].legs != null">🚶></div>
+            <div data-ng-repeat="shilutSchedule in transitionShilutScheduleItem.shilutScheduleList" style="display: table-cell;">
+                <div style="display: table-cell;" data-ng-if="shilutSchedule.Company.Id == 10">🚆</div>
+                <div style="display: table-cell;" data-ng-if="shilutSchedule.Company.Id != 10">
+                    <div style="display: table-cell; ">
+                        🚌
+                    </div>
+                    <div style="display: table-cell;">
+                        {{shilutSchedule.Shilut}}
+                    </div>
+                </div>
+                <div style="display: table-cell; " data-ng-if="transitionShilutScheduleItem.shilutScheduleList.length - 1 > $index">></div>
+            </div>
+            <div style="display: table-cell;" data-ng-if="search.directionsDisplayAlighting.directions.routes[0].legs != null">>🚶</div>
+            <div data-ng-if="transitionShilutScheduleItem.MinutesToArrival != null && transitionShilutScheduleItem.MinutesToArrival != '0'" style="color: #D90000;">
+                {{"_InStation_" | i18n}} {{"_InTime_" | i18n}} {{transitionShilutScheduleItem.MinutesToArrival}} {{"_Minutes_" | i18n}}
+            </div>
+        </div>
+        <ul style="padding: 2px 10px 2px 10px;">
+            <li data-ng-if="search.directionsDisplayBoarding.directions.routes[0].legs != null">
+                <button type="button"
+                        style="text-align: initial;"
+                        data-ng-click="isShowBoardWalkRouteDescription = !isShowBoardWalkRouteDescription">
+                    <div data-ng-if="isShowBoardWalkRouteDescription != true"
+                         title="{{'_WalkingCourse_' | i18n}} אל התחנה {{'_ClickToOpen_' | i18n}}"
+                         aria-label="{{'_WalkingCourse_' | i18n}} אל התחנה {{'_ClickToOpen_' | i18n}}"
+                         class="TextOverflowEllipsis"
+                         style="vertical-align: middle; display: inline-block; width: 100%;">
+                        <h3>+{{"_WalkingCourse_" | i18n}} {{search.directionsDisplayBoarding.directions.routes[0].summary}}</h3>
+                        <div style="text-indent: 10px;">{{search.directionsDisplayBoarding.directions.routes[0].legs[0].distance.text}}</div>
+                        <div style="text-indent: 10px;">{{search.directionsDisplayBoarding.directions.routes[0].legs[0].duration.text}}</div>
+                    </div>
+                    <div data-ng-if="isShowBoardWalkRouteDescription == true"
+                         title="{{'_WalkingCourse_' | i18n}} אל התחנה {{'_ClickToClose_' | i18n}}"
+                         aria-label="{{'_WalkingCourse_' | i18n}} אל התחנה {{'_ClickToClose_' | i18n}}"
+                         style="vertical-align: middle; display: inline-block; white-space: normal; width: 100%;">
+                        <h3>-{{"_WalkingCourse_" | i18n}} {{search.directionsDisplayBoarding.directions.routes[0].summary}}</h3>
+                        <div style="text-indent: 10px;">{{search.directionsDisplayBoarding.directions.routes[0].legs[0].distance.text}}</div>
+                        <div style="text-indent: 10px;">{{search.directionsDisplayBoarding.directions.routes[0].legs[0].duration.text}}</div>
+                    </div>
+                </button>
+                <ul data-ng-if="isShowBoardWalkRouteDescription == true" style="margin-right: 10px;">
+                    <li data-ng-repeat="step in search.directionsDisplayBoarding.directions.routes[0].legs[0].steps"
+                        data-ng-bind-html="step.instructions">
+                    </li>
+                </ul>
+            </li>
+            <li data-ng-repeat="shilutSchedule in transitionShilutScheduleItem.shilutScheduleList">
+                <div style="display: inline-block; vertical-align: middle; width: 100%;">
+                    <div data-ng-if="isShowtransition1Description != true"
+                         style="text-align: initial;"
+                         aria-label="{{'_line_' | i18n}} {{shilutSchedule.Shilut}}"
+                         title="{{'_line_' | i18n}} {{shilutSchedule.Shilut}}">
+                        <div data-ng-if="shilutSchedule.Company.Id != 10">
+                            <h3>{{"_line_" | i18n}} {{shilutSchedule.Shilut}}</h3>
+
+                            <div 
+                                 data-ng-if="shilutSchedule.MinutesToArrival == null || shilutSchedule.MinutesToArrival == '' || $index != 0"
+                                style="text-indent: 10px;"
+                                 class="TextOverflowEllipsis">{{"_From_" | i18n}}{{"_Station_" | i18n}} {{shilutSchedule.boardingBusstop.Name}} ({{shilutSchedule.boardingBusstop.ArrivalTime}}<span data-ng-if="shilutSchedule.MazanToMoza  != 0" style="color: #c02524;">★</span>)</div>
+
+                            <div data-ng-if="shilutSchedule.MinutesToArrival != null && shilutSchedule.MinutesToArrival != '' && $index == 0"
+                                 style="text-indent: 10px;">
+                                <div style="display: inline-block;" class="TextOverflowEllipsis">{{"_From_" | i18n}}{{"_Station_" | i18n}} {{shilutSchedule.boardingBusstop.Name}}</div>
+                                <div style="display: inline-block; width: 100px; height: 17px;">
+                                    <div style="position: relative; ">
+                                        <div class="elementToFadeInAndOut" style="position: absolute;">{{shilutSchedule.boardingBusstop.ArrivalTime}}<span data-ng-if="shilutSchedule.MazanToMoza  != 0" style="color: #c02524;">★</span></div>
+                                        <div class="elementToFadeOutAndIn" style="position: absolute;">{{shilutSchedule.MinutesToArrival}} {{'_Minutes_' | i18n}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-indent: 10px;"
+                                 class="TextOverflowEllipsis">{{"_To_" | i18n}}{{"_Station_" | i18n}} {{shilutSchedule.alightingBusstop.Name}} ({{shilutSchedule.alightingBusstop.ArrivalTime}})</div>
+                        </div>
+                        <div data-ng-if="shilutSchedule.Company.Id == 10">+{{"_Train_" | i18n}}</div>
+                        <!--<div data-ng-if="shilutSchedule.MinutesToArrival != null && shilutSchedule.MinutesToArrival != '' && $index == 0"
+                             style="text-indent: 10px; color: #D90000;">{{'_InStation_' | i18n}} {{'_InTime_' | i18n}} {{shilutSchedule.MinutesToArrival}} {{'_Minutes_' | i18n}}</div>-->
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h3 class="HighlightedTextRed">★ {{"_EstimatedDepartureTimeShorter_" | i18n}}</h3>
+            </li>
+            <li data-ng-if="search.directionsDisplayAlighting.directions.routes[0].legs != null">
+                <button type="button"
+                        style="text-align: initial;"
+                        data-ng-click="isShowAlightWalkRouteDescription = !isShowAlightWalkRouteDescription">
+                    <div class="TextOverflowEllipsis"
+                         title="{{'_WalkingCourse_' | i18n}} מתחנה {{'_ClickToOpen_' | i18n}}"
+                         aria-label="{{'_WalkingCourse_' | i18n}} מהתחנה {{'_ClickToOpen_' | i18n}}"
+                         data-ng-if="isShowAlightWalkRouteDescription != true"
+                         style="display: inline-block; vertical-align: middle; width: 100%;">
+                        <h3>+{{"_WalkingCourse_" | i18n}} {{search.directionsDisplayAlighting.directions.routes[0].summary}}</h3>
+                        <div style="text-indent: inherit;">{{search.directionsDisplayAlighting.directions.routes[0].legs[0].distance.text}}</div>
+                        <div style="text-indent: inherit;">{{search.directionsDisplayAlighting.directions.routes[0].legs[0].duration.text}}</div>
+                    </div>
+                    <div data-ng-if="isShowAlightWalkRouteDescription == true"
+                         title="{{'_WalkingCourse_' | i18n}} מהתחנה{{'_ClickToClose_' | i18n}}"
+                         aria-label="{{'_WalkingCourse_' | i18n}}  מהתחנה{{'_ClickToClose_' | i18n}}"
+                         style="display: inline-block; vertical-align: middle; white-space: normal; width: 100%;">
+                        <h3>-{{"_WalkingCourse_" | i18n}}  {{search.directionsDisplayAlighting.directions.routes[0].summary}}</h3>
+                        <div style="text-indent: inherit;">{{search.directionsDisplayAlighting.directions.routes[0].legs[0].distance.text}}</div>
+                        <div style="text-indent: inherit;">{{search.directionsDisplayAlighting.directions.routes[0].legs[0].duration.text}}</div>
+                    </div>
+                </button>
+                <ul data-ng-if="isShowAlightWalkRouteDescription == true" style="margin-right: 10px;">
+                    <li data-ng-repeat="step in search.directionsDisplayAlighting.directions.routes[0].legs[0].steps"
+                        data-ng-bind-html="step.instructions">
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+

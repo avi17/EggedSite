@@ -1,0 +1,122 @@
+﻿<div class="wrapperDiv"
+     data-ng-style="{'width':popupWidth}"
+     style="background-color: white; border: 1px solid lightgray; border-radius: 3px; ">
+    <button type="button"
+            class="ComboButton"
+            data-ng-click="isDisabled || comboClicked(); "
+            aria-label="{{ariaLabel}} {{autoCompleteValue.NAME}} {{'_ClickToOpen_' | i18n}}">
+        <div>
+            <div class="AllBorderRadius"
+                 style="display: inline-block; height: 30px; width: 20px; text-align: center; vertical-align: middle; background-color: lightgrey; font-size: 8px;border:0.1px solid lightgray;">
+                <div style="height: 30px; line-height: 30px;" data-ng-show="isPopupVisible == true">▲</div>
+                <div style="height: 30px; line-height: 30px;" data-ng-show="isPopupVisible != true">▼</div>
+            </div>
+            <div class="selectedItemDiv">
+                <span data-ng-show="itemList.length>0 && (autoCompleteValue == null || autoCompleteValue.ID == 0)">{{'_Select_' | i18n}}</span>
+                <span style="overflow: hidden; text-overflow: ellipsis;"
+                      data-ng-show="!isDisabled  && itemList.length>0 && (autoCompleteValue != null && autoCompleteValue.ID != 0)">{{autoCompleteValue.NAME}}</span>
+            </div>
+        </div>
+    </button>
+    <div class="cb quarterList ComboPopup"
+         data-ng-show="isPopupVisible == true"
+         style="z-index: 10; background-color: white; border: 1px solid lightgray;">
+        <div>
+            <input type="text"
+                   size="{{inputSize}}"
+                   placeholder="{{'_PleaseTypeToNarrowDownList_' | i18n}}"
+                   style="border: 1px solid lightgray;"
+                   class="cb_edit autoCompleteValue ComboTextFilter"
+                   data-ng-keyup="textFieldKeyUp($event)"
+                   data-ng-keydown="textFieldKeyDown($event)"
+                   data-ng-model="filterExpression"
+                   role="combobox" />
+        </div>
+        <div data-ng-show="filteredList.length > 0"
+             class="table-header" 
+             style="color: white;width: 100%;">
+            <span style="margin: 2px;">
+                {{'_PleaseTypeToNarrowDownList_' | i18n}}
+            </span>
+        </div>
+
+        <div data-ng-show="filteredList.length == 0">{{"_NoResultsFound_" | i18n}}</div>
+
+        <div data-ng-if="isTable == true && filteredList.length > 0">
+            <div class="TableHeaders"
+                 style="display: table; width: 100%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <th style="display: table-cell; width: 40px; font-size: 14px;">
+                        </th>
+                        <th style="display: table-cell; width: 60px; font-size: 14px;">
+                            {{'_line_' | i18n}}
+                        </th>
+                        <th style="display: table-cell; width: auto; font-size: 14px;">
+                            {{'_destination_' | i18n}}
+                        </th>
+                        <th style="display: table-cell; width: 20px;">
+                       
+                    </tr>
+                </table>
+            </div>
+            <div style="max-height: 150px; overflow-y: auto; overflow-x: hidden; "
+                 class="scrollableParent">
+                <ul data-ng-if="filteredList.length > 0"
+                    style="width: 100%; background-color: white; border:1px solid lightgray; padding: 0; margin: 0; display: table; position: relative;">
+                    <li tabindex="0"
+                        role="option"
+                        data-ng-repeat="item in filteredList"
+                        data-ng-click="itemSelected(item)"
+                        data-ng-class="{true: 'SelectedDropDownItem', false: 'DropDownItem'}[item.ID == navItem.ID && item.NAME == navItem.NAME]"
+                        scroll-to
+                        isscroll="item.ID == navItem.ID && item.NAME == navItem.NAME"
+                        style="display: table-row; padding: 2px; ">
+                        <div tabindex="0"
+                             style="display: table; "
+                             data-ng-click="itemSelected(item)">
+                            <div style="display: table-cell; width: 40px; text-align: center; vertical-align: middle;">
+                                <img alt="{{item.CompanyName}}"
+                                     data-ng-src="content/images/BusOperators/company_{{item.CompanyId}}.png" />
+                            </div>
+                            <div style="display: table-cell; width: 60px; vertical-align: middle; display: table-cell;">
+                                <div title="{{item.NAME}}"
+                                     style="width: 70px; padding: 2px; overflow: hidden; text-overflow: ellipsis;">
+                                    {{item.NAME}}
+                                </div>
+                            </div>
+                            <div style="display: table-cell; width: auto; vertical-align: middle; display: table-cell;">
+                                <div title="{{item.DestinationName}}"
+                                     style="overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis; width: auto; padding: 2px;">
+                                    {{item.DestinationName}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ul data-ng-if="isTable != true && filteredList.length > 0"
+            style="overflow-y: auto; overflow-x: hidden; max-height: 105%; width: 99.4%; border:1px solid lightgray;padding: 0; margin: 0; position: relative"
+            class="scrollableParent">
+            <li tabindex="0"
+                role="option"
+                data-ng-repeat="item in filteredList"
+                data-ng-click="itemSelected(item)"
+                data-ng-class="{true: 'SelectedDropDownItem', false: 'DropDownItem'}[item.ID == navItem.ID && item.NAME == navItem.NAME]"
+                scroll-to
+                isscroll="item.ID == navItem.ID && item.NAME == navItem.NAME"
+                style="overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 2px;">
+                <div tabindex="0"
+                     title="{{item.NAME}}"
+                     style="overflow: hidden; text-overflow: ellipsis;"
+                     data-ng-click="itemSelected(item)">
+                    {{item.NAME}}
+                </div>
+            </li>
+        </ul>
+
+
+    </div>
+</div>

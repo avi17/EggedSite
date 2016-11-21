@@ -1,0 +1,37 @@
+﻿<div style="position: absolute; left: 30%; top: 30%; background-color: white; border: 1px grey solid; z-index: 103;">
+    <div style="padding: 7px; font-weight: bold; color: darkgreen; background-color: lightgray;" data-i18n="_SiteMessages_"></div>
+    <div style="width: 400px; padding: 10px;" class="MessageBody">
+        <table>
+            <tr>
+                <td colspan="3">
+                    <div class="MessageContent" data-i18n="currentMessage">{{currentMessage}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <a href="https://www.google.com/chrome/browser/desktop/" target="_blank" style="text-align: center;">
+                        <img src="content/images/popup/chrome.png" alt="chrome shortcut" style="height: 40px; width: 38px; margin: auto; border: 0;"/>
+                        <div class="ChromeIconLabel" style="font: regular 12px Arial; color: #1ca78a;">Google Chrome</div>
+                    </a>
+                </td>
+                <td style="text-align: center;">
+                    <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" style="text-align: center;">
+                        <img src="content/images/popup/firefox.png" alt="firefox shortcut" style="height: 40px; width: 38px; margin: auto; border: 0;"/>
+                        <div class="FirefoxIconLabel" style="font: regular 12px Arial; color: #1ca78a;">Mozilla Firefox</div>
+                    </a>
+                </td>
+            </tr>
+            <tr style="height: 10px;">
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center; cursor: pointer;">
+                    <div data-ng-click="closeElement()" data-i18n="_Close_"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div 
+    data-ng-click="closeElement()"
+    style="background-color: lightgrey; height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; z-index: 102; opacity: 0.7"></div>

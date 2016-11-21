@@ -1,0 +1,93 @@
+﻿<div data-ng-show="enumCompatibilityMessage != 0">
+    <div role="dialog"
+         tabindex="0"
+         id="browserCompatibilityDialog"
+         aria-labelledby="browserCompatibilityDialogHeader"
+         aria-describedby="browserCompatibilityDialogDescription"
+         style="font-size: 20px; height: 300px; width: 70%; position: absolute; left: 15%; top: 15%; background-color: white; opacity: 0.8; border-radius: 5px; padding: 10px; z-index: 2; ">
+        <table data-ng-show="enumCompatibilityMessage == 1"
+               style="height: 100%; "
+               class="MessageBody">
+            <tr>
+                <td colspan="2">
+                    <h2 id="browserCompatibilityDialogHeader" style="font-size: 20px; color: black; text-align: center; margin: 0; padding: 0;">הבחנו כי אתה גולש דרך הנייד, האם תרצה :</h2>
+                    <p id="browserCompatibilityDialogDescription" style="font-size: 0px; text-indent: -9999px;">לפניך חלונית המאפשרת ברירה בין אפשרות גלישה באתר הרגיל לבין גלישה באתר מותאם.</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="display: table-cell; text-align: center;">
+                    <button type="button"
+                            data-ng-click="redirectToMobimsl()"
+                            style="background-color: #15842A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 15px; width: 85%; display: block; margin: 0px auto;"
+                            class="">
+                        המשך גלישה באתר מותאם
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <button type="button"
+                            data-ng-click="hidePopup()"
+                            style="background-color: #15842A; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 15px; width: 85%; display: block; margin: 0px auto;"
+                            class="">
+                        המשך גלישה באתר הרגיל
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; white-space: nowrap; font-size: 12px;">
+                    <input type="checkbox"
+                           id="stopShowingMessageInput"
+                           style="display: table-cell;"
+                           data-ng-click="stopShowingMessageClicked()"
+                           data-ng-model="isStopShowingMessage"
+                           class="btnCheckbox" />
+                    <label for="stopShowingMessageInput" style="color: black; ">אל תציג הודעה זו יותר</label>
+                </td>
+            </tr>
+        </table>
+        <div data-ng-show="enumCompatibilityMessage == 2"
+             style="position: absolute; left: 30%; top: 30%; background-color: white; border: 1px grey solid; z-index: 3;">
+            <div style="padding: 7px; font-weight: bold; color: darkgreen; background-color: lightgray;" i18n="_SiteMessages_"></div>
+            <div style="width: 400px; padding: 10px;" class="MessageBody">
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            <div class="MessageContent" i18n="currentMessage">{{currentMessage}}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">
+                            <a href="https://www.google.com/chrome/browser/desktop/" target="_blank" style="text-align: center;">
+                                <img src="content/images/popup/chrome.png" alt="chrome shortcut" style="height: 40px; width: 38px; margin: auto; border: 0;" />
+                                <div class="ChromeIconLabel" style="font: regular 12px Arial; color: #1ca78a;">Google Chrome</div>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" style="text-align: center;">
+                                <img src="content/images/popup/firefox.png" alt="firefox shortcut" style="height: 40px; width: 38px; margin: auto; border: 0;" />
+                                <div class="FirefoxIconLabel" style="font: regular 12px Arial; color: #1ca78a;">Mozilla Firefox</div>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" style="text-align: center;">
+                                <img src="content/images/popup/explorer.png" alt="explorer shortcut" style="height: 40px; width: 38px; margin: auto; border: 0;" />
+                                <div class="InternetExplorerIconLabel" style="font: regular 12px Arial; color: #1ca78a;">Internet Explorer</div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center; cursor: pointer;">
+                            <div data-ng-click="closeElement()" i18n="_Close_"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div data-ng-click="closeElement()"
+         style="height: 100%; width: 100%; position: fixed; top: 0px; left: 0px; z-index: 1; "></div>
+</div>

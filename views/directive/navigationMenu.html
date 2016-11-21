@@ -1,0 +1,21 @@
+﻿<div tabindex="0" data-ng-blur="elementBlured()" data-ng-focus="elementFocused()">
+    <!--<div data-ng-click="menuButtonClicked()"
+         class="HamburgerImage"
+         style="position: absolute; top: 30px; right: 30px;">
+    </div>-->
+    <div 
+         data-ng-click="menuButtonClicked()" 
+         class="btnToggleMainMenuStrip" 
+         style="position: absolute; top: 30px; right: 30px; color: white; font-size: 30px; width: auto; padding: 10px;">≡</div>
+    <div data-ng-show="isPopupVisible == true" style="position: absolute; top: 60px; right: 20px; z-index: 10; ">
+        <div data-ng-repeat="mainItem in itemList">
+            <div style="background-color: gray; color: white;">{{mainItem.categoryName}}</div>
+            <a href="{{item.url}}"
+               style="padding: 5px 10px; cursor: pointer; background: -webkit-linear-gradient(-90deg, #009d7d 0%, #018369 100%); background: -moz-linear-gradient(-90deg, #009d7d 0%, #018369 100%); background: -o-linear-gradient(-90deg, #009d7d 0%, #018369 100%); background: -ms-linear-gradient(-90deg, #009d7d 0%, #018369 100%); background: linear-gradient(180deg, #009d7d 0%, #018369 100%); font-size: 25px; color: #f7f7f7; font-weight: 400; text-align: right; text-decoration: none; display: block; display: table; width: 100%;"
+               data-ng-repeat="item in mainItem.itemList">
+                <div style="float: right; display: table-cell; vertical-align: middle; display: block; height: 34px; width: 35px; background: url('images/{{item.name}}Icon.png') no-repeat transparent; background-size: 22px 22px; background-position: center center; "></div>
+                <div style="float: right; display: table-cell; white-space: normal; vertical-align: middle; ">{{item.text}}</div>
+            </a>
+        </div>
+    </div>
+</div>

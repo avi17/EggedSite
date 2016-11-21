@@ -1,0 +1,52 @@
+﻿<div>
+    <input type="text"
+           title="{{inputValue}}"
+           data-ng-focus="inputFocused()"
+           data-ng-blur="inputBlured()"
+           data-ng-keyup="inputKeyUp($event);"
+           data-ng-model="inputValue"
+           class="txtGoogleSearch"
+           style="margin: 0;" />
+    <div data-ng-show="isPopupVisible == true"
+         style="z-index: 1; position: absolute; color: black; font-size: 14px; background-color: grey;"
+         data-ng-style="{ 'width' : popupWidth}">
+        <button type="button"
+                tabindex="-1"
+                title="{{'_CurrentPosition_' | i18n}}"
+                aria-label="{{'_CurrentPosition_' | i18n}}"
+                data-ng-show="inputValue.length == 0 && isEggedDb == true"
+                class="isBusGovIlTableHeader"
+                style="cursor: pointer; padding: 5px; margin: 1px; width: 100%; text-align: start;"
+                data-ng-click="showCurrentLocation()">
+            {{'_CurrentPosition_' | i18n}}
+        </button>
+        <button type="button"
+                tabindex="-1"
+                title="{{'_SearchBy_' | i18n}} {{'_StationNumber_' | i18n}}"
+                aria-label="{{'_SearchBy_' | i18n}} {{'_StationNumber_' | i18n}}"
+                data-ng-show="inputValue.length == 0  && isEggedDb == false && isSearchByAddress == true"
+                style="background-color: white; cursor: pointer; padding: 5px; margin: 1px; width: 100%; text-align: start;"
+                data-ng-click="isSearchByAddress = !isSearchByAddress">
+            {{'_SearchBy_' | i18n}} {{'_StationNumber_' | i18n}}
+        </button>
+        <button type="button"
+                tabindex="-1"
+                title="{{'_SearchBy_' | i18n}} {{'_Address_' | i18n}}"
+                aria-label="{{'_SearchBy_' | i18n}} {{'_Address_' | i18n}}"
+                data-ng-show="inputValue.length == 0  && isEggedDb == false && isSearchByAddress != true"
+                style="background-color: white; cursor: pointer; padding: 5px; margin: 1px; width: 100%; text-align: start;"
+                data-ng-click="isSearchByAddress = !isSearchByAddress">
+            {{'_SearchBy_' | i18n}} {{'_Address_' | i18n}}
+        </button>
+        <ul data-ng-show="predictionList != null && predictionList.length > 0" style="padding: 0; margin: 0;">
+            <li style="cursor: pointer; margin: 1px;"
+                data-ng-repeat="prediction in predictionList"
+                data-ng-class="{true: 'SelectedDropDownItem', false: 'DropDownItem'}[selectedPrediction.id == prediction.id]"
+                data-ng-click="predictionSelected(prediction)"
+                title="{{prediction.description}}">
+                <span style="margin: 5px;"
+                      role="option">{{prediction.description}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
